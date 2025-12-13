@@ -197,7 +197,7 @@ that can be used in React Native. Each has its strengths, and credit goes to
 their contributors. Still, I have highlighted what I consider to be their main
 drawbacks to explain why I decided to build a new one.
 
-#### `react-native-maps` or `Expo maps`
+#### `react-native-maps` or `expo-maps`
 
 To achieve the wanted result, one should overlay the custom tiles on Apple plan
 (iOS) or Google Maps (iOS/Android).
