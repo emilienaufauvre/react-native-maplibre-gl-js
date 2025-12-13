@@ -13,6 +13,8 @@ A TypeScript library to enable the use of [MapLibre GL JS](https://github.com/ma
 Aims to bring all the web features into React Native components, thereby
 offering new capabilities to React Native developers.
 
+![Demo](./res/demo.gif)
+
 **This library is not an official MapLibre project.**
 
 
