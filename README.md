@@ -28,7 +28,10 @@
   <strong>This library is not an official MapLibre project.</strong>
   <br/>
   <br/>
-  <img src="./res/demo.gif" alt="Demo" width="300"/>
+  <div>
+  <img src="./res/demo1.gif" alt="Demo1" width="300"/>
+  <img src="./res/demo2.gif" alt="Demo2" width="300"/>
+  </div>
 </div>
 
 
