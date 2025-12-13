@@ -14,8 +14,14 @@
 </div>
 
 <div align="center">
+  <br/>
   <p>
-  A TypeScript library to enable the use of [MapLibre GL JS](https://github.com/maplibre/maplibre-gl-js) within React Native.
+  A TypeScript library to enable the use of
+  <a href="https://github.com/maplibre/maplibre-gl-js" target="_blank">
+      MapLibre GL JS
+  </a>
+  within React Native.
+  <br/>
   Aims to bring all the web features into React Native components, thereby
   offering new capabilities to React Native developers.
   </p>
