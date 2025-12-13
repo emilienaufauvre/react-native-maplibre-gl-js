@@ -1,10 +1,10 @@
 # react-native-maplibre-gl-js
 
-A TypeScript library to enable the use of MapLibre GL JS within React Native.
+A TypeScript library to enable the use of [MapLibre GL JS](https://github.com/maplibre/maplibre-gl-js) within React Native.
 Aims to bring all the web features into React Native components, thereby
 offering new capabilities to React Native developers.
 
-**This is not an official MapLibre project.**
+**This library is not an official MapLibre project.**
 
 
 ## Installation
@@ -110,13 +110,13 @@ the `{ComponentName}.types.ts` file.
 
 ```mermaid
 graph TD
-A[src] --> B[web]
-A[src] --> C[react-native]
-A[src] --> D[communication]
+A[src] --> B[communication]
+A[src] --> C[web]
+A[src] --> D[react-native]
 
-    B --> B1[Contains code to run MapLibreGL JS in the web environment]
-    C --> C1[Contains code to instantiate MapLibreGL JS elements from React Native]
-    D --> D1[Handles messages and shared types between web and React Native]
+    B --> B1[Handles messages and shared types between web and React Native]
+    C --> C1[The web environment that runs MapLibreGL JS and exchanges with React Native]
+    D --> D1[The React Native environment used from the end user of this library]
 ```
 
 The JS code that runs within the WebView is bundled using the script in the
