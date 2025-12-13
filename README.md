@@ -205,7 +205,7 @@ To achieve the wanted result, one should overlay the custom tiles on Apple plan
 - On tile loading, the map below (Google Maps or Apple plan) is visible.
 - If the map provider is Google Maps (mandatory on the Android platform), an API
   key is needed to use Google Maps SDK, and therefore its use is billed.
--
+
 #### `@rnmapbox/maps`
 
 - Dependence on Mapbox choices.
@@ -214,7 +214,7 @@ To achieve the wanted result, one should overlay the custom tiles on Apple plan
 - To render animated markers or markers with dynamic content and developed
   visual styles, the use of native views is necessary, and this greatly slows
   down the application.
--
+
 #### `maplibre-react-native`
 
 - Being an open source fork of MapBox, the library is years behind (1000+
@@ -222,14 +222,14 @@ To achieve the wanted result, one should overlay the custom tiles on Apple plan
 - The same performance issue with native views as `@rnmapbox` is also
   present.
 
-### What I think it can be done
+### Prospects
 
 To address these drawbacks, two main approaches are possible (as far as I know):
 either build a library on top of native views using free mobile SDKs (such as
 MapLibre Native, meaning the effort should instead go into improving
 `maplibre-react-native`), or leverage existing web-based map libraries.
 
-The second option is far easier to build and maintain, since it relies on a
+The second option is far easier to build and maintain since it relies on a
 single rendering engine rather than separate iOS and Android SDKs. It also opens
 the door to fixing performance issues and limitations found in earlier
 libraries, while enabling more features.
