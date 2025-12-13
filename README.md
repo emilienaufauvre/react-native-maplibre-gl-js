@@ -17,7 +17,7 @@ A TypeScript library to enable the use of [MapLibre GL JS](https://github.com/ma
 Aims to bring all the web features into React Native components, thereby
 offering new capabilities to React Native developers.
 
-<div style="text-align: center;">
+<div align="center">
   <img src="./res/demo.gif" alt="Demo" width="300"/>
 </div>
 
