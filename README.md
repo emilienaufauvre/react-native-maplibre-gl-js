@@ -190,11 +190,11 @@ The following table lists the MapLibre GL JS classes that are implemented yet.
 
 ## Motivations
 
-### My "state of the art" of the existing solutions
+### A tour of the RN map libraries
 
 Considering tile-based maps, these are the maintained or supported libraries
 that can be used in React Native. Each has its strengths, and credit goes to
-their contributors. Still, I have highlighted what I consider to be  their main
+their contributors. Still, I have highlighted what I consider to be their main
 drawbacks to explain why I decided to build a new one.
 
 #### `react-native-maps` or `Expo maps`
@@ -202,9 +202,9 @@ drawbacks to explain why I decided to build a new one.
 To achieve the wanted result, one should overlay the custom tiles on Apple plan
 (iOS) or Google Maps (iOS/Android).
 
-- On tile loading, the map below (Google maps or Apple plan) is visible.
-- If the map provider is Google Maps (mandatory on the Android platform) an API
-  key is needed to use Google maps SDK, and therefore its use is billed.
+- On tile loading, the map below (Google Maps or Apple plan) is visible.
+- If the map provider is Google Maps (mandatory on the Android platform), an API
+  key is needed to use Google Maps SDK, and therefore its use is billed.
 -
 #### `@rnmapbox/maps`
 
@@ -237,7 +237,7 @@ libraries, while enabling more features.
 I outline two solutions in this category below, along with the issues they still
 carry.
 
-#### Host a map on a web page, and access it through a WebView
+#### Host a map on a web page and access it through a WebView
 
 - Requires additional infrastructure.
 - Very sensitive to network latency, and in general, a degraded user experience.
@@ -250,7 +250,7 @@ carry.
 - Some objects cannot be serialized and sent between the WebView code and React
   Native (e.g. HTMLElement).
 
-Some GitHub repositories are implementing this solution however no one are
+Some GitHub repositories are implementing this solution, however, no one is
 actively maintained, and the underlying web libraries are missing key features
 — good examples being `react-native-leaflet-view` and
 `@neukolabs/react-native-maplibre-js`.
