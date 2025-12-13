@@ -16,24 +16,24 @@
 <div align="center">
   <br/>
   <p>
-  A TypeScript library to enable the use of
-  <a href="https://github.com/maplibre/maplibre-gl-js" target="_blank">
-      MapLibre GL JS
-  </a>
-  within React Native.
-  <br/>
-  Aims to bring all the web features into React Native components, thereby
-  offering new capabilities to React Native developers.
+    A TypeScript library to enable the use of
+    <a href="https://github.com/maplibre/maplibre-gl-js" target="_blank">
+        MapLibre GL JS
+    </a>
+    within React Native.
+    <br/>
+    Aims to bring all the web features into React Native components, thereby
+    offering new capabilities to React Native developers.
   </p>
-  <strong>This library is not an official MapLibre project.</strong>
-  <br/>
-  <br/>
-  <div>
-  <img src="./res/demo1.gif" alt="Demo1" width="300"/>
-  <img src="./res/demo2.gif" alt="Demo2" width="300"/>
-  </div>
+  <p align="center">
+    <img src="./res/demo1.gif" width="300"/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="./res/demo2.gif" width="300"/>
+  </p>
 </div>
 
+> [!IMPORTANT]
+> This project **is not** affiliated with, endorsed by, or sponsored by MapLibre.
 
 
 ## Installation
