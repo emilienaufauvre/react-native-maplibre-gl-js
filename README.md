@@ -248,7 +248,7 @@ carry.
 - Any interaction between the WebView content and the React Native world is made
   through message-passing, which can make certain interactions more indirect.
 - Some objects cannot be serialized and sent between the WebView code and React
-  Native (e.g. HTMLElement).
+  Native (e.g., HTMLElement).
 
 Some GitHub repositories are implementing this solution, however, no one is
 actively maintained, and the underlying web libraries are missing key features

@@ -1,0 +1,16 @@
+export default {
+  entryPoints: ['src/index.ts', 'src/typedoc.ts'],
+  entryFileName: 'index.md',
+  out: 'docs/api',
+  plugin: ['typedoc-plugin-markdown', 'typedoc-plugin-rename-defaults'],
+  readme: 'none',
+  indexFormat: 'table',
+  excludePrivate: true,
+  excludeProtected: true,
+  excludeInternal: true,
+  expandObjects: true,
+  hideBreadcrumbs: true,
+  sort: ['source-order'],
+  groupOrder: ['Components', 'Types', '*'],
+  cleanOutputDir: true,
+}

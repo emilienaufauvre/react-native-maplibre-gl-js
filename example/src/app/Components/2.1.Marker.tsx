@@ -1,6 +1,10 @@
-import RNMapLibreGlJs from 'react-native-maplibre-gl-js'
+import {
+  MapProvider,
+  Map,
+  Marker,
+  type MarkerRef,
+} from 'react-native-maplibre-gl-js'
 import { useRef } from 'react'
-import type { MarkerMethods } from 'react-native-maplibre-gl-js/react-native/components/Marker/Marker.types'
 import { COORDINATE_DEFAULT_1, MAP_STYLE_URL_DEFAULT } from '../../constants'
 
 /**
@@ -8,18 +12,18 @@ import { COORDINATE_DEFAULT_1, MAP_STYLE_URL_DEFAULT } from '../../constants'
  */
 const Screen = () => {
   // Refs.
-  const markerRef = useRef<MarkerMethods>(null)
+  const markerRef = useRef<MarkerRef>(null)
 
   return (
-    <RNMapLibreGlJs.MapProvider>
-      <RNMapLibreGlJs.Map
+    <MapProvider>
+      <Map
         options={{
           style: MAP_STYLE_URL_DEFAULT,
           center: COORDINATE_DEFAULT_1,
           zoom: 12,
         }}
       />
-      <RNMapLibreGlJs.Marker
+      <Marker
         ref={markerRef}
         options={{
           draggable: true,
@@ -70,7 +74,7 @@ const Screen = () => {
           },
         }}
       />
-    </RNMapLibreGlJs.MapProvider>
+    </MapProvider>
   )
 }
 

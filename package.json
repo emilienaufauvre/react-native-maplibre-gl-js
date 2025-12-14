@@ -29,7 +29,9 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "release": "release-it --only-version",
     "test": "jest --passWithNoTests",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "docs:check": "npm run docs:generate && git diff --exit-code docs/api",
+    "docs:generate": "typedoc"
   },
   "keywords": [
     "react-native",
@@ -156,6 +158,9 @@
     "release-it": "^19.0.4",
     "semantic-release": "^25.0.2",
     "ts-node": "^10.9.2",
+    "typedoc": "^0.28.15",
+    "typedoc-plugin-markdown": "^4.9.0",
+    "typedoc-plugin-rename-defaults": "^0.7.3",
     "typescript": "^5.9.3"
   }
 }

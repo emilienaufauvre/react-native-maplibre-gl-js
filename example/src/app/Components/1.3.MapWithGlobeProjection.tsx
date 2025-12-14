@@ -1,7 +1,6 @@
-import RNMapLibreGlJs from 'react-native-maplibre-gl-js'
+import { MapProvider, Map, type MapRef } from 'react-native-maplibre-gl-js'
 import { COORDINATE_DEFAULT_1, MAP_STYLE_URL_DEFAULT } from '../../constants'
 import { useRef } from 'react'
-import type { MapMethods } from 'react-native-maplibre-gl-js/react-native/components/Map/Map.types'
 
 /**
  * @returns - Example of the map component usage, with a globe projection that
@@ -9,11 +8,11 @@ import type { MapMethods } from 'react-native-maplibre-gl-js/react-native/compon
  */
 const Screen = () => {
   // Refs.
-  const mapRef = useRef<MapMethods>(null)
+  const mapRef = useRef<MapRef>(null)
 
   return (
-    <RNMapLibreGlJs.MapProvider>
-      <RNMapLibreGlJs.Map
+    <MapProvider>
+      <Map
         ref={mapRef}
         options={{
           style: MAP_STYLE_URL_DEFAULT,
@@ -58,7 +57,7 @@ const Screen = () => {
           },
         }}
       />
-    </RNMapLibreGlJs.MapProvider>
+    </MapProvider>
   )
 }
 

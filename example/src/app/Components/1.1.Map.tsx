@@ -1,6 +1,6 @@
-import RNMapLibreGlJs from 'react-native-maplibre-gl-js'
 import { COORDINATE_DEFAULT_1, MAP_STYLE_URL_DEFAULT } from '../../constants'
 import type { MapLibreEvent, MapMouseEvent } from 'maplibre-gl'
+import { MapProvider, Map } from 'react-native-maplibre-gl-js'
 
 /**
  * @returns - Example of the map component usage.
@@ -9,12 +9,12 @@ const Screen = () => {
   return (
     // The MapProvider must be the parent component of all your map elements.
     // It is necessary to communicate with the MapLibre GL JS library.
-    <RNMapLibreGlJs.MapProvider>
+    <MapProvider>
       {
         // Then you must at least add one Map component to display the map.
         // It can be only one Map component per MapProvider.
       }
-      <RNMapLibreGlJs.Map
+      <Map
         // Add your map options here. The options are the ones specified in the
         // MapLibre GL JS documentation (MapOptions).
         options={{
@@ -48,7 +48,7 @@ const Screen = () => {
       {
         // Add your map elements here (Marker, Popup, etc.).
       }
-    </RNMapLibreGlJs.MapProvider>
+    </MapProvider>
   )
 }
 

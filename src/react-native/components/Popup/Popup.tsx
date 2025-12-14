@@ -1,14 +1,14 @@
 import type {
-  PopupListeners,
-  PopupMethods,
-  PopUpOptions,
+  PopupProps,
+  PopupRef,
 } from 'react-native-maplibre-gl-js/react-native/components/Popup/Popup.types'
 import createWebObjectAsComponent from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent'
 
-const Popup = createWebObjectAsComponent<
-  PopUpOptions,
-  PopupMethods,
-  PopupListeners
->('popup')
+/**
+ * MapLibre Popup view.
+ * @see {@link https://maplibre.org/maplibre-gl-js/docs/API/classes/Popup/ MapLibre GL JS docs}
+ * @group Components
+ */
+const Popup = createWebObjectAsComponent<PopupRef, PopupProps>('popup')
 
 export default Popup

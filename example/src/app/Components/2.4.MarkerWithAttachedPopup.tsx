@@ -1,7 +1,12 @@
-import RNMapLibreGlJs from 'react-native-maplibre-gl-js'
+import {
+  MapProvider,
+  Map,
+  Marker,
+  Popup,
+  type MarkerRef,
+  type PopupRef,
+} from 'react-native-maplibre-gl-js'
 import { useRef } from 'react'
-import type { MarkerMethods } from 'react-native-maplibre-gl-js/react-native/components/Marker/Marker.types'
-import type { PopupMethods } from 'react-native-maplibre-gl-js/react-native/components/Popup/Popup.types'
 import { COORDINATE_DEFAULT_1, MAP_STYLE_URL_DEFAULT } from '../../constants'
 
 /**
@@ -9,19 +14,19 @@ import { COORDINATE_DEFAULT_1, MAP_STYLE_URL_DEFAULT } from '../../constants'
  */
 const Screen = () => {
   // Refs.
-  const markerRef = useRef<MarkerMethods>(null)
-  const popupRef = useRef<PopupMethods>(null)
+  const markerRef = useRef<MarkerRef>(null)
+  const popupRef = useRef<PopupRef>(null)
 
   return (
-    <RNMapLibreGlJs.MapProvider>
-      <RNMapLibreGlJs.Map
+    <MapProvider>
+      <Map
         options={{
           style: MAP_STYLE_URL_DEFAULT,
           center: COORDINATE_DEFAULT_1,
           zoom: 12,
         }}
       />
-      <RNMapLibreGlJs.Marker
+      <Marker
         ref={markerRef}
         options={{
           draggable: true,
@@ -65,13 +70,13 @@ const Screen = () => {
           },
         }}
       />
-      <RNMapLibreGlJs.Popup
+      <Popup
         ref={popupRef}
         options={{
           closeButton: false,
         }}
       />
-    </RNMapLibreGlJs.MapProvider>
+    </MapProvider>
   )
 }
 

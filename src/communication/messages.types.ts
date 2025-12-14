@@ -4,7 +4,7 @@ import type {
   Popup as MapLibrePopup,
 } from 'maplibre-gl'
 import type {
-  InferWebObjectOptions,
+  WebObjectOptionsInferred,
   WebObjectListeners,
 } from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
 
@@ -42,7 +42,7 @@ export type MessageFromRNToWeb =
       payload: {
         objectId: WebObjectId
         objectType: WebObjectType
-        options: InferWebObjectOptions<any>
+        options: WebObjectOptionsInferred<any>
         listeners: WebObjectListeners
       }
     }
@@ -65,7 +65,7 @@ export type MessageFromRNToWeb =
       type: 'webObjectOptionsUpdate'
       payload: {
         objectId: WebObjectId
-        options: InferWebObjectOptions<any>
+        options: WebObjectOptionsInferred<any>
       }
     }
 

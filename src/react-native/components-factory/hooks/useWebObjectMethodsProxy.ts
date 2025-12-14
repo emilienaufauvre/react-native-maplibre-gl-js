@@ -5,7 +5,7 @@ import {
   useMemo,
 } from 'react'
 import useMapAtoms from 'react-native-maplibre-gl-js/react-native/hooks/atoms/useMapAtoms'
-import type { InferWebObjectMethods } from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
+import type { WebObjectRef } from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
 
 /**
  * Create a proxy to call the methods of the corresponding web world object,
@@ -14,17 +14,15 @@ import type { InferWebObjectMethods } from 'react-native-maplibre-gl-js/react-na
  *  methods proxy.
  * @param objectId - The ID of the web object that owns the method.
  */
-export const useWebObjectMethodsProxy = <
-  Methods extends InferWebObjectMethods<object>,
->(
-  ref: ForwardedRef<Methods>,
+export const useWebObjectMethodsProxy = <Ref extends WebObjectRef<any>>(
+  ref: ForwardedRef<Ref>,
   objectId: string,
 ) => {
   // States.
   // - Global.
   const { dispatchMessage, setWebObjectPendingMethodResponse } = useMapAtoms()
 
-  const createProxy = useCallback((): Methods => {
+  const createProxy = useCallback((): Ref => {
     return new Proxy(
       {},
       {
@@ -52,7 +50,7 @@ export const useWebObjectMethodsProxy = <
           }
         },
       },
-    ) as Methods
+    ) as Ref
   }, [objectId, dispatchMessage, setWebObjectPendingMethodResponse])
 
   const methodsProxy = useMemo(() => createProxy(), [createProxy])

@@ -15,127 +15,135 @@ import {
   type MapStyleImageMissingEvent,
 } from 'maplibre-gl'
 import type {
-  InferWebObjectMethods,
-  InferWebObjectOptions,
+  WebObjectMethodsInferred,
+  WebObjectOptionsInferred,
   WebObjectListenerOnMapLayer,
   WebObjectListenerOnObject,
   WebObjectListenerOnRN,
+  WebObjectProps,
+  WebObjectRef,
 } from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
 
-export type MapOptions = InferWebObjectOptions<
-  MapLibreMapOptions,
-  {},
-  'container'
->
+/**
+ * A Map component ref.
+ * @group Types
+ */
+export type MapRef = WebObjectRef<MapMethods>
 
-export type MapMethods = InferWebObjectMethods<MapLibreMap, {}>
+/**
+ * A Map component props.
+ * @group Types
+ */
+export type MapProps = WebObjectProps<MapOptions, MapListeners>
 
-export type MapListeners = {
+type MapMethods = WebObjectMethodsInferred<MapLibreMap>
+type MapOptions = WebObjectOptionsInferred<MapLibreMapOptions, {}, 'container'>
+type MapListeners = {
   // React native events.
-  mount?: WebObjectListenerOnRN<void>
-  unmount?: WebObjectListenerOnRN<void>
+  mount: WebObjectListenerOnRN<void>
+  unmount: WebObjectListenerOnRN<void>
   // MapLibre GL JS events.
   // https://maplibre.org/maplibre-gl-js/docs/API/classes/Map/#on
-  mousedown?:
+  mousedown:
     | WebObjectListenerOnObject<MapLayerMouseEvent>
     | WebObjectListenerOnMapLayer<MapLayerMouseEvent>
-  mouseup?:
+  mouseup:
     | WebObjectListenerOnObject<MapLayerMouseEvent>
     | WebObjectListenerOnMapLayer<MapLayerMouseEvent>
-  mouseover?:
+  mouseover:
     | WebObjectListenerOnObject<MapLayerMouseEvent>
     | WebObjectListenerOnMapLayer<MapLayerMouseEvent>
-  mouseout?:
+  mouseout:
     | WebObjectListenerOnObject<MapLayerMouseEvent>
     | WebObjectListenerOnMapLayer<MapLayerMouseEvent>
-  mousemove?:
+  mousemove:
     | WebObjectListenerOnObject<MapLayerMouseEvent>
     | WebObjectListenerOnMapLayer<MapLayerMouseEvent>
-  mouseenter?: WebObjectListenerOnMapLayer<MapLayerMouseEvent>
-  mouseleave?: WebObjectListenerOnMapLayer<MapLayerMouseEvent>
-  click?:
+  mouseenter: WebObjectListenerOnMapLayer<MapLayerMouseEvent>
+  mouseleave: WebObjectListenerOnMapLayer<MapLayerMouseEvent>
+  click:
     | WebObjectListenerOnObject<MapLayerMouseEvent>
     | WebObjectListenerOnMapLayer<MapLayerMouseEvent>
-  dblclick?:
+  dblclick:
     | WebObjectListenerOnObject<MapLayerMouseEvent>
     | WebObjectListenerOnMapLayer<MapLayerMouseEvent>
-  contextmenu?:
+  contextmenu:
     | WebObjectListenerOnObject<MapLayerMouseEvent>
     | WebObjectListenerOnMapLayer<MapLayerMouseEvent>
-  touchstart?:
+  touchstart:
     | WebObjectListenerOnObject<MapLayerTouchEvent>
     | WebObjectListenerOnMapLayer<MapLayerTouchEvent>
-  touchend?:
+  touchend:
     | WebObjectListenerOnObject<MapLayerTouchEvent>
     | WebObjectListenerOnMapLayer<MapLayerTouchEvent>
-  touchcancel?:
+  touchcancel:
     | WebObjectListenerOnObject<MapLayerTouchEvent>
     | WebObjectListenerOnMapLayer<MapLayerTouchEvent>
-  wheel?: WebObjectListenerOnObject<MapWheelEvent>
-  resize?: WebObjectListenerOnObject<MapLibreEvent>
-  remove?: WebObjectListenerOnObject<MapLibreEvent>
-  touchmove?: WebObjectListenerOnObject<MapTouchEvent>
-  movestart?: WebObjectListenerOnObject<
+  wheel: WebObjectListenerOnObject<MapWheelEvent>
+  resize: WebObjectListenerOnObject<MapLibreEvent>
+  remove: WebObjectListenerOnObject<MapLibreEvent>
+  touchmove: WebObjectListenerOnObject<MapTouchEvent>
+  movestart: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | WheelEvent | undefined>
   >
-  move?: WebObjectListenerOnObject<
+  move: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | WheelEvent | undefined>
   >
-  moveend?: WebObjectListenerOnObject<
+  moveend: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | WheelEvent | undefined>
   >
-  dragstart?: WebObjectListenerOnObject<
+  dragstart: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | undefined>
   >
-  drag?: WebObjectListenerOnObject<
+  drag: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | undefined>
   >
-  dragend?: WebObjectListenerOnObject<
+  dragend: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | undefined>
   >
-  zoomstart?: WebObjectListenerOnObject<
+  zoomstart: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | WheelEvent | undefined>
   >
-  zoom?: WebObjectListenerOnObject<
+  zoom: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | WheelEvent | undefined>
   >
-  zoomend?: WebObjectListenerOnObject<
+  zoomend: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | WheelEvent | undefined>
   >
-  rotatestart?: WebObjectListenerOnObject<
+  rotatestart: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | undefined>
   >
-  rotate?: WebObjectListenerOnObject<
+  rotate: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | undefined>
   >
-  rotateend?: WebObjectListenerOnObject<
+  rotateend: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | undefined>
   >
-  pitchstart?: WebObjectListenerOnObject<
+  pitchstart: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | undefined>
   >
-  pitch?: WebObjectListenerOnObject<
+  pitch: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | undefined>
   >
-  pitchend?: WebObjectListenerOnObject<
+  pitchend: WebObjectListenerOnObject<
     MapLibreEvent<MouseEvent | TouchEvent | undefined>
   >
-  boxzoomstart?: WebObjectListenerOnObject<MapLibreZoomEvent>
-  boxzoomend?: WebObjectListenerOnObject<MapLibreZoomEvent>
-  boxzoomcancel?: WebObjectListenerOnObject<MapLibreZoomEvent>
-  webglcontextlost?: WebObjectListenerOnObject<MapContextEvent>
-  webglcontextrestored?: WebObjectListenerOnObject<MapContextEvent>
-  load?: WebObjectListenerOnObject<MapLibreEvent>
-  render?: WebObjectListenerOnObject<MapLibreEvent>
-  idle?: WebObjectListenerOnObject<MapLibreEvent>
-  error?: WebObjectListenerOnObject<ErrorEvent>
-  data?: WebObjectListenerOnObject<MapDataEvent>
-  styledata?: WebObjectListenerOnObject<MapStyleDataEvent>
-  sourcedata?: WebObjectListenerOnObject<MapSourceDataEvent>
-  dataloading?: WebObjectListenerOnObject<MapDataEvent>
-  styledataloading?: WebObjectListenerOnObject<MapStyleDataEvent>
-  sourcedataloading?: WebObjectListenerOnObject<MapSourceDataEvent>
-  styleimagemissing?: WebObjectListenerOnObject<MapStyleImageMissingEvent>
-  dataabort?: WebObjectListenerOnObject<MapDataEvent>
-  sourcedataabort?: WebObjectListenerOnObject<MapSourceDataEvent>
+  boxzoomstart: WebObjectListenerOnObject<MapLibreZoomEvent>
+  boxzoomend: WebObjectListenerOnObject<MapLibreZoomEvent>
+  boxzoomcancel: WebObjectListenerOnObject<MapLibreZoomEvent>
+  webglcontextlost: WebObjectListenerOnObject<MapContextEvent>
+  webglcontextrestored: WebObjectListenerOnObject<MapContextEvent>
+  load: WebObjectListenerOnObject<MapLibreEvent>
+  render: WebObjectListenerOnObject<MapLibreEvent>
+  idle: WebObjectListenerOnObject<MapLibreEvent>
+  error: WebObjectListenerOnObject<ErrorEvent>
+  data: WebObjectListenerOnObject<MapDataEvent>
+  styledata: WebObjectListenerOnObject<MapStyleDataEvent>
+  sourcedata: WebObjectListenerOnObject<MapSourceDataEvent>
+  dataloading: WebObjectListenerOnObject<MapDataEvent>
+  styledataloading: WebObjectListenerOnObject<MapStyleDataEvent>
+  sourcedataloading: WebObjectListenerOnObject<MapSourceDataEvent>
+  styleimagemissing: WebObjectListenerOnObject<MapStyleImageMissingEvent>
+  dataabort: WebObjectListenerOnObject<MapDataEvent>
+  sourcedataabort: WebObjectListenerOnObject<MapSourceDataEvent>
 }

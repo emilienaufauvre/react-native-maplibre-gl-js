@@ -23,11 +23,39 @@ export default defineConfig([
     ignores: ['node_modules/', 'lib/'],
   },
   // Warning for missing JSDoc, except on:
-  // - arrow functions that are not components (PascalCase),
-  // - constructors, getters, and setters.
+  // - destructured props (e.g. {children}: props), deactivate the need to
+  //   documentate the children,
+  // - arrow functions that are components, deactivate @returns,
+  // - arrow functions that are components, deactivate @param,
+  // - arrow functions that are not components (PascalCase), constructors,
+  //   getters, and setters, deactivate the whole doc,
+  // - tags introduced by TypeDoc are enabled.
   jsdoc.configs['flat/recommended-typescript'],
   {
     rules: {
+      'jsdoc/check-param-names': ['warn', { checkDestructured: false }],
+      'jsdoc/require-returns': [
+        'warn',
+        {
+          contexts: [
+            'FunctionDeclaration',
+            'ClassDeclaration',
+            'MethodDefinition',
+            'VariableDeclaration > VariableDeclarator[id.name=/^[a-z_]/] > ArrowFunctionExpression',
+          ],
+        },
+      ],
+      'jsdoc/require-param': [
+        'warn',
+        {
+          contexts: [
+            'FunctionDeclaration',
+            'ClassDeclaration',
+            'MethodDefinition',
+            'VariableDeclaration > VariableDeclarator[id.name=/^[a-z_]/] > ArrowFunctionExpression',
+          ],
+        },
+      ],
       'jsdoc/require-jsdoc': [
         'warn',
         {
@@ -40,6 +68,22 @@ export default defineConfig([
           checkConstructors: false,
           checkGetters: false,
           checkSetters: false,
+        },
+      ],
+      'jsdoc/check-tag-names': [
+        'error',
+        {
+          definedTags: [
+            'group',
+            'groupDescription',
+            'showGroups',
+            'hideGroups',
+            'disableGroups',
+            'category',
+            'categoryDescription',
+            'packageDocumentation',
+            'defaultValue',
+          ],
         },
       ],
     },

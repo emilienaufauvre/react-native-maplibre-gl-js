@@ -11,15 +11,21 @@ import {
   isWebObjectListenerOnRN,
 } from 'react-native-maplibre-gl-js/communication/messages.utils'
 import { useStyles } from 'react-native-maplibre-gl-js/react-native/components/MapProvider/MapProvider.hooks'
-import { type FC, type ReactNode, useCallback, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import type {
   WebObjectListenerOnHTMLElement,
   WebObjectListenerOnMapLayer,
   WebObjectListenerOnObject,
   WebObjectListenerOnRN,
 } from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
+import type { MapProviderProps } from 'react-native-maplibre-gl-js/react-native/components/MapProvider/MapProvider.types'
 
-const MapProvider: FC<{ children?: ReactNode }> = ({ children }) => {
+/**
+ * Provide the main
+ * @param props -
+ * @group Components
+ */
+const MapProvider = ({ children }: MapProviderProps) => {
   // States.
   // - Global.
   const {

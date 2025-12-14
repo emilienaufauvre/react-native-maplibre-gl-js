@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { type PropsWithoutRef, useCallback, useEffect, useRef } from 'react'
 import useMapAtoms from 'react-native-maplibre-gl-js/react-native/hooks/atoms/useMapAtoms'
 import type { WebObjectType } from 'react-native-maplibre-gl-js/communication/messages.types'
-import type { PropsOfWebObject } from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
+import type { WebObjectProps } from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
 
 /**
  * Mount the web object once the React Native one is mounted.
@@ -9,8 +9,8 @@ import type { PropsOfWebObject } from 'react-native-maplibre-gl-js/react-native/
  * @param objectId - The ID of the web object that owns the method.
  * @param objectType - The type of the associated web object.
  */
-const useWebObjectMountOnLaunch = <Props extends PropsOfWebObject<any, any>>(
-  props: Props,
+const useWebObjectMountOnLaunch = <Props extends WebObjectProps<any, any>>(
+  props: PropsWithoutRef<Props>,
   objectId: string,
   objectType: WebObjectType,
 ) => {
