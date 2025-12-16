@@ -2,7 +2,12 @@
   "name": "react-native-maplibre-gl-js",
   "version": "0.0.0-development",
   "description": "MapLibre GL JS for React Native",
-  "files": ["lib", "package.json", "README.md", "LICENSE"],
+  "files": [
+    "lib",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {

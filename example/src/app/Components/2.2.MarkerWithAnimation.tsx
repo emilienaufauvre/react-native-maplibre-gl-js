@@ -80,7 +80,7 @@ const Screen = () => {
           },
           // If marker clicked, animate it to a new random position.
           click: {
-            elementListener: async (_) => {
+            elementListener: async (_: MouseEvent) => {
               const lngLat = await markerRef.current?.getLngLat()
               if (!lngLat) {
                 return

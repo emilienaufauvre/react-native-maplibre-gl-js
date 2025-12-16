@@ -30,18 +30,7 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "react-native-maplibre-gl-js": [
-        "./src/index"
-      ],
-      "react-native-maplibre-gl-js/communication/*": [
-        "src/communication/*"
-      ],
-      "react-native-maplibre-gl-js/react-native/*": [
-        "src/react-native/*"
-      ],
-      "react-native-maplibre-gl-js/web/*": [
-        "src/web/*"
-      ]
+      "@ml/*": ["src/*"]
     }
   }
 }

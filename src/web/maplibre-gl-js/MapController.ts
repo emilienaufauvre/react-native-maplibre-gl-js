@@ -1,20 +1,20 @@
 import maplibregl, { type MapLayerEventType } from 'maplibre-gl'
-import type ReactNativeBridge from 'react-native-maplibre-gl-js/web/bridge/ReactNativeBridge'
+import type ReactNativeBridge from '@ml/web/bridge/ReactNativeBridge'
 import {
   type HTMLElementDescriptor,
   type MessageFromRNToWeb,
   type WebObjectClass,
-} from 'react-native-maplibre-gl-js/communication/messages.types'
-import WebLogger from 'react-native-maplibre-gl-js/web/logger/web-logger'
+} from '@ml/communication/messages.types'
+import WebLogger from '@ml/web/logger/web-logger'
 import {
   isWebObjectListenerOnHTMLElement,
   isWebObjectListenerOnMapLayer,
   isWebObjectListenerOnObject,
-} from 'react-native-maplibre-gl-js/communication/messages.utils'
+} from '@ml/communication/messages.utils'
 import type {
   WebObjectListenerOnMapLayer,
   WebObjectListeners,
-} from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
+} from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
 
 /**
  * Manage the MapLibre GL JS map and its objects. Receive messages from the

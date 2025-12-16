@@ -3,7 +3,7 @@ import {
   type Marker as MapLibreMarker,
   type MarkerOptions as MapLibreMarkerOptions,
 } from 'maplibre-gl'
-import type { HTMLElementDescriptor } from 'react-native-maplibre-gl-js/communication/messages.types'
+import type { HTMLElementDescriptor } from '@ml/communication/messages.types'
 import type {
   WebObjectMethodsInferred,
   WebObjectOptionsInferred,
@@ -12,7 +12,7 @@ import type {
   WebObjectListenerOnRN,
   WebObjectProps,
   WebObjectRef,
-} from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
+} from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
 
 /**
  * TODO

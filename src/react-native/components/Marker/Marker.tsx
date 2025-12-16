@@ -1,8 +1,8 @@
-import createWebObjectAsComponent from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent'
+import createWebObjectAsComponent from '@ml/react-native/components-factory/createWebObjectAsComponent'
 import type {
   MarkerProps,
   MarkerRef,
-} from 'react-native-maplibre-gl-js/react-native/components/Marker/Marker.types'
+} from '@ml/react-native/components/Marker/Marker.types'
 
 /**
  * MapLibre Marker view.

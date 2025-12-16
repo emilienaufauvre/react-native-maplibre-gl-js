@@ -1,12 +1,12 @@
 import { forwardRef, useId } from 'react'
-import type { WebObjectType } from 'react-native-maplibre-gl-js/communication/messages.types'
+import type { WebObjectType } from '@ml/communication/messages.types'
 import type {
   WebObjectProps,
   WebObjectComponent,
   WebObjectRef,
-} from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
-import useWebObjectMountOnLaunch from 'react-native-maplibre-gl-js/react-native/components-factory/hooks/useWebObjectMountOnLaunch'
-import useWebObjectMethodsProxy from 'react-native-maplibre-gl-js/react-native/components-factory/hooks/useWebObjectMethodsProxy'
+} from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
+import useWebObjectMountOnLaunch from '@ml/react-native/components-factory/hooks/useWebObjectMountOnLaunch'
+import useWebObjectMethodsProxy from '@ml/react-native/components-factory/hooks/useWebObjectMethodsProxy'
 
 const createWebObjectAsComponent = <
   Ref extends WebObjectRef<any>,

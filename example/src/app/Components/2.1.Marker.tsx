@@ -4,6 +4,7 @@ import {
   Marker,
   type MarkerRef,
 } from 'react-native-maplibre-gl-js'
+import { Event } from 'maplibre-gl'
 import { useRef } from 'react'
 import { COORDINATE_DEFAULT_1, MAP_STYLE_URL_DEFAULT } from '../../constants'
 
@@ -64,10 +65,10 @@ const Screen = () => {
             rnListener: () => console.log('Marker unmounted'),
           },
           dragend: {
-            objectListener: (_) => console.log('Marker drag ended'),
+            objectListener: (_: Event) => console.log('Marker drag ended'),
           },
           click: {
-            elementListener: async (_) => {
+            elementListener: async (_: MouseEvent) => {
               const lngLat = await markerRef.current?.getLngLat()
               console.log('Marker clicked at', lngLat)
             },

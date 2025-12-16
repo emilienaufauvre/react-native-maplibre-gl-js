@@ -1,4 +1,4 @@
-import type { MessageFromWebToRN } from 'react-native-maplibre-gl-js/communication/messages.types'
+import type { MessageFromWebToRN } from '@ml/communication/messages.types'
 
 // TODO how to disable in prod?
 const __DEV__ = true

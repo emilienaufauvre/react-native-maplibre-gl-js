@@ -1,8 +1,8 @@
-import createWebObjectAsComponent from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent'
+import createWebObjectAsComponent from '@ml/react-native/components-factory/createWebObjectAsComponent'
 import type {
   MapRef,
   MapProps,
-} from 'react-native-maplibre-gl-js/react-native/components/Map/Map.types'
+} from '@ml/react-native/components/Map/Map.types'
 
 /**
  * MapLibre Map view.

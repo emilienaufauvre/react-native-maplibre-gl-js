@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
-import type { WebObjectType } from 'react-native-maplibre-gl-js/communication/messages.types'
+import type { WebObjectType } from '@ml/communication/messages.types'
 import type {
   WebObjectOptionsInferred,
   WebObjectProps,
   WebObjectListeners,
-} from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
+} from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
 
 export const useWebObjectOptionsUpdater = <
   Options extends WebObjectOptionsInferred<WebObjectType>,

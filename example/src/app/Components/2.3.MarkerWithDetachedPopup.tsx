@@ -88,7 +88,7 @@ const Screen = () => {
               markerRef.current?.setLngLat(COORDINATE_DEFAULT_1),
           },
           click: {
-            elementListener: async (_) => {
+            elementListener: async (_: MouseEvent) => {
               // Open the popup when on the marker coordinate when it is
               // clicked.
               const lngLat = await markerRef.current?.getLngLat()

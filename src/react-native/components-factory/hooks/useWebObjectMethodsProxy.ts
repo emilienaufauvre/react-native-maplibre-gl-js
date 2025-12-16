@@ -4,8 +4,8 @@ import {
   useImperativeHandle,
   useMemo,
 } from 'react'
-import useMapAtoms from 'react-native-maplibre-gl-js/react-native/hooks/atoms/useMapAtoms'
-import type { WebObjectRef } from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
+import useMapAtoms from '@ml/react-native/hooks/atoms/useMapAtoms'
+import type { WebObjectRef } from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
 
 /**
  * Create a proxy to call the methods of the corresponding web world object,

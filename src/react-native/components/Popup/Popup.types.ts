@@ -10,7 +10,7 @@ import type {
   WebObjectListenerOnRN,
   WebObjectProps,
   WebObjectRef,
-} from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
+} from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
 
 /**
  * TODO

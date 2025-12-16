@@ -3,7 +3,7 @@ import type {
   WebObjectListenerOnMapLayer,
   WebObjectListenerOnObject,
   WebObjectListenerOnRN,
-} from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
+} from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
 
 export const isWebObjectListenerOnRN = (
   listener?:

@@ -6,7 +6,7 @@ import type {
 import type {
   WebObjectOptionsInferred,
   WebObjectListeners,
-} from 'react-native-maplibre-gl-js/react-native/components-factory/createWebObjectAsComponent.types'
+} from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
 
 /**
  * The web objects that are supported by this library.
