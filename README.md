@@ -69,21 +69,23 @@ npm install react-native-maplibre-gl-js
 The minimal setup to render a MapLibre map in React Native.
 
 ```js
-import RNMapLibreGlJs from 'react-native-maplibre-gl-js';
+import { MapProvider, Map } from 'react-native-maplibre-gl-js';
 
-export const MyMapComponent = () => {
+const App = () => {
   return (
-    <RNMapLibreGlJs.MapProvider>
-      <RNMapLibreGlJs.Map
+    <MapProvider>
+      <Map
         options={{
           style: 'https://tiles.openfreemap.org/styles/liberty',
           center: [2.32, 48.86],
           zoom: 12,
         }}
       />
-    </RNMapLibreGlJs.MapProvider>
+    </MapProvider>
   )
 }
+
+export default App
 ```
 
 
