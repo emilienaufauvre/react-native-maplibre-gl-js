@@ -6,12 +6,15 @@ on:
     types:
       - completed
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch }}
-  cancel-in-progress: true
+permissions:
+  contents: write
 
 jobs:
   docs:
+    concurrency:
+      group: docs-${{ github.event.workflow_run.head_branch }}
+      cancel-in-progress: true
+
     runs-on: ubuntu-latest
 
     steps:
@@ -22,18 +25,18 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Generate docs
-        run: npm run docs:generate
+        run: npm run docs
 
       - name: Commit docs
         run: |
-          if git diff --quiet docs/api; then
+          git add -fA ./docs/api
+          if git diff --cached --quiet; then
             echo "No doc changes"
             exit 0
           fi
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add docs/api
-          git commit -m "docs(api): update TypeScript documentation"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "docs: update API reference documentation"
           git push
 
   release:
@@ -53,12 +56,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
+          ref: ${{ github.event.workflow_run.head_sha }}
           fetch-depth: 0
 
       - name: Setup
         uses: ./.github/actions/setup
 
-      - name: Build package (release)
+      - name: Build package
         run: yarn prepare
 
       - name: Semantic Release

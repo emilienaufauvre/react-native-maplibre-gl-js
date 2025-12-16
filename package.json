@@ -1,6 +1,6 @@
 {
   "name": "react-native-maplibre-gl-js",
-  "version": "0.1.0",
+  "version": "0.0.0-development",
   "description": "MapLibre GL JS for React Native",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
@@ -24,14 +24,13 @@
     "build:webview": "node scripts/build.js",
     "example": "yarn workspace react-native-maplibre-gl-js-example",
     "clean": "del-cli lib",
-    "prepare": "bob build",
-    "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "typecheck": "tsc",
     "release": "release-it --only-version",
     "test": "jest --passWithNoTests",
-    "semantic-release": "semantic-release",
-    "docs:check": "npm run docs:generate && git diff --exit-code docs/api",
-    "docs:generate": "typedoc"
+    "docs": "typedoc",
+    "prepare": "bob build",
+    "semantic-release": "semantic-release"
   },
   "keywords": [
     "react-native",
@@ -80,6 +79,31 @@
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
+    ]
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": true
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            { "path": "CHANGELOG.md", "label": "Changelog" },
+            { "path": "*.tgz", "label": "NPM package (.tgz)" }
+          ]
+        }
+      ]
     ]
   },
   "release-it": {
