@@ -2,24 +2,28 @@
   "name": "react-native-maplibre-gl-js",
   "version": "0.0.0-development",
   "description": "MapLibre GL JS for React Native",
+  "files": ["lib", "package.json", "README.md", "LICENSE"],
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
     ".": {
-      "source": "./src/index.ts",
       "types": "./lib/typescript/src/index.d.ts",
       "default": "./lib/module/index.js"
     },
+    "./react-native/*": {
+      "types": "./lib/typescript/src/react-native/*",
+      "default": "./lib/module/react-native/*"
+    },
+    "./web/*": {
+      "types": "./lib/typescript/src/web/*",
+      "default": "./lib/module/web/*"
+    },
+    "./communication/*": {
+      "types": "./lib/typescript/src/communication/*",
+      "default": "./lib/module/communication/*"
+    },
     "./package.json": "./package.json"
   },
-  "files": [
-    "src",
-    "lib",
-    "!**/.*",
-    "!**/*tests*",
-    "!**/*fixtures*",
-    "!**/*mocks*"
-  ],
   "scripts": {
     "build:webview": "node scripts/build.js",
     "example": "yarn workspace react-native-maplibre-gl-js-example",
@@ -99,7 +103,10 @@
         "@semantic-release/github",
         {
           "assets": [
-            { "path": "CHANGELOG.md", "label": "Changelog" }
+            {
+              "path": "CHANGELOG.md",
+              "label": "Changelog"
+            }
           ]
         }
       ]
