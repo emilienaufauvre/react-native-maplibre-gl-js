@@ -8,7 +8,7 @@
 
 > **WebObjectProps**\<`Options`, `Listeners`\> = \{ `options?`: `Partial`\<`Options`\>; `listeners?`: `Partial`\<`Listeners`\>; \}
 
-Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:30](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/e25cd1b6bd1f4ab67ba76836e1eb8134522e2f16/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L30)
+Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:30](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/acd18309aaa49606c0d1ba537b884684413acbc9/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L30)
 
 React Native props of a component (used to instantiate the web object in the
 web world).
@@ -26,7 +26,7 @@ web world).
 
 > `optional` **options**: `Partial`\<`Options`\>
 
-Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:37](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/e25cd1b6bd1f4ab67ba76836e1eb8134522e2f16/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L37)
+Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:37](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/acd18309aaa49606c0d1ba537b884684413acbc9/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L37)
 
 The MapLibreGL JS options used to mount the web object.
 
@@ -36,6 +36,6 @@ The MapLibreGL JS options used to mount the web object.
 
 > `optional` **listeners**: `Partial`\<`Listeners`\>
 
-Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:41](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/e25cd1b6bd1f4ab67ba76836e1eb8134522e2f16/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L41)
+Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:41](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/acd18309aaa49606c0d1ba537b884684413acbc9/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L41)
 
 The listeners to be set on the web object events.

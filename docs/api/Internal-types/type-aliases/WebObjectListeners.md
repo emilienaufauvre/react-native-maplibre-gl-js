@@ -8,7 +8,7 @@
 
 > **WebObjectListeners** = [`WebObjectListenersDefault`](WebObjectListenersDefault.md) & [`WebObjectListenersWeb`](WebObjectListenersWeb.md)
 
-Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:57](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/e25cd1b6bd1f4ab67ba76836e1eb8134522e2f16/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L57)
+Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:57](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/acd18309aaa49606c0d1ba537b884684413acbc9/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L57)
 
 Listeners that can be set by a component on the corresponding web object
 events.

@@ -8,7 +8,7 @@
 
 > **WebObjectMethodsInferred**\<`WebObject`, `ReplacedMethods`\> = `Merge`\<`AllMethodsToAsyncMethods`\<`Merge`\<`OnlyMethods`\<`WebObject`\>, `ReplacedMethods`\>\>, \{ `getId`: () => `string`; \}\>
 
-Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:150](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/e25cd1b6bd1f4ab67ba76836e1eb8134522e2f16/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L150)
+Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:150](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/acd18309aaa49606c0d1ba537b884684413acbc9/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L150)
 
 Methods that are used to call web object methods from the RN world.
 Filter out those methods that cannot be used from the RN world and replace

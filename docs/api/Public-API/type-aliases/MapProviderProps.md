@@ -8,7 +8,7 @@
 
 > **MapProviderProps** = \{ `children?`: `ReactNode`; \}
 
-Defined in: [react-native/components/MapProvider/MapProvider.types.ts:7](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/e25cd1b6bd1f4ab67ba76836e1eb8134522e2f16/src/react-native/components/MapProvider/MapProvider.types.ts#L7)
+Defined in: [react-native/components/MapProvider/MapProvider.types.ts:7](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/acd18309aaa49606c0d1ba537b884684413acbc9/src/react-native/components/MapProvider/MapProvider.types.ts#L7)
 
 TODO
 
@@ -18,6 +18,6 @@ TODO
 
 > `optional` **children**: `ReactNode`
 
-Defined in: [react-native/components/MapProvider/MapProvider.types.ts:11](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/e25cd1b6bd1f4ab67ba76836e1eb8134522e2f16/src/react-native/components/MapProvider/MapProvider.types.ts#L11)
+Defined in: [react-native/components/MapProvider/MapProvider.types.ts:11](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/acd18309aaa49606c0d1ba537b884684413acbc9/src/react-native/components/MapProvider/MapProvider.types.ts#L11)
 
 The map elements (e.g., Map) as direct children.
