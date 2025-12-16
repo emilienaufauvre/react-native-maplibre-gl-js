@@ -36,15 +36,15 @@ jobs:
       - name: Build package
         run: yarn prepare
 
-      - name: Ensure branch hasn't advanced since CI
-          run: |
-            git fetch origin main
-            REMOTE_SHA="$(git rev-parse origin/main)"
-            CI_SHA="${{ github.event.workflow_run.head_sha }}"
-            if [ "$REMOTE_SHA" != "$CI_SHA" ]; then
-              echo "main advanced since CI; skipping release."
-              exit 0
-            fi
+      - name: Ensure branch has not advanced since CI
+        run: |
+          git fetch origin main
+          REMOTE_SHA="$(git rev-parse origin/main)"
+          CI_SHA="${{ github.event.workflow_run.head_sha }}"
+          if [ "$REMOTE_SHA" != "$CI_SHA" ]; then
+            echo "main advanced since CI; skipping release."
+            exit 0
+          fi
 
       - name: Semantic Release
         env:
@@ -53,10 +53,12 @@ jobs:
         run: yarn semantic-release
 
   docs:
+    # Release must be executed first (even if it fails), then we always generate
+    # the docs, based on the last commit of the main branch, not the commit that
+    # triggered the release.
     needs: release
-
     if: >
-      always() &&  # Release must be executed first even if it fails.
+      always() &&
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.head_branch == 'main' &&
       github.event.workflow_run.event == 'push'
@@ -71,7 +73,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          # Force to be the last commit of the main branch (if another commit
+          # was pushed in between).
+          ref: main
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -89,5 +93,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit -m "docs: update API reference documentation"
-          git push
+          git push origin HEAD:main
 
