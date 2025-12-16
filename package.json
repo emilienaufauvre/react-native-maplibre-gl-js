@@ -99,8 +99,7 @@
         "@semantic-release/github",
         {
           "assets": [
-            { "path": "CHANGELOG.md", "label": "Changelog" },
-            { "path": "*.tgz", "label": "NPM package (.tgz)" }
+            { "path": "CHANGELOG.md", "label": "Changelog" }
           ]
         }
       ]
