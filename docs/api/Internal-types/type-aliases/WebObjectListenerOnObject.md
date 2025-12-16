@@ -8,7 +8,7 @@
 
 > **WebObjectListenerOnObject**\<`Event`\> = \{ `objectListener`: `Listener`\<`Event`\>; \}
 
-Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:96](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/acd18309aaa49606c0d1ba537b884684413acbc9/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L96)
+Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:96](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L96)
 
 A listener to be set on an event emitted by the web object.
 
@@ -24,4 +24,4 @@ A listener to be set on an event emitted by the web object.
 
 > **objectListener**: `Listener`\<`Event`\>
 
-Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:97](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/acd18309aaa49606c0d1ba537b884684413acbc9/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L97)
+Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:97](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L97)

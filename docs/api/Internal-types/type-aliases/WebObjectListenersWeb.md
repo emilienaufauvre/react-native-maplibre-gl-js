@@ -8,7 +8,7 @@
 
 > **WebObjectListenersWeb** = \{\[`eventName`: `string`\]: [`WebObjectListenerOnRN`](WebObjectListenerOnRN.md)\<`void`\> \| [`WebObjectListenerOnObject`](WebObjectListenerOnObject.md)\<`any`\> \| [`WebObjectListenerOnMapLayer`](WebObjectListenerOnMapLayer.md)\<`any`\> \| [`WebObjectListenerOnHTMLElement`](WebObjectListenerOnHTMLElement.md)\<`any`\>; \}
 
-Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:74](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/acd18309aaa49606c0d1ba537b884684413acbc9/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L74)
+Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:74](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L74)
 
 MapLibre GL JS events as defined in the official documentation of the object.
 

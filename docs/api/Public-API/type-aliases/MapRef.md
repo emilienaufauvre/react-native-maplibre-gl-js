@@ -8,6 +8,6 @@
 
 > **MapRef** = [`WebObjectRef`](../../Internal-types/type-aliases/WebObjectRef.md)\<`MapMethods`\>
 
-Defined in: [react-native/components/Map/Map.types.ts:31](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/acd18309aaa49606c0d1ba537b884684413acbc9/src/react-native/components/Map/Map.types.ts#L31)
+Defined in: [react-native/components/Map/Map.types.ts:31](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/Map/Map.types.ts#L31)
 
 A Map component ref.

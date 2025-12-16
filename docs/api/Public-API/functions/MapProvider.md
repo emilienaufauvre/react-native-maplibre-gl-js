@@ -8,7 +8,7 @@
 
 > **MapProvider**(`props`): `Element`
 
-Defined in: [react-native/components/MapProvider/MapProvider.tsx:28](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/acd18309aaa49606c0d1ba537b884684413acbc9/src/react-native/components/MapProvider/MapProvider.tsx#L28)
+Defined in: [react-native/components/MapProvider/MapProvider.tsx:28](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/MapProvider/MapProvider.tsx#L28)
 
 Provide the main
 
