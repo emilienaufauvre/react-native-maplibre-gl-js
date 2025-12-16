@@ -17,4 +17,5 @@ export default {
   useCodeBlocks: false,
   expandObjects: true,
   hideBreadcrumbs: false,
+  gitRevision: 'main',
 }
