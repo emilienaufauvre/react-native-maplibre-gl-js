@@ -13,6 +13,7 @@ concurrency:
 
 jobs:
   lint:
+    name: Lint files
     runs-on: ubuntu-latest
 
     steps:
@@ -31,6 +32,7 @@ jobs:
         run: yarn typecheck
 
   test:
+    name: Run tests
     needs: lint
     runs-on: ubuntu-latest
 
@@ -47,6 +49,7 @@ jobs:
         run: yarn test --maxWorkers=2 --coverage
 
   docs:
+    name: Check docs generation
     needs: test
     runs-on: ubuntu-latest
 
@@ -63,6 +66,7 @@ jobs:
         run: npm run docs
 
   build:
+    name: Check release generation
     needs: docs
     runs-on: ubuntu-latest
 

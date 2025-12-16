@@ -6,11 +6,9 @@ on:
     types:
       - completed
 
-permissions:
-  contents: write
-
 jobs:
   release:
+    name: Generate release
     if: >
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.head_branch == 'main' &&
@@ -18,8 +16,6 @@ jobs:
 
     permissions:
       contents: write
-      issues: write
-      pull-requests: write
 
     runs-on: ubuntu-latest
 
@@ -28,6 +24,8 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
+          # Fetch all tags and branches, so semantic-release can determine the
+          # next version number.
           fetch-depth: 0
 
       - name: Setup
@@ -46,13 +44,14 @@ jobs:
             exit 0
           fi
 
-      - name: Semantic Release
+      - name: Semantic release (github + npmjs)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: yarn semantic-release
 
   docs:
+    name: Generate docs
     # Release must be executed first (even if it fails), then we always generate
     # the docs, based on the last commit of the main branch, not the commit that
     # triggered the release.
@@ -66,6 +65,9 @@ jobs:
     concurrency:
       group: docs-${{ github.event.workflow_run.head_branch }}
       cancel-in-progress: true
+
+    permissions:
+      contents: write
 
     runs-on: ubuntu-latest
 
