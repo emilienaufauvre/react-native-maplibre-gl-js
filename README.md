@@ -58,8 +58,6 @@
 
 ## Installation
 
-** TODO not available on npm yet **
-
 ```sh
 npm install react-native-maplibre-gl-js
 ```
