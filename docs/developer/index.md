@@ -74,21 +74,66 @@ The following terms are used throughout the documentation and codebase.
 
 ## Current status
 
+Here is a status of the MapLibre GL JS classes implemented in this library.
+
+| Symbol | Definition             |
+|--------|------------------------|
+| 🖼️    | Frame                  |
+| 🫟     | .addTo(map) view       |
+| 🧩     | map.addSource(..) view |
+| 🕹     | Control view           |
+| 👆     | Gesture handler        |
+| 📦     | Data container         |
+
+| Implemented class | Type |
+|-------------------|------|
+| Map               | 🖼️  |
+| Marker            | 🫟   |
+| Popup             | 🫟   |
+
+| To be implemented class          | Type |
+|----------------------------------|------|
+| AttributionControl               | 🕹️  |
+| CanvasSource                     | 🧩   |
+| GeoJSONSource                    | 🧩   |
+| GlobeControl                     | 🕹️  |
+| GlobeControl                     | 🕹️  |
+| ImageSource                      | 🧩   |
+| LogoControl                      | 🕹️  |
+| NavigationControl                | 🕹️  |
+| RasterDEMTileSource              | 🧩   |
+| RasterTileSource                 | 🧩   |
+| ScaleControl                     | 🕹️  |
+| TerrainControl                   | 🕹️  |
+| VectorTileSource                 | 🧩   |
+| VideoSource                      | 🧩   |
+
 The following table lists the MapLibre GL JS classes that are not implemented
-because they are not relevant in a React Native context.
+because they are not relevant in the React Native context.
 
-| Unsupported class | Reason                                                                 |
-|-------------------|------------------------------------------------------------------------|
-| Hash              | Update Browser URL but the browser URL of this library is not visible. |
-
-The following table lists the MapLibre GL JS classes that are implemented yet.
-
-| To be implemented class |
-|-------------------------|
-| VectorTileSource        |
-| RasterTileSource        |
-| RasterDEMTileSource     |
-| GeoJSONSource           |
-| ImageSource             |
-| VideoSource             |
-| **TODO controls**       |
+| Unsupported class                | Type | Reason                                           |
+|----------------------------------|------|--------------------------------------------------|
+| AJAXError                        | 📦   | No need to instantiated to use the public API.   |
+| BoxZoomHandler                   | 👆   | No need to instantiated to use the public API.   |
+| CooperativeGesturesHandler       | 👆   | No need to instantiated to use the public API.   |
+| DoubleClickZoomHandler           | 👆   | No need to instantiated to use the public API.   |
+| DragPanHandler                   | 👆   | No need to instantiated to use the public API.   |
+| DragRotateHandler                | 👆   | No need to instantiated to use the public API.   |
+| EdgeInsets                       | 📦   | No need to instantiated to use the public API.   |
+| Event                            | 📦   | No need to instantiated to use the public API.   |
+| Evented                          | 📦   | No need to instantiated to use the public API.   |
+| FullscreenControl                | 🕹   | No need to control fullscreen.                   |
+| Hash                             | 🫟   | Browser URL is not visible in WebView.           |
+| KeyboardHandler                  | 👆   | No need to instantiated to use the public API.   |
+| LngLat                           | 📦   | LngLatLike type is enough to provide coordinate. |
+| LngLatBounds                     | 📦   | No need to instantiated to use the public API.   |
+| MapMouseEvent                    | 📦   | No need to instantiated to use the public API.   |
+| MapTouchEvent                    | 📦   | No need to instantiated to use the public API.   |
+| MapWheelEvent                    | 📦   | No need to instantiated to use the public API.   |
+| MercatorCoordinate               | 📦   | No need to instantiated to use the public API.   |
+| ScrollZoomHandler                | 👆   | No need to instantiated to use the public API.   |
+| Style                            | 📦   | No need to instantiated to use the public API.   |
+| TwoFingersTouchPitchHandler      | 👆   | No need to instantiated to use the public API.   |
+| TwoFingersTouchRotateHandler     | 👆   | No need to instantiated to use the public API.   |
+| TwoFingersTouchZoomHandler       | 👆   | No need to instantiated to use the public API.   |
+| TwoFingersTouchZoomRotateHandler | 👆   | No need to instantiated to use the public API.   |
