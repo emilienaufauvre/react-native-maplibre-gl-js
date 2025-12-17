@@ -38,6 +38,21 @@
 > [!IMPORTANT]
 > This project **is not** affiliated with, endorsed by, or sponsored by MapLibre.
 
+## Table of contents
+
+<!-- TOC -->
+  * [Table of contents](#table-of-contents)
+  * [Supported platforms](#supported-platforms)
+  * [Documentation](#documentation)
+  * [Installation](#installation)
+  * [Getting started](#getting-started)
+  * [Design rationale](#design-rationale)
+    * [Existing React Native map solutions](#existing-react-native-map-solutions)
+    * [Architectural approach](#architectural-approach)
+  * [Contributing](#contributing)
+  * [Credits](#credits)
+  * [License](#license)
+<!-- TOC -->
 
 ## Supported platforms
 
