@@ -8,7 +8,7 @@
 
 > `const` **Popup**: [`WebObjectComponent`](../../Internal-types/type-aliases/WebObjectComponent.md)\<[`PopupRef`](../type-aliases/PopupRef.md), [`PopupProps`](../type-aliases/PopupProps.md)\>
 
-Defined in: [react-native/components/Popup/Popup.tsx:12](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/Popup/Popup.tsx#L12)
+Defined in: [react-native/components/Popup/Popup.tsx:9](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/Popup/Popup.tsx#L9)
 
 MapLibre Popup view.
 
