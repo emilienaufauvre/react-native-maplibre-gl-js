@@ -23193,6 +23193,9 @@ uniform mat4 u_projection_matrix;
     }
   });
 
+  // src/web/maplibre-gl-js/MapController.ts
+  var import_maplibre_gl = __toESM(require_maplibre_gl());
+
   // src/web/logger/web-logger.ts
   var __DEV__ = true;
   var createLoggerMethod = (level) => {
@@ -23220,38 +23223,6 @@ uniform mat4 u_projection_matrix;
     error: createLoggerMethod("error")
   };
   var web_logger_default = WebLogger;
-
-  // src/web/bridge/ReactNativeBridge.ts
-  var ReactNativeBridge = class {
-    #mapController;
-    constructor() {
-      const messageHandler = (raw) => {
-        try {
-          web_logger_default.debug(this.constructor.name, raw?.data);
-          const data = typeof raw?.data === "string" ? raw.data : raw;
-          const message = JSON.parse(data);
-          this.mapController?.handleMessage(message);
-        } catch (error) {
-          web_logger_default.error(this.constructor.name, error.message);
-        }
-      };
-      document.addEventListener?.("message", messageHandler);
-      window.addEventListener?.("message", messageHandler);
-    }
-    set mapController(controller) {
-      this.#mapController = controller;
-    }
-    get mapController() {
-      return this.#mapController;
-    }
-    postMessage(message) {
-      web_logger_default.debug(this.postMessage.name, message);
-      window.ReactNativeWebView?.postMessage(JSON.stringify(message));
-    }
-  };
-
-  // src/web/maplibre-gl-js/MapController.ts
-  var import_maplibre_gl = __toESM(require_maplibre_gl());
 
   // src/communication/messages.utils.ts
   var isWebObjectListenerOnObject = (listener) => {
@@ -23503,6 +23474,35 @@ uniform mat4 u_projection_matrix;
         }
       });
     };
+  };
+
+  // src/web/bridge/ReactNativeBridge.ts
+  var ReactNativeBridge = class {
+    #mapController;
+    constructor() {
+      const messageHandler = (raw) => {
+        try {
+          web_logger_default.debug(this.constructor.name, raw?.data);
+          const data = typeof raw?.data === "string" ? raw.data : raw;
+          const message = JSON.parse(data);
+          this.mapController?.handleMessage(message);
+        } catch (error) {
+          web_logger_default.error(this.constructor.name, error.message);
+        }
+      };
+      document.addEventListener?.("message", messageHandler);
+      window.addEventListener?.("message", messageHandler);
+    }
+    set mapController(controller) {
+      this.#mapController = controller;
+    }
+    get mapController() {
+      return this.#mapController;
+    }
+    postMessage(message) {
+      web_logger_default.debug(this.postMessage.name, message);
+      window.ReactNativeWebView?.postMessage(JSON.stringify(message));
+    }
   };
 
   // src/web/generated/index.ts

@@ -22,7 +22,7 @@ import type {
   WebObjectListenerOnRN,
   WebObjectProps,
   WebObjectRef,
-} from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
+} from '../../components-factory/createWebObjectAsComponent.types'
 
 /**
  * A Map component ref.

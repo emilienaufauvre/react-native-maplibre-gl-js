@@ -15,18 +15,6 @@
       "types": "./lib/typescript/src/index.d.ts",
       "default": "./lib/module/index.js"
     },
-    "./react-native/*": {
-      "types": "./lib/typescript/src/react-native/*",
-      "default": "./lib/module/react-native/*"
-    },
-    "./web/*": {
-      "types": "./lib/typescript/src/web/*",
-      "default": "./lib/module/web/*"
-    },
-    "./communication/*": {
-      "types": "./lib/typescript/src/communication/*",
-      "default": "./lib/module/communication/*"
-    },
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -117,25 +105,6 @@
       ]
     ]
   },
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
-    },
-    "npm": {
-      "publish": true
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it/conventional-changelog": {
-        "preset": {
-          "name": "angular"
-        }
-      }
-    }
-  },
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
@@ -149,7 +118,6 @@
     "tools": [
       "eslint",
       "lefthook",
-      "release-it",
       "jest"
     ],
     "version": "0.55.1"

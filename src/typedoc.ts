@@ -17,7 +17,7 @@ import type {
   WebObjectListenerOnHTMLElement,
   WebObjectOptionsInferred,
   WebObjectMethodsInferred,
-} from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
+} from './react-native/components-factory/createWebObjectAsComponent.types'
 
 export type {
   WebObjectComponent,

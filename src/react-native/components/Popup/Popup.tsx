@@ -1,8 +1,5 @@
-import type {
-  PopupProps,
-  PopupRef,
-} from '@ml/react-native/components/Popup/Popup.types'
-import createWebObjectAsComponent from '@ml/react-native/components-factory/createWebObjectAsComponent'
+import createWebObjectAsComponent from '../../components-factory/createWebObjectAsComponent'
+import type { PopupProps, PopupRef } from './Popup.types'
 
 /**
  * MapLibre Popup view.

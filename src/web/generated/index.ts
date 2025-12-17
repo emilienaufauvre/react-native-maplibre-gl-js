@@ -1,6 +1,6 @@
 import 'maplibre-gl/dist/maplibre-gl.css'
-import ReactNativeBridge from '@ml/web/bridge/ReactNativeBridge'
-import MapController from '@ml/web/maplibre-gl-js/MapController'
+import MapController from '../maplibre-gl-js/MapController'
+import ReactNativeBridge from '../bridge/ReactNativeBridge'
 
 /**
  * Main entry point for the web app to be bundled. Initialize the map controller

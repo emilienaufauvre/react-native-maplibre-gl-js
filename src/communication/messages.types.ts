@@ -4,9 +4,9 @@ import type {
   Popup as MapLibrePopup,
 } from 'maplibre-gl'
 import type {
-  WebObjectOptionsInferred,
   WebObjectListeners,
-} from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
+  WebObjectOptionsInferred,
+} from '../react-native/components-factory/createWebObjectAsComponent.types'
 
 /**
  * The web objects that are supported by this library.

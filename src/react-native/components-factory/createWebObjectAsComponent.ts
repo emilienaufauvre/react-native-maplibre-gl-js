@@ -1,12 +1,12 @@
 import { forwardRef, useId } from 'react'
-import type { WebObjectType } from '@ml/communication/messages.types'
 import type {
-  WebObjectProps,
   WebObjectComponent,
+  WebObjectProps,
   WebObjectRef,
-} from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
-import useWebObjectMountOnLaunch from '@ml/react-native/components-factory/hooks/useWebObjectMountOnLaunch'
-import useWebObjectMethodsProxy from '@ml/react-native/components-factory/hooks/useWebObjectMethodsProxy'
+} from './createWebObjectAsComponent.types'
+import type { WebObjectType } from '../../communication/messages.types'
+import useWebObjectMountOnLaunch from './hooks/useWebObjectMountOnLaunch'
+import useWebObjectMethodsProxy from './hooks/useWebObjectMethodsProxy'
 
 const createWebObjectAsComponent = <
   Ref extends WebObjectRef<any>,

@@ -1,24 +1,24 @@
 import { View } from 'react-native'
 import { WebView, type WebViewMessageEvent } from 'react-native-webview'
-import { WEBVIEW_STATIC_HTML } from '@ml/web/generated/webview_static_html'
-import type { MessageFromWebToRN } from '@ml/communication/messages.types'
-import RNLogger from '@ml/react-native/logger/rn-logger'
-import useMapAtoms from '@ml/react-native/hooks/atoms/useMapAtoms'
+import { WEBVIEW_STATIC_HTML } from '../../../web/generated/webview_static_html'
+import type { MessageFromWebToRN } from '../../../communication/messages.types'
+import RNLogger from '../../logger/rn-logger'
+import useMapAtoms from '../../hooks/atoms/useMapAtoms'
 import {
   isWebObjectListenerOnHTMLElement,
   isWebObjectListenerOnMapLayer,
   isWebObjectListenerOnObject,
   isWebObjectListenerOnRN,
-} from '@ml/communication/messages.utils'
-import { useStyles } from '@ml/react-native/components/MapProvider/MapProvider.hooks'
+} from '../../../communication/messages.utils'
+import { useStyles } from './MapProvider.hooks'
 import { useCallback, useEffect } from 'react'
 import type {
   WebObjectListenerOnHTMLElement,
   WebObjectListenerOnMapLayer,
   WebObjectListenerOnObject,
   WebObjectListenerOnRN,
-} from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
-import type { MapProviderProps } from '@ml/react-native/components/MapProvider/MapProvider.types'
+} from '../../components-factory/createWebObjectAsComponent.types'
+import type { MapProviderProps } from './MapProvider.types'
 
 /**
  * Provide the main

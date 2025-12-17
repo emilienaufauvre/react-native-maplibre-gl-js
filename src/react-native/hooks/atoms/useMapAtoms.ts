@@ -4,9 +4,9 @@ import { useAtom } from 'jotai'
 import type {
   MessageFromRNToWeb,
   WebObjectId,
-} from '@ml/communication/messages.types'
-import { stableStringify } from '@ml/react-native/hooks/atoms/useMapAtoms.utils'
-import type { WebObjectListeners } from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
+} from '../../../communication/messages.types'
+import type { WebObjectListeners } from '../../components-factory/createWebObjectAsComponent.types'
+import { stableStringify } from './useMapAtoms.utils'
 
 /**
  * The WebView used to render MapLibre GL JS views (the web world).

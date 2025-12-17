@@ -1,9 +1,9 @@
-import type MapController from '@ml/web/maplibre-gl-js/MapController'
+import type MapController from '../maplibre-gl-js/MapController'
+import WebLogger from '../logger/web-logger'
 import type {
   MessageFromRNToWeb,
   MessageFromWebToRN,
-} from '@ml/communication/messages.types'
-import WebLogger from '@ml/web/logger/web-logger'
+} from '../../communication/messages.types'
 
 /**
  * From the web world, manage bidirectional communication with the React Native

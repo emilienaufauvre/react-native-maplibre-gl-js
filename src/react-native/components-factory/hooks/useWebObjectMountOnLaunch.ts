@@ -1,7 +1,7 @@
 import { type PropsWithoutRef, useCallback, useEffect, useRef } from 'react'
-import useMapAtoms from '@ml/react-native/hooks/atoms/useMapAtoms'
-import type { WebObjectType } from '@ml/communication/messages.types'
-import type { WebObjectProps } from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
+import type { WebObjectProps } from '../createWebObjectAsComponent.types'
+import type { WebObjectType } from '../../../communication/messages.types'
+import useMapAtoms from '../../hooks/atoms/useMapAtoms'
 
 /**
  * Mount the web object once the React Native one is mounted.

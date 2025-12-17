@@ -14988,7 +14988,6 @@ __metadata:
     react-dom: "npm:19.1.0"
     react-native: "npm:0.81.5"
     react-native-builder-bob: "npm:^0.40.16"
-    react-native-maplibre-gl-js: "npm:1.0.1"
     react-native-monorepo-config: "npm:^0.1.9"
     react-native-reanimated: "npm:~4.1.1"
     react-native-safe-area-context: "npm:~5.6.0"
@@ -14997,21 +14996,6 @@ __metadata:
     react-native-worklets: "npm:0.5.1"
   languageName: unknown
   linkType: soft
-
-"react-native-maplibre-gl-js@npm:1.0.1":
-  version: 1.0.1
-  resolution: "react-native-maplibre-gl-js@npm:1.0.1"
-  dependencies:
-    jotai: "npm:^2.15.2"
-    maplibre-gl: "npm:^5.14.0"
-    react-native-logs: "npm:^5.5.0"
-    react-native-webview: "npm:^13.16.0"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10c0/9ebde94415ff53b19918ffc79b5dd40cbce22d8333ea3000ab67f3108f9150f5f71ed07fcd7b20c5a278945b9290d1f9ce3150a0e251d725c3008a793fce40cc
-  languageName: node
-  linkType: hard
 
 "react-native-maplibre-gl-js@workspace:.":
   version: 0.0.0-use.local

@@ -30,7 +30,13 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@ml/*": ["src/*"]
+      // This alias is only for the example app. It simulates that we are in the
+      // final package when we are developing the package and testing in
+      // parallel with the app. It should not be used in src/ to simply paths
+      // because bob utility that builds the final package supports only
+      // relative paths.
+      // https://github.com/callstack/react-native-builder-bob/discussions/494
+      "react-native-maplibre-gl-js": ["src/index.ts"]
     }
   }
 }

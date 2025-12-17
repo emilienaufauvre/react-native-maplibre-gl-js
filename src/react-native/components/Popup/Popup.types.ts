@@ -4,13 +4,13 @@ import {
   type PopupOptions as MapLibrePopupOptions,
 } from 'maplibre-gl'
 import type {
-  WebObjectMethodsInferred,
-  WebObjectOptionsInferred,
   WebObjectListenerOnObject,
   WebObjectListenerOnRN,
+  WebObjectMethodsInferred,
+  WebObjectOptionsInferred,
   WebObjectProps,
   WebObjectRef,
-} from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
+} from '../../components-factory/createWebObjectAsComponent.types'
 
 /**
  * TODO

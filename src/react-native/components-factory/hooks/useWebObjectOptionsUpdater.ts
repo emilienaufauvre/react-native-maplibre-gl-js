@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
-import type { WebObjectType } from '@ml/communication/messages.types'
 import type {
+  WebObjectListeners,
   WebObjectOptionsInferred,
   WebObjectProps,
-  WebObjectListeners,
-} from '@ml/react-native/components-factory/createWebObjectAsComponent.types'
+} from '../createWebObjectAsComponent.types'
+import type { WebObjectType } from '../../../communication/messages.types'
 
 export const useWebObjectOptionsUpdater = <
   Options extends WebObjectOptionsInferred<WebObjectType>,

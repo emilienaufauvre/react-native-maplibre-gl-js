@@ -1,6 +1,6 @@
 {
   "name": "react-native-maplibre-gl-js-example",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
@@ -19,7 +19,6 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
-    "react-native-maplibre-gl-js": "1.0.1",
     "react-native-reanimated": "~4.1.1",
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0",

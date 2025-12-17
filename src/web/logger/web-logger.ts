@@ -1,6 +1,6 @@
-import type { MessageFromWebToRN } from '@ml/communication/messages.types'
-
 // TODO how to disable in prod?
+import type { MessageFromWebToRN } from '../../communication/messages.types'
+
 const __DEV__ = true
 
 const createLoggerMethod = (level: 'debug' | 'info' | 'error') => {
