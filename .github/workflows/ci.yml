@@ -63,7 +63,10 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Check docs generation
-        run: npm run docs
+        run: \
+          npm run docs:typedoc
+          npm run docs:readme-toc
+          npm run docs:readme-examples
 
   build:
     name: Check release generation
@@ -80,4 +83,4 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Check package build
-        run: yarn prepare
+        run: yarn release:build

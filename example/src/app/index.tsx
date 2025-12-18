@@ -36,19 +36,24 @@ const Index = () => {
           style={styles.section}
         >
           <Text style={styles.sectionTitle}>{folder}</Text>
-          {screens.map((screen) => (
-            <Pressable
-              key={screen.path}
-              style={styles.item}
-              onPress={() => handlePress(screen.path)}
-            >
-              <Text style={styles.itemText}>{screen.name}</Text>
-              <MaterialCommunityIcons
-                name={'chevron-right'}
-                size={28}
-              />
-            </Pressable>
-          ))}
+          {screens.map((screen) => {
+            return (
+              <Pressable
+                key={screen.path}
+                style={styles.item}
+                onPress={() => handlePress(screen.path)}
+              >
+                <View style={styles.itemTextWrapper}>
+                  <Text style={styles.itemIndex}>{screen.index}</Text>
+                  <Text style={styles.itemTitle}>{screen.title}</Text>
+                </View>
+                <MaterialCommunityIcons
+                  name={'chevron-right'}
+                  size={28}
+                />
+              </Pressable>
+            )
+          })}
         </View>
       ))}
     </ScrollView>
@@ -83,14 +88,25 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: '#E5E5E5',
   },
-  itemText: {
+  itemTextWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  itemIndex: {
+    fontSize: 14,
+  },
+  itemTitle: {
     fontSize: 16,
+    flex: 1,
   },
 })
 
 type RouteDef = {
   folder: string
-  name: string
+  index: string
+  title: string
   path: string
 }
 
@@ -102,12 +118,9 @@ const pretty = (value: string): string => {
     value
       // Remove .tsx/ts.
       .replace(/[-_]/g, ' ')
-      // Add space after numbers at the start: 1.SomeName → 1. SomeName.
-      .replace(/^(\d+)\s*\./, '$1. ')
-      // Separate camelCase: someName → some Name.
+      // Separate camelCase and kebab case: someName/some-Name → some Name.
       .replace(/([a-z])([A-Z])/g, '$1 $2')
       // Capitalize the first letter of each word.
-      .replace(/\b\w/g, (c) => c.toUpperCase())
       .trim()
   )
 }
@@ -122,15 +135,20 @@ const routes: RouteDef[] = ctx
     const folder: string = parts.at(0) ?? 'General'
     const name: string =
       parts.length > 1 ? parts.slice(1).join('/') : (parts[0] ?? '')
+    const [index, title] = ((t) => [
+      t.slice(0, t.indexOf(' ')),
+      t.slice(t.indexOf(' ') + 1),
+    ])(pretty(name))
     return {
       folder: pretty(folder),
-      name: pretty(name),
+      index,
+      title,
       path: `/${clean}`,
     }
   })
   .sort(
     (a: RouteDef, b: RouteDef) =>
-      a.folder.localeCompare(b.folder) || a.name.localeCompare(b.name),
+      a.folder.localeCompare(b.folder) || a.index.localeCompare(b.index),
   )
 
 const groupByFolder = (items: RouteDef[]): Record<string, RouteDef[]> =>

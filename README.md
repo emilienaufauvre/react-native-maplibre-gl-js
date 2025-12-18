@@ -38,37 +38,22 @@
 > [!IMPORTANT]
 > This project **is not** affiliated with, endorsed by, or sponsored by MapLibre.
 
+
 ## Table of contents
 
-<!-- TOC -->
-  * [Table of contents](#table-of-contents)
-  * [Supported platforms](#supported-platforms)
-  * [Documentation](#documentation)
-  * [Installation](#installation)
-  * [Getting started](#getting-started)
-  * [Design rationale](#design-rationale)
-    * [Existing React Native map solutions](#existing-react-native-map-solutions)
-    * [Architectural approach](#architectural-approach)
-  * [Contributing](#contributing)
-  * [Credits](#credits)
-  * [License](#license)
-<!-- TOC -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 ## Supported platforms
 
 | Platform | Status |
-|--------|--------|
-| iOS | ✅ |
-| Android | ✅ |
-| Web | ❌ |
-
-## Documentation
-
-📘 [**API Reference** – Complete TypeScript API documentation.](./docs/api/index.md)
-
-🧪 [**Examples** – Real-world examples showcasing common use cases.](./docs/examples/index.md)
-
-📚 [**For library developers** – Internal architecture, glossary and design decisions.](./docs/developer/index.md)
+|----------|--------|
+| iOS      | ✅      |
+| Android  | ✅      |
+| Web      | ❌      |
 
 
 ## Installation
@@ -77,7 +62,45 @@
 npm install react-native-maplibre-gl-js
 ```
 
-## Getting started
+## 📚 Documentation
+
+[**API Reference** – Complete TypeScript API documentation.](./docs/api/index.md)
+
+[**For library developers** – Internal architecture, glossary and design decisions.](./docs/developer/index.md)
+
+
+## 🧪 Examples
+
+Several real-world usage scenarios are available, you can explore them in two ways:
+
+- [**Browse the source code**](./example/src/app) to understand how each feature is implemented.
+- [**Run the examples as an Expo app**](./CONTRIBUTING.md#scripts) to interact with them directly.
+
+<!-- EXAMPLES-LIST:START -->
+
+### 1. Map
+
+- [`1.1. Component basis`](./example/src/app/1.-Map/1.1.-Component-basis.tsx)
+- [`1.2. Create a camera animation`](./example/src/app/1.-Map/1.2.-Create-a-camera-animation.tsx)
+- [`1.3. Use the globe projection`](./example/src/app/1.-Map/1.3.-Use-the-globe-projection.tsx)
+- [`1.4. Use a raster tile source without a component`](./example/src/app/1.-Map/1.4.-Use-a-raster-tile-source-without-a-component.tsx)
+
+### 2. Marker
+
+- [`2.1. Component basis`](./example/src/app/2.-Marker/2.1.-Component-basis.tsx)
+- [`2.2. Animate the coordinate`](./example/src/app/2.-Marker/2.2.-Animate-the-coordinate.tsx)
+- [`2.3. Use an detached popup`](./example/src/app/2.-Marker/2.3.-Use-an-detached-popup.tsx)
+- [`2.4. Use an attached popup`](./example/src/app/2.-Marker/2.4.-Use-an-attached-popup.tsx)
+- [`2.5. Propagates the events to a parent component`](./example/src/app/2.-Marker/2.5.-Propagates-the-events-to-a-parent-component.tsx)
+
+### 3. Popup
+
+- [`3.1. Component basis`](./example/src/app/3.-Popup/3.1.-Component-basis.tsx)
+
+<!-- EXAMPLES-LIST:END -->
+
+
+## 🏁 Getting started
 
 The minimal setup to render a MapLibre map in React Native.
 
@@ -102,7 +125,7 @@ export default App
 ```
 
 
-## Design rationale
+## 📝 Design rationale
 
 Explain why I decided to build a new React Native map library instead of using
 an existing one.
@@ -114,11 +137,11 @@ that can be used in React Native. Each has its strengths, and credit goes to
 their contributors. Still, I have highlighted what I consider to be their main
 drawbacks.
 
-| Library                     | Notes                                                                  | Main Drawbacks                                                                                                                                                                                                                                                                                                                                                       |
-|-----------------------------|------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `react-native-maps` / `expo-maps` | Overlay custom tiles on Apple Maps (iOS) or Google Maps (iOS/Android). | - On tile loading, the map below (Google Maps or Apple Maps) is visible.<br/>- If the map provider is Google Maps (mandatory on the Android platform), an API key is needed to use Google Maps SDK, and therefore its use is billed.                                                                                                                                      |
-| `@rnmapbox/maps`             | -                                                                      | - Dependence on Mapbox choices.<br>- On the latest versions, an API key is required (at least on the Android side that drops the MapLibre SDK support), and therefore its use is billed.<br>- To render animated markers or markers with dynamic content and developed visual styles, the use of native views is necessary, and this greatly slows down the application. |
-| `maplibre-react-native`      | Open source fork of MapBox.                                            | - Being an open source fork of MapBox, the library is years behind (1000+ commits to date) and lacks many features and bug fixes.<br>- The same performance issue with native views as `@rnmapbox` is also present.                                                                                                                                                  |
+| Library                           | Notes                                                                  | Main Drawbacks                                                                                                                                                                                                                                                                                                                                                           |
+|-----------------------------------|------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `react-native-maps` / `expo-maps` | Overlay custom tiles on Apple Maps (iOS) or Google Maps (iOS/Android). | - On tile loading, the map below (Google Maps or Apple Maps) is visible.<br/>- If the map provider is Google Maps (mandatory on the Android platform), an API key is needed to use Google Maps SDK, and therefore its use is billed.                                                                                                                                     |
+| `@rnmapbox/maps`                  | -                                                                      | - Dependence on Mapbox choices.<br>- On the latest versions, an API key is required (at least on the Android side that drops the MapLibre SDK support), and therefore its use is billed.<br>- To render animated markers or markers with dynamic content and developed visual styles, the use of native views is necessary, and this greatly slows down the application. |
+| `maplibre-react-native`           | Open source fork of MapBox.                                            | - Being an open source fork of MapBox, the library is years behind (1000+ commits to date) and lacks many features and bug fixes.<br>- The same performance issue with native views as `@rnmapbox` is also present.                                                                                                                                                      |
 
 ### Architectural approach
 
@@ -135,9 +158,9 @@ libraries, while enabling more features.
 I outline two solutions in this category below, along with the issues they still
 carry. This library implements the second approach.
 
-| Approach                                      | Description                                                                                   | Main Drawbacks                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-|-----------------------------------------------|-----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Remote WebView-based map                      | Host a map on a web page and access it through a WebView.                                          | - Requires additional infrastructure.<br>- Very sensitive to network latency, and in general, a degraded user experience.<br>- Offline usage is not possible.                                                                                                                                                                                                                                                                                                                                                                            |
+| Approach                                     | Description                                                                                                                            | Main Drawbacks                                                                                                                                                                                                                                                                                                                                                                                                                                        <br/>                                                                              |
+|----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Remote WebView-based map                     | Host a map on a web page and access it through a WebView.                                                                              | - Requires additional infrastructure.<br>- Very sensitive to network latency, and in general, a degraded user experience.<br>- Offline usage is not possible.                                                                                                                                                                                                                                                                                                                                                                            |
 | Embedded WebView with bundled MapLibre GL JS | Bundle JS code that runs MapLibre GL JS, enabling two-way communication with React Native, and inject it into a WebView for execution. | - Any interaction between the WebView content and the React Native world is made through message-passing, which can make certain interactions more indirect.<br>- Some objects cannot be serialized and sent between the WebView code and React Native (e.g., HTMLElement).<br>- Some GitHub repositories are implementing this solution, however, no one is actively maintained, and the underlying web libraries are missing key features — good examples being `react-native-leaflet-view` and `@neukolabs/react-native-maplibre-js`. |
 
 

@@ -49,9 +49,11 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "typecheck": "tsc",
     "test": "jest --passWithNoTests",
-    "docs": "typedoc",
-    "prepare": "bob build",
-    "semantic-release": "semantic-release"
+    "docs:typedoc": "typedoc",
+    "docs:readme-toc": "doctoc README.md",
+    "docs:readme-examples": "node scripts/examples-list-for-readme.js",
+    "release:build": "bob build",
+    "release:semantic-release": "semantic-release"
   },
   "jest": {
     "preset": "react-native",
@@ -135,6 +137,7 @@
     "commitlint": "^19.8.1",
     "conventional-changelog-conventionalcommits": "^9.1.0",
     "del-cli": "^6.0.0",
+    "doctoc": "^2.2.1",
     "esbuild": "^0.27.0",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",

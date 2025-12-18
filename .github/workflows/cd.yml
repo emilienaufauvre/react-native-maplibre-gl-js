@@ -32,7 +32,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build package
-        run: yarn prepare
+        run: yarn release:build
 
       - name: Ensure branch has not advanced since CI
         run: |
@@ -48,7 +48,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: yarn semantic-release
+        run: yarn release:semantic-release
 
   docs:
     name: Generate docs
@@ -83,11 +83,14 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Generate docs
-        run: npm run docs
+        run: \
+          npm run docs:typedoc
+          npm run docs:readme-toc
+          npm run docs:readme-examples
 
       - name: Commit docs
         run: |
-          git add -fA ./docs/api
+          git add -fA ./docs/api README.md
           if git diff --cached --quiet; then
             echo "No doc changes"
             exit 0
