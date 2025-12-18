@@ -51,7 +51,7 @@
     "test": "jest --passWithNoTests",
     "docs:typedoc": "typedoc",
     "docs:readme-toc": "doctoc README.md",
-    "docs:readme-examples": "node scripts/examples-list-for-readme.js",
+    "docs:readme-examples": "node scripts/docs-readme-examples.js",
     "release:build": "bob build",
     "release:semantic-release": "semantic-release"
   },
