@@ -64,9 +64,9 @@ jobs:
 
       - name: Check docs generation
         run: \
-          yarn run docs:typedoc
-          yarn run docs:readme-toc
-          yarn run docs:readme-examples
+          yarn docs:typedoc
+          yarn docs:readme-toc
+          yarn docs:readme-examples
 
   build:
     name: Check release generation
