@@ -63,7 +63,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Check docs generation
-        run: \
+        run: |
           yarn docs:typedoc
           yarn docs:readme-toc
           yarn docs:readme-examples

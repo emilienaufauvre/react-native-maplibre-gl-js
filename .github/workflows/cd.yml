@@ -83,7 +83,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Generate docs
-        run: \
+        run: |
           npm run docs:typedoc
           npm run docs:readme-toc
           npm run docs:readme-examples

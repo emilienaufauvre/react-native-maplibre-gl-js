@@ -45,7 +45,7 @@
     "react-native": "*"
   },
   "scripts": {
-    "build": "node scripts/build.js",
+    "build:webview-code": "node scripts/build-webview-code.js",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "typecheck": "tsc",
     "test": "jest --passWithNoTests",

@@ -68,7 +68,7 @@ pushed) into the `main` branch.
 The `package.json` file contains various scripts for common tasks:
 
 - `yarn`: setup project by installing dependencies.
-- `yarn build`: build the WebView injected code (to test it locally).
+- `yarn build:webview-code`: build the WebView injected code (to test it locally).
 - `yarn lint`: lint files with [ESLint](https://eslint.org/).
 - `yarn typecheck`: type-check files with TypeScript.
 - `yarn test`: run unit tests with [Jest](https://jestjs.io/).
