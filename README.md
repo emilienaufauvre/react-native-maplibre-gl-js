@@ -98,7 +98,7 @@ Several real-world usage scenarios are available, you can explore them in two wa
 - [`1.1. Component basis`](./example/src/app/1.-Map/1.1.-Component-basis.tsx)
 - [`1.2. Create a camera animation`](./example/src/app/1.-Map/1.2.-Create-a-camera-animation.tsx)
 - [`1.3. Use the globe projection`](./example/src/app/1.-Map/1.3.-Use-the-globe-projection.tsx)
-- [`1.4. Use a raster tile source without a component`](./example/src/app/1.-Map/1.4.-Use-a-raster-tile-source-without-a-component.tsx)
+- [`1.4. Add a raster tile source directly on map`](./example/src/app/1.-Map/1.4.-Add-a-raster-tile-source-directly-on-map.tsx)
 
 ### 2. Marker
 
