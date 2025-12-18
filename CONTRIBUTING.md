@@ -36,64 +36,7 @@ make to the library's source code will be reflected in the example app. Changes
 to the library's JavaScript code will be reflected in the example app without a
 rebuild, but native code changes will require a rebuild of the example app.
 
-You can use various commands from the root directory to work with the project.
-
-To start the packager:
-
-```sh
-yarn example start
-```
-
-To run the example app on Android:
-
-```sh
-yarn example android
-```
-
-To run the example app on iOS:
-
-```sh
-yarn example ios
-```
-
-To confirm that the app is running with the new architecture, you can check the
-Metro logs for a message like this:
-
-```sh
-Running "MaplibreGlJsExample" with {"fabric":true,"initialProps":{"concurrentRoot":true},"rootTag":1}
-```
-
-Note the `"fabric":true` and `"concurrentRoot":true` properties.
-
-To run the example app on Web:
-
-```sh
-yarn example web
-```
-
-Make sure your code passes TypeScript:
-
-```sh
-yarn typecheck
-```
-
-To check for linting errors, run the following:
-
-```sh
-yarn lint
-```
-
-To fix formatting errors, run the following:
-
-```sh
-yarn lint --fix
-```
-
-Remember to add tests for your change if possible. Run the unit tests by:
-
-```sh
-yarn test
-```
+You can use various commands from the root directory to work with the project (see [next section](#scripts)).
 
 ### Commit message convention
 
@@ -129,11 +72,14 @@ The `package.json` file contains various scripts for common tasks:
 - `yarn lint`: lint files with [ESLint](https://eslint.org/).
 - `yarn typecheck`: type-check files with TypeScript.
 - `yarn test`: run unit tests with [Jest](https://jestjs.io/).
-- `yarn docs`: build the API reference documentation using
+- `yarn docs:typedoc`: build the API reference documentation using
   [TypeDoc](https://typedoc.org/) (docs should not be committed, it is built
   with the [CD workflow](./.github/workflows/cd.yml).
-- `yarn prepare`: build the final npm package (to test locally).
-- `yarn semantic-release`: perform release and publishing (to not be used
+- `yarn docs:readme-toc`: build the table of contents in README (docs should not be committed, it is built
+- `yarn docs:readme-examples`: build the example links in README (docs should not be committed, it is built
+  with the [CD workflow](./.github/workflows/cd.yml).
+- `yarn release:build`: build the final npm package (to test locally).
+- `yarn release:semantic-release`: perform release and publishing (to not be used
   directly).
 - `yarn example start`: start the Metro server for the example app.
 - `yarn example android`: run the example app on Android.
