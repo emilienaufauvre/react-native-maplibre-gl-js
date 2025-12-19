@@ -4,7 +4,7 @@
 
 > **WebObjectListenerOnMapLayer**\<`Event`\> = \{ `layerListener`: `Listener`\<`Event`\>; `layerId`: `string`; \}
 
-Defined in: [src/react-native/components-factory/createWebObjectAsComponent.types.ts:106](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L106)
+Defined in: [src/react-native/components-factory/createWebObjectAsComponent.types.ts:107](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L107)
 
 A listener to be set on an event emitted by the web object, but specific to
 a map layer.
@@ -19,5 +19,5 @@ a map layer.
 
 | Property | Type | Defined in |
 | ------ | ------ | ------ |
-| <a id="layerlistener"></a> `layerListener` | `Listener`\<`Event`\> | [src/react-native/components-factory/createWebObjectAsComponent.types.ts:107](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L107) |
-| <a id="layerid"></a> `layerId` | `string` | [src/react-native/components-factory/createWebObjectAsComponent.types.ts:108](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L108) |
+| <a id="layerlistener"></a> `layerListener` | `Listener`\<`Event`\> | [src/react-native/components-factory/createWebObjectAsComponent.types.ts:108](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L108) |
+| <a id="layerid"></a> `layerId` | `string` | [src/react-native/components-factory/createWebObjectAsComponent.types.ts:109](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L109) |

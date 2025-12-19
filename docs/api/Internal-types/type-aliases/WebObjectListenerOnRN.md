@@ -4,7 +4,7 @@
 
 > **WebObjectListenerOnRN**\<`Event`\> = \{ `rnListener`: `Listener`\<`Event`\>; \}
 
-Defined in: [src/react-native/components-factory/createWebObjectAsComponent.types.ts:89](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L89)
+Defined in: [src/react-native/components-factory/createWebObjectAsComponent.types.ts:90](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L90)
 
 A listener on an event introduced by the React Native usage.
 
@@ -18,4 +18,4 @@ A listener on an event introduced by the React Native usage.
 
 | Property | Type | Defined in |
 | ------ | ------ | ------ |
-| <a id="rnlistener"></a> `rnListener` | `Listener`\<`Event`\> | [src/react-native/components-factory/createWebObjectAsComponent.types.ts:90](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L90) |
+| <a id="rnlistener"></a> `rnListener` | `Listener`\<`Event`\> | [src/react-native/components-factory/createWebObjectAsComponent.types.ts:91](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L91) |

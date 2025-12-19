@@ -45,6 +45,20 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+- [Supported platforms](#supported-platforms)
+- [Installation](#installation)
+- [📚 Documentation](#-documentation)
+- [🧪 Examples](#-examples)
+- [🏁 Getting started](#-getting-started)
+- [📝 Design rationale](#-design-rationale)
+  - [Existing React Native map solutions](#existing-react-native-map-solutions)
+  - [Architectural approach](#architectural-approach)
+- [Contributing](#contributing)
+- [Credits](#credits)
+- [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 ## Supported platforms
 
@@ -78,6 +92,26 @@ Several real-world usage scenarios are available, you can explore them in two wa
   is implemented (see below the example list).
 
 <!-- EXAMPLES-LIST:START -->
+
+### 1. Map
+
+- [`1.1. Component basis`](./example/src/app/1.-Map/1.1.-Component-basis.tsx)
+- [`1.2. Create a camera animation`](./example/src/app/1.-Map/1.2.-Create-a-camera-animation.tsx)
+- [`1.3. Use the globe projection`](./example/src/app/1.-Map/1.3.-Use-the-globe-projection.tsx)
+- [`1.4. Add a raster tile source directly on map`](./example/src/app/1.-Map/1.4.-Add-a-raster-tile-source-directly-on-map.tsx)
+
+### 2. Marker
+
+- [`2.1. Component basis`](./example/src/app/2.-Marker/2.1.-Component-basis.tsx)
+- [`2.2. Animate the coordinate`](./example/src/app/2.-Marker/2.2.-Animate-the-coordinate.tsx)
+- [`2.3. Use an detached popup`](./example/src/app/2.-Marker/2.3.-Use-an-detached-popup.tsx)
+- [`2.4. Use an attached popup`](./example/src/app/2.-Marker/2.4.-Use-an-attached-popup.tsx)
+- [`2.5. Propagates the events to a parent component`](./example/src/app/2.-Marker/2.5.-Propagates-the-events-to-a-parent-component.tsx)
+
+### 3. Popup
+
+- [`3.1. Component basis`](./example/src/app/3.-Popup/3.1.-Component-basis.tsx)
+
 <!-- EXAMPLES-LIST:END -->
 
 

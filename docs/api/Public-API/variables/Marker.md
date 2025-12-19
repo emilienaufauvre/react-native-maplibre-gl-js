@@ -27,7 +27,7 @@ MapLibre Marker view.
   ref={markerRef}
   options={{
     draggable: true,
-    // The element to be used as the marker (mocks the HTMLElement class).
+    // The element to be used as the marker (a descriptor of an HTMLElement).
     element: {
       tagName: 'div',
       innerHTML: `
