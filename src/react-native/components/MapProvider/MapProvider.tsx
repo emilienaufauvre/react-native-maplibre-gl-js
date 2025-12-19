@@ -35,7 +35,7 @@ import type { MapProviderProps } from './MapProvider.types'
  * </MapProvider>
  * ```
  */
-const MapProvider = ({ children }: MapProviderProps) => {
+const MapProvider = ({ style, webViewStyle, children }: MapProviderProps) => {
   // States.
   // - Global.
   const {
@@ -127,10 +127,10 @@ const MapProvider = ({ children }: MapProviderProps) => {
   )
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <WebView
         ref={setWebView}
-        style={styles.webview}
+        style={[styles.webView, webViewStyle]}
         originWhitelist={['*']}
         javaScriptEnabled={true}
         allowFileAccess={true}

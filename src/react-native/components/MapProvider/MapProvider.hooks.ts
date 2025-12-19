@@ -6,7 +6,7 @@ export const useStyles = () => {
     () =>
       StyleSheet.create({
         container: { width: '100%', height: '100%', overflow: 'hidden' },
-        webview: { flex: 1, backgroundColor: 'transparent' },
+        webView: { flex: 1, backgroundColor: 'transparent' },
       }),
     [],
   )
