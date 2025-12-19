@@ -15,18 +15,24 @@ import type {
 import type { HTMLElementDescriptor } from '../../../communication/messages.types'
 
 /**
- * TODO
+ * Marker component ref.
+ * @interface
  * @group Types
  */
 export type MarkerRef = WebObjectRef<MarkerMethods>
 
 /**
- * TODO
+ * Marker component props.
+ * @interface
  * @group Types
  */
 export type MarkerProps = WebObjectProps<MarkerOptions, MarkerListeners>
 
-type MarkerMethods = WebObjectMethodsInferred<
+/**
+ * @interface
+ * @group Marker types
+ */
+export type MarkerMethods = WebObjectMethodsInferred<
   MapLibreMarker,
   {
     addTo: () => Promise<void>
@@ -34,23 +40,28 @@ type MarkerMethods = WebObjectMethodsInferred<
     setPopup: (popupId: string) => Promise<void>
   }
 >
-
-type MarkerOptions = WebObjectOptionsInferred<
+/**
+ * @interface
+ * @group Marker types
+ */
+export type MarkerOptions = WebObjectOptionsInferred<
   MapLibreMarkerOptions,
   {
     element?: HTMLElementDescriptor
   }
 >
-
-type MarkerListeners = {
+/**
+ * @interface
+ * @group Marker types
+ */
+export type MarkerListeners = {
   // React native events.
-  mount: WebObjectListenerOnRN<void>
-  unmount: WebObjectListenerOnRN<void>
-  // MapLibre GL JS events.
-  // https://maplibre.org/maplibre-gl-js/docs/API/classes/Marker/#events
-  dragstart: WebObjectListenerOnObject<Event>
-  drag: WebObjectListenerOnObject<Event>
-  dragend: WebObjectListenerOnObject<Event>
+  mount?: WebObjectListenerOnRN<void>
+  unmount?: WebObjectListenerOnRN<void>
+  // `MapLibre GL JS` events.
+  dragstart?: WebObjectListenerOnObject<Event>
+  drag?: WebObjectListenerOnObject<Event>
+  dragend?: WebObjectListenerOnObject<Event>
   // HTMLElement events.
-  click: WebObjectListenerOnHTMLElement<MouseEvent>
+  click?: WebObjectListenerOnHTMLElement<MouseEvent>
 }

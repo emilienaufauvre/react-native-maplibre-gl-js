@@ -17,7 +17,7 @@ import type {
 } from '../../react-native/components-factory/createWebObjectAsComponent.types'
 
 /**
- * Manage the MapLibre GL JS map and its objects. Receive messages from the
+ * Manage the `MapLibre GL JS` map and its objects. Receive messages from the
  * React Native world and act accordingly.
  */
 export default class MapController {

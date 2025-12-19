@@ -1,23 +1,31 @@
-[**react-native-maplibre-gl-js**](../../index.md)
-
-***
-
 [react-native-maplibre-gl-js](../../index.md) / [Public API](../index.md) / MapProvider
 
-# Function: MapProvider()
+# MapProvider()
 
-> **MapProvider**(`props`): `Element`
+> **MapProvider**(`props`: [`MapProviderProps`](../interfaces/MapProviderProps.md)): `Element`
 
-Defined in: [react-native/components/MapProvider/MapProvider.tsx:28](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/MapProvider/MapProvider.tsx#L28)
+Defined in: [src/react-native/components/MapProvider/MapProvider.tsx:38](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/MapProvider/MapProvider.tsx#L38)
 
-Provide the main
+Must be used as a parent component to allow instantiation of map elements.
+Every child must be a direct component.
+This is the bridge to the web world / the `MapLibre GL JS` library.
 
 ## Parameters
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `props` | [`MapProviderProps`](../type-aliases/MapProviderProps.md) |  |
+| `props` | [`MapProviderProps`](../interfaces/MapProviderProps.md) |  |
 
 ## Returns
 
 `Element`
+
+## Example
+
+```tsx
+<MapProvider>
+  <Map/>
+  <Marker/>
+  ...
+</MapProvider>
+```

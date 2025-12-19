@@ -1,13 +1,9 @@
-[**react-native-maplibre-gl-js**](../../index.md)
-
-***
-
 [react-native-maplibre-gl-js](../../index.md) / [Public API](../index.md) / MapProps
 
-# Type Alias: MapProps
+# MapProps
 
-> **MapProps** = [`WebObjectProps`](../../Internal-types/type-aliases/WebObjectProps.md)\<`MapOptions`, `MapListeners`\>
+> **MapProps** = [`WebObjectProps`](../../Internal-types/interfaces/WebObjectProps.md)\<[`MapOptions`](../../Internal-types/interfaces/MapOptions.md), [`MapListeners`](../../Internal-types/interfaces/MapListeners.md)\>
 
-Defined in: [react-native/components/Map/Map.types.ts:37](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/Map/Map.types.ts#L37)
+Defined in: [src/react-native/components/Map/Map.types.ts:38](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/Map/Map.types.ts#L38)
 
-A Map component props.
+Map component props.

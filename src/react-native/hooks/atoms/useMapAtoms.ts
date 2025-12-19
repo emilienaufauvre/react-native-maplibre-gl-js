@@ -9,7 +9,7 @@ import type { WebObjectListeners } from '../../components-factory/createWebObjec
 import { stableStringify } from './useMapAtoms.utils'
 
 /**
- * The WebView used to render MapLibre GL JS views (the web world).
+ * The WebView used to render `MapLibre GL JS` views (the web world).
  */
 const webViewAtom = atom<WebView | null>(null)
 

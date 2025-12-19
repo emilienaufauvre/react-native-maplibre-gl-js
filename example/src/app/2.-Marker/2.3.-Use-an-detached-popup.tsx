@@ -7,7 +7,6 @@ import {
   type PopupRef,
 } from 'react-native-maplibre-gl-js'
 import { useRef } from 'react'
-import { COORDINATE_DEFAULT_1, MAP_STYLE_URL_DEFAULT } from '../../constants'
 
 /**
  * @returns - Example of the marker component usage, with a detached popup.
@@ -21,8 +20,8 @@ const Screen = () => {
     <MapProvider>
       <Map
         options={{
-          style: MAP_STYLE_URL_DEFAULT,
-          center: COORDINATE_DEFAULT_1,
+          style: 'https://tiles.openfreemap.org/styles/liberty',
+          center: [2.32, 48.86],
           zoom: 12,
         }}
       />
@@ -84,8 +83,7 @@ const Screen = () => {
         }}
         listeners={{
           mount: {
-            rnListener: () =>
-              markerRef.current?.setLngLat(COORDINATE_DEFAULT_1),
+            rnListener: () => markerRef.current?.setLngLat([2.32, 48.86]),
           },
           click: {
             elementListener: async (_: MouseEvent) => {

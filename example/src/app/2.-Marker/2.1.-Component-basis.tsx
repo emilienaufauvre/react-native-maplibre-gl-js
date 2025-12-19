@@ -6,7 +6,6 @@ import {
 } from 'react-native-maplibre-gl-js'
 import { Event } from 'maplibre-gl'
 import { useRef } from 'react'
-import { COORDINATE_DEFAULT_1, MAP_STYLE_URL_DEFAULT } from '../../constants'
 
 /**
  * @returns - Example of the marker component usage.
@@ -19,8 +18,8 @@ const Screen = () => {
     <MapProvider>
       <Map
         options={{
-          style: MAP_STYLE_URL_DEFAULT,
-          center: COORDINATE_DEFAULT_1,
+          style: 'https://tiles.openfreemap.org/styles/liberty',
+          center: [2.32, 48.86],
           zoom: 12,
         }}
       />
@@ -28,7 +27,8 @@ const Screen = () => {
         ref={markerRef}
         options={{
           draggable: true,
-          // The element to be used as the marker (mocks the HTMLElement class).
+          // The element to be used as the marker (a descriptor of an
+          // HTMLElement).
           element: {
             tagName: 'div',
             innerHTML: `
@@ -58,7 +58,7 @@ const Screen = () => {
           mount: {
             rnListener: () => {
               // The marker coordinate must be set on mount.
-              markerRef.current?.setLngLat(COORDINATE_DEFAULT_1)
+              markerRef.current?.setLngLat([2.32, 48.86])
             },
           },
           unmount: {

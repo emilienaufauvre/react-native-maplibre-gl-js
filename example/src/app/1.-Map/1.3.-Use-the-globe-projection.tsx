@@ -1,5 +1,4 @@
 import { MapProvider, Map, type MapRef } from 'react-native-maplibre-gl-js'
-import { COORDINATE_DEFAULT_1, MAP_STYLE_URL_DEFAULT } from '../../constants'
 import { useRef } from 'react'
 
 /**
@@ -15,8 +14,8 @@ const Screen = () => {
       <Map
         ref={mapRef}
         options={{
-          style: MAP_STYLE_URL_DEFAULT,
-          center: COORDINATE_DEFAULT_1,
+          style: 'https://tiles.openfreemap.org/styles/liberty',
+          center: [2.32, 48.86],
           zoom: 12,
           // Settings to avoid being able to see the whole globe (with the space
           // behind).

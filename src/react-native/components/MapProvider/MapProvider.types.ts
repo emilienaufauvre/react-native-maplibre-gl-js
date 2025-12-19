@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react'
 
 /**
- * TODO
+ * MapProvider component props.
+ * @interface
  * @group Types
  */
 export type MapProviderProps = {

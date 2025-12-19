@@ -1,6 +1,5 @@
 import { MapProvider, Map, type MapRef } from 'react-native-maplibre-gl-js'
 import { useRef } from 'react'
-import { COORDINATE_DEFAULT_1 } from '../../constants'
 
 /**
  * @returns - Example of the map component with a RasterTileSource, but not
@@ -15,7 +14,7 @@ const Screen = () => {
       <Map
         ref={mapRef}
         options={{
-          center: COORDINATE_DEFAULT_1,
+          center: [2.32, 48.86],
           zoom: 12,
           // No need to pass a style option.
         }}

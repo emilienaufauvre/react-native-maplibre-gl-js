@@ -1,4 +1,3 @@
-import { COORDINATE_DEFAULT_1, MAP_STYLE_URL_DEFAULT } from '../../constants'
 import type { MapLibreEvent, MapMouseEvent } from 'maplibre-gl'
 import { MapProvider, Map } from 'react-native-maplibre-gl-js'
 
@@ -8,7 +7,7 @@ import { MapProvider, Map } from 'react-native-maplibre-gl-js'
 const Screen = () => {
   return (
     // The MapProvider must be the parent component of all your map elements.
-    // It is necessary to communicate with the MapLibre GL JS library.
+    // It is necessary to communicate with the `MapLibre GL JS` library.
     <MapProvider>
       {
         // Then you must at least add one Map component to display the map.
@@ -16,10 +15,10 @@ const Screen = () => {
       }
       <Map
         // Add your map options here. The options are the ones specified in the
-        // MapLibre GL JS documentation (MapOptions).
+        // `MapLibre GL JS` documentation (MapOptions).
         options={{
-          style: MAP_STYLE_URL_DEFAULT,
-          center: COORDINATE_DEFAULT_1,
+          style: 'https://tiles.openfreemap.org/styles/liberty',
+          center: [2.32, 48.86],
           zoom: 12,
         }}
         // Attach your listeners here. The listeners are the ones specified in

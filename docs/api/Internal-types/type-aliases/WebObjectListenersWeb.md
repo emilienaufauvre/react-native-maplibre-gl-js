@@ -1,16 +1,12 @@
-[**react-native-maplibre-gl-js**](../../index.md)
-
-***
-
 [react-native-maplibre-gl-js](../../index.md) / [Internal types](../index.md) / WebObjectListenersWeb
 
-# Type Alias: WebObjectListenersWeb
+# WebObjectListenersWeb
 
 > **WebObjectListenersWeb** = \{\[`eventName`: `string`\]: [`WebObjectListenerOnRN`](WebObjectListenerOnRN.md)\<`void`\> \| [`WebObjectListenerOnObject`](WebObjectListenerOnObject.md)\<`any`\> \| [`WebObjectListenerOnMapLayer`](WebObjectListenerOnMapLayer.md)\<`any`\> \| [`WebObjectListenerOnHTMLElement`](WebObjectListenerOnHTMLElement.md)\<`any`\>; \}
 
-Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:74](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L74)
+Defined in: [src/react-native/components-factory/createWebObjectAsComponent.types.ts:75](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L75)
 
-MapLibre GL JS events as defined in the official documentation of the object.
+`MapLibre GL JS` events as defined in the official documentation of the object.
 
 ## Index Signature
 

@@ -5,11 +5,6 @@ import {
   type MarkerRef,
 } from 'react-native-maplibre-gl-js'
 import { useRef } from 'react'
-import {
-  COORDINATE_DEFAULT_1,
-  COORDINATE_DEFAULT_2,
-  MAP_STYLE_URL_DEFAULT,
-} from '../../constants'
 
 /**
  * @returns - Example of the marker component usage, with its drag event
@@ -24,8 +19,8 @@ const Screen = () => {
     <MapProvider>
       <Map
         options={{
-          style: MAP_STYLE_URL_DEFAULT,
-          center: COORDINATE_DEFAULT_1,
+          style: 'https://tiles.openfreemap.org/styles/liberty',
+          center: [2.32, 48.86],
           zoom: 12,
         }}
       />
@@ -40,7 +35,7 @@ const Screen = () => {
         listeners={{
           mount: {
             rnListener: () => {
-              marker1Ref.current?.setLngLat(COORDINATE_DEFAULT_2)
+              marker1Ref.current?.setLngLat([2.33, 48.87])
             },
           },
           dragend: {
@@ -64,7 +59,7 @@ const Screen = () => {
               if (!marker1Ref.current) {
                 return
               }
-              marker2Ref.current?.setLngLat(COORDINATE_DEFAULT_1)
+              marker2Ref.current?.setLngLat([2.32, 48.86])
               marker2Ref.current?.setEventedParent(marker1Ref.current.getId())
               // Now, when you click on the marker, the click event will be
               // propagated to the first marker.

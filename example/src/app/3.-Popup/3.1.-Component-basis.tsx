@@ -5,7 +5,6 @@ import {
   type PopupRef,
 } from 'react-native-maplibre-gl-js'
 import { useRef } from 'react'
-import { COORDINATE_DEFAULT_1, MAP_STYLE_URL_DEFAULT } from '../../constants'
 
 /**
  * @returns - Example of the Popup component usage.
@@ -18,8 +17,8 @@ const Screen = () => {
     <MapProvider>
       <Map
         options={{
-          style: MAP_STYLE_URL_DEFAULT,
-          center: COORDINATE_DEFAULT_1,
+          style: 'https://tiles.openfreemap.org/styles/liberty',
+          center: [2.32, 48.86],
           zoom: 12,
         }}
       />
@@ -32,7 +31,7 @@ const Screen = () => {
           mount: {
             rnListener: () => {
               // The popup is opened once the coordinates are set.
-              popupRef.current?.setLngLat(COORDINATE_DEFAULT_1)
+              popupRef.current?.setLngLat([2.32, 48.86])
               // Then it is closed before the text is set.
               popupRef.current?.setText('This is a popup')
               // And finally, it is opened again because the text is set.

@@ -1,14 +1,10 @@
-[**react-native-maplibre-gl-js**](../../index.md)
-
-***
-
 [react-native-maplibre-gl-js](../../index.md) / [Internal types](../index.md) / WebObjectMethodsInferred
 
-# Type Alias: WebObjectMethodsInferred\<WebObject, ReplacedMethods\>
+# WebObjectMethodsInferred\<WebObject, ReplacedMethods\>
 
 > **WebObjectMethodsInferred**\<`WebObject`, `ReplacedMethods`\> = `Merge`\<`AllMethodsToAsyncMethods`\<`Merge`\<`OnlyMethods`\<`WebObject`\>, `ReplacedMethods`\>\>, \{ `getId`: () => `string`; \}\>
 
-Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:150](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L150)
+Defined in: [src/react-native/components-factory/createWebObjectAsComponent.types.ts:151](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L151)
 
 Methods that are used to call web object methods from the RN world.
 Filter out those methods that cannot be used from the RN world and replace

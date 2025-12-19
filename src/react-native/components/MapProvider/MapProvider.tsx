@@ -21,9 +21,19 @@ import type {
 import type { MapProviderProps } from './MapProvider.types'
 
 /**
- * Provide the main
+ * Must be used as a parent component to allow instantiation of map elements.
+ * Every child must be a direct component.
+ * This is the bridge to the web world / the `MapLibre GL JS` library.
  * @param props -
  * @group Components
+ * @example
+ * ```tsx
+ * <MapProvider>
+ *   <Map/>
+ *   <Marker/>
+ *   ...
+ * </MapProvider>
+ * ```
  */
 const MapProvider = ({ children }: MapProviderProps) => {
   // States.

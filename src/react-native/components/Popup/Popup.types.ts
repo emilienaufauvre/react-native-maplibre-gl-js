@@ -13,31 +13,44 @@ import type {
 } from '../../components-factory/createWebObjectAsComponent.types'
 
 /**
- * TODO
+ * Popup component ref.
+ * @interface
  * @group Types
  */
 export type PopupRef = WebObjectRef<PopupMethods>
 
 /**
- * TODO
+ * Popup component props.
+ * @interface
  * @group Types
  */
-export type PopupProps = WebObjectProps<PopUpOptions, PopupListeners>
+export type PopupProps = WebObjectProps<PopupOptions, PopupListeners>
 
-type PopupMethods = WebObjectMethodsInferred<
+/**
+ * @interface
+ * @group Popup types
+ */
+export type PopupMethods = WebObjectMethodsInferred<
   MapLibrePopup,
   {
     addTo: () => Promise<void>
     setEventedParent: (parentId: string) => Promise<void>
   }
 >
-type PopUpOptions = WebObjectOptionsInferred<MapLibrePopupOptions>
-type PopupListeners = {
+/**
+ * @interface
+ * @group Popup types
+ */
+export type PopupOptions = WebObjectOptionsInferred<MapLibrePopupOptions>
+/**
+ * @interface
+ * @group Popup types
+ */
+export type PopupListeners = {
   // React native events.
-  mount: WebObjectListenerOnRN<void>
-  unmount: WebObjectListenerOnRN<void>
-  // MapLibre GL JS events.
-  // https://maplibre.org/maplibre-gl-js/docs/API/classes/Popup/#events
-  open: WebObjectListenerOnObject<Event>
-  close: WebObjectListenerOnObject<Event>
+  mount?: WebObjectListenerOnRN<void>
+  unmount?: WebObjectListenerOnRN<void>
+  // `MapLibre GL JS` events.
+  open?: WebObjectListenerOnObject<Event>
+  close?: WebObjectListenerOnObject<Event>
 }

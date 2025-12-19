@@ -5,7 +5,6 @@ import {
   type MapRef,
   type MarkerRef,
 } from 'react-native-maplibre-gl-js'
-import { COORDINATE_DEFAULT_1, MAP_STYLE_URL_DEFAULT } from '../../constants'
 import { useRef } from 'react'
 
 /**
@@ -21,8 +20,8 @@ const Screen = () => {
       <Map
         ref={mapRef}
         options={{
-          style: MAP_STYLE_URL_DEFAULT,
-          center: COORDINATE_DEFAULT_1,
+          style: 'https://tiles.openfreemap.org/styles/liberty',
+          center: [2.32, 48.86],
           zoom: 12,
           minZoom: 3,
           maxPitch: 60,
@@ -33,7 +32,7 @@ const Screen = () => {
         listeners={{
           mount: {
             rnListener: () => {
-              markerRef.current?.setLngLat(COORDINATE_DEFAULT_1)
+              markerRef.current?.setLngLat([2.32, 48.86])
             },
           },
           // If marker clicked, go to NYC with a smooth animation.

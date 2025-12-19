@@ -2,23 +2,31 @@
  * Internal types exposed for the documentation, but not by the public API.
  * @module Internal types
  * @packageDocumentation
+ * @sortStrategy sort-order
  */
 
-import type {
-  WebObjectComponent,
-  WebObjectRef,
-  WebObjectProps,
-  WebObjectListeners,
-  WebObjectListenersDefault,
-  WebObjectListenersWeb,
-  WebObjectListenerOnRN,
-  WebObjectListenerOnObject,
-  WebObjectListenerOnMapLayer,
-  WebObjectListenerOnHTMLElement,
-  WebObjectOptionsInferred,
-  WebObjectMethodsInferred,
-} from './react-native/components-factory/createWebObjectAsComponent.types'
+// @group Map types.
+export type {
+  MapMethods,
+  MapOptions,
+  MapListeners,
+} from './react-native/components/Map/Map.types'
 
+// @group Marker types.
+export type {
+  MarkerMethods,
+  MarkerOptions,
+  MarkerListeners,
+} from './react-native/components/Marker/Marker.types'
+
+// @group Popup types.
+export type {
+  PopupMethods,
+  PopupOptions,
+  PopupListeners,
+} from './react-native/components/Popup/Popup.types'
+
+// @group Web objects abstractions.
 export type {
   WebObjectComponent,
   WebObjectRef,
@@ -32,4 +40,4 @@ export type {
   WebObjectListenerOnHTMLElement,
   WebObjectOptionsInferred,
   WebObjectMethodsInferred,
-}
+} from './react-native/components-factory/createWebObjectAsComponent.types'

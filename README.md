@@ -45,20 +45,6 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-- [Supported platforms](#supported-platforms)
-- [Installation](#installation)
-- [📚 Documentation](#-documentation)
-- [🧪 Examples](#-examples)
-- [🏁 Getting started](#-getting-started)
-- [📝 Design rationale](#-design-rationale)
-  - [Existing React Native map solutions](#existing-react-native-map-solutions)
-  - [Architectural approach](#architectural-approach)
-- [Contributing](#contributing)
-- [Credits](#credits)
-- [License](#license)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 
 ## Supported platforms
 
@@ -92,26 +78,6 @@ Several real-world usage scenarios are available, you can explore them in two wa
   is implemented (see below the example list).
 
 <!-- EXAMPLES-LIST:START -->
-
-### 1. Map
-
-- [`1.1. Component basis`](./example/src/app/1.-Map/1.1.-Component-basis.tsx)
-- [`1.2. Create a camera animation`](./example/src/app/1.-Map/1.2.-Create-a-camera-animation.tsx)
-- [`1.3. Use the globe projection`](./example/src/app/1.-Map/1.3.-Use-the-globe-projection.tsx)
-- [`1.4. Add a raster tile source directly on map`](./example/src/app/1.-Map/1.4.-Add-a-raster-tile-source-directly-on-map.tsx)
-
-### 2. Marker
-
-- [`2.1. Component basis`](./example/src/app/2.-Marker/2.1.-Component-basis.tsx)
-- [`2.2. Animate the coordinate`](./example/src/app/2.-Marker/2.2.-Animate-the-coordinate.tsx)
-- [`2.3. Use an detached popup`](./example/src/app/2.-Marker/2.3.-Use-an-detached-popup.tsx)
-- [`2.4. Use an attached popup`](./example/src/app/2.-Marker/2.4.-Use-an-attached-popup.tsx)
-- [`2.5. Propagates the events to a parent component`](./example/src/app/2.-Marker/2.5.-Propagates-the-events-to-a-parent-component.tsx)
-
-### 3. Popup
-
-- [`3.1. Component basis`](./example/src/app/3.-Popup/3.1.-Component-basis.tsx)
-
 <!-- EXAMPLES-LIST:END -->
 
 
@@ -176,7 +142,7 @@ carry. This library implements the second approach.
 | Approach                                     | Description                                                                                                                            | Main Drawbacks                                                                                                                                                                                                                                                                                                                                                                                                                                        <br/>                                                                              |
 |----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Remote WebView-based map                     | Host a map on a web page and access it through a WebView.                                                                              | - Requires additional infrastructure.<br>- Very sensitive to network latency, and in general, a degraded user experience.<br>- Offline usage is not possible.                                                                                                                                                                                                                                                                                                                                                                            |
-| Embedded WebView with bundled MapLibre GL JS | Bundle JS code that runs MapLibre GL JS, enabling two-way communication with React Native, and inject it into a WebView for execution. | - Any interaction between the WebView content and the React Native world is made through message-passing, which can make certain interactions more indirect.<br>- Some objects cannot be serialized and sent between the WebView code and React Native (e.g., HTMLElement).<br>- Some GitHub repositories are implementing this solution, however, no one is actively maintained, and the underlying web libraries are missing key features — good examples being `react-native-leaflet-view` and `@neukolabs/react-native-maplibre-js`. |
+| Embedded WebView with bundled `MapLibre GL JS` | Bundle JS code that runs `MapLibre GL JS`, enabling two-way communication with React Native, and inject it into a WebView for execution. | - Any interaction between the WebView content and the React Native world is made through message-passing, which can make certain interactions more indirect.<br>- Some objects cannot be serialized and sent between the WebView code and React Native (e.g., HTMLElement).<br>- Some GitHub repositories are implementing this solution, however, no one is actively maintained, and the underlying web libraries are missing key features — good examples being `react-native-leaflet-view` and `@neukolabs/react-native-maplibre-js`. |
 
 
 ## Contributing

@@ -29,7 +29,7 @@ export default defineConfig([
   // - arrow functions that are components, deactivate @param,
   // - arrow functions that are not components (PascalCase), constructors,
   //   getters, and setters, deactivate the whole doc,
-  // - tags introduced by TypeDoc are enabled.
+  // - tags introduced by TypeDoc usage are enabled.
   jsdoc.configs['flat/recommended-typescript'],
   {
     rules: {
@@ -74,15 +74,11 @@ export default defineConfig([
         'error',
         {
           definedTags: [
-            'group',
-            'groupDescription',
-            'showGroups',
-            'hideGroups',
-            'disableGroups',
-            'category',
-            'categoryDescription',
             'packageDocumentation',
-            'defaultValue',
+            'sortStrategy',
+            'group',
+            'props',
+            'ref',
           ],
         },
       ],

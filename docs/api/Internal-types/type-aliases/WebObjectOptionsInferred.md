@@ -1,14 +1,10 @@
-[**react-native-maplibre-gl-js**](../../index.md)
-
-***
-
 [react-native-maplibre-gl-js](../../index.md) / [Internal types](../index.md) / WebObjectOptionsInferred
 
-# Type Alias: WebObjectOptionsInferred\<WebObjectOptions, ReplacedOptions, RemovedOptions\>
+# WebObjectOptionsInferred\<WebObjectOptions, ReplacedOptions, RemovedOptions\>
 
 > **WebObjectOptionsInferred**\<`WebObjectOptions`, `ReplacedOptions`, `RemovedOptions`\> = `Omit`\<`Omit`\<`WebObjectOptions`, keyof `ReplacedOptions`\> & `ReplacedOptions`, `RemovedOptions`\>
 
-Defined in: [react-native/components-factory/createWebObjectAsComponent.types.ts:127](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L127)
+Defined in: [src/react-native/components-factory/createWebObjectAsComponent.types.ts:128](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L128)
 
 Options that are used to instantiate a web object.
 Filter out those options that cannot be set from the RN world and replace

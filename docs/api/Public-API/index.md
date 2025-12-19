@@ -1,30 +1,26 @@
-[**react-native-maplibre-gl-js**](../index.md)
-
-***
-
 [react-native-maplibre-gl-js](../index.md) / Public API
 
 # Public API
 
-Public API of react-native-maplibre-gl-js.
+Public API of `react-native-maplibre-gl-js`.
 
 ## Components
 
 | Name | Description |
 | ------ | ------ |
+| [MapProvider](functions/MapProvider.md) | Must be used as a parent component to allow instantiation of map elements. Every child must be a direct component. This is the bridge to the web world / the `MapLibre GL JS` library. |
 | [Map](variables/Map.md) | MapLibre Map view. |
-| [MapProvider](functions/MapProvider.md) | Provide the main |
 | [Marker](variables/Marker.md) | MapLibre Marker view. |
 | [Popup](variables/Popup.md) | MapLibre Popup view. |
 
 ## Types
 
-| Type Alias | Description |
+| Name | Description |
 | ------ | ------ |
-| [MapRef](type-aliases/MapRef.md) | A Map component ref. |
-| [MapProps](type-aliases/MapProps.md) | A Map component props. |
-| [MapProviderProps](type-aliases/MapProviderProps.md) | TODO |
-| [MarkerRef](type-aliases/MarkerRef.md) | TODO |
-| [MarkerProps](type-aliases/MarkerProps.md) | TODO |
-| [PopupRef](type-aliases/PopupRef.md) | TODO |
-| [PopupProps](type-aliases/PopupProps.md) | TODO |
+| [MapProviderProps](interfaces/MapProviderProps.md) | MapProvider component props. |
+| [MapRef](interfaces/MapRef.md) | Map component ref. |
+| [MapProps](type-aliases/MapProps.md) | Map component props. |
+| [MarkerRef](interfaces/MarkerRef.md) | Marker component ref. |
+| [MarkerProps](interfaces/MarkerProps.md) | Marker component props. |
+| [PopupRef](interfaces/PopupRef.md) | Popup component ref. |
+| [PopupProps](interfaces/PopupProps.md) | Popup component props. |

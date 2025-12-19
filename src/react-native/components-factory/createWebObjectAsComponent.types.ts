@@ -7,7 +7,7 @@ import {
 /**
  * React Native component that corresponds and perform actions with a web object
  * in the web world.
- * @group Types
+ * @group Web object abstraction types
  */
 export type WebObjectComponent<
   Ref extends WebObjectRef<any>,
@@ -17,7 +17,7 @@ export type WebObjectComponent<
 /**
  * React Native ref of a component (corresponds to the web object methods in the
  * web world).
- * @group Types
+ * @group Web object abstraction types
  */
 export type WebObjectRef<Methods extends WebObjectMethodsInferred<object>> =
   Omit<Methods, 0>
@@ -25,7 +25,8 @@ export type WebObjectRef<Methods extends WebObjectMethodsInferred<object>> =
 /**
  * React Native props of a component (used to instantiate the web object in the
  * web world).
- * @group Types
+ * @interface
+ * @group Web object abstraction types
  */
 export type WebObjectProps<
   Options extends WebObjectOptionsInferred<any>,
@@ -34,11 +35,11 @@ export type WebObjectProps<
   /**
    * The MapLibreGL JS options used to mount the web object.
    */
-  options?: Partial<Options>
+  options?: Options
   /**
    * The listeners to be set on the web object events.
    */
-  listeners?: Partial<Listeners>
+  listeners?: Listeners
 }
 
 /**
@@ -47,12 +48,12 @@ export type WebObjectProps<
  * Event can be emitted by the web object itself, its HTML element, or be
  * specific to a map layer (if the object is the map).
  * By default, the mount/unmount events are available (they are custom, added
- * on top of the MapLibre GL JS events).
+ * on top of the `MapLibre GL JS` events).
  *
  * Note: sadly, listeners cannot be inferred as Methods and Options, therefore,
  * when adding a new listener, one must ensure that the listeners correspond to
  * the real web object events.
- * @group Types
+ * @group Web object abstraction types
  */
 export type WebObjectListeners = WebObjectListenersDefault &
   WebObjectListenersWeb
@@ -60,7 +61,7 @@ export type WebObjectListeners = WebObjectListenersDefault &
 /**
  * Custom events introduced by this library, executed once the web object is
  * (un)mounted to the map.
- * @group Types
+ * @group Web object abstraction types
  */
 export type WebObjectListenersDefault = {
   mount?: WebObjectListenerOnRN<void>
@@ -68,8 +69,9 @@ export type WebObjectListenersDefault = {
 }
 
 /**
- * MapLibre GL JS events as defined in the official documentation of the object.
- * @group Types
+ * `MapLibre GL JS` events as defined in the official documentation of the
+ * object.
+ * @group Web object abstraction types
  */
 export type WebObjectListenersWeb = {
   [eventName: string]:
@@ -83,7 +85,7 @@ export type Listener<Event> = (event: Event) => void
 
 /**
  * A listener on an event introduced by the React Native usage.
- * @group Types
+ * @group Web object abstraction types
  */
 export type WebObjectListenerOnRN<Event> = {
   rnListener: Listener<Event>
@@ -91,7 +93,7 @@ export type WebObjectListenerOnRN<Event> = {
 
 /**
  * A listener to be set on an event emitted by the web object.
- * @group Types
+ * @group Web object abstraction types
  */
 export type WebObjectListenerOnObject<Event> = {
   objectListener: Listener<Event>
@@ -100,7 +102,7 @@ export type WebObjectListenerOnObject<Event> = {
 /**
  * A listener to be set on an event emitted by the web object, but specific to
  * a map layer.
- * @group Types
+ * @group Web object abstraction types
  */
 export type WebObjectListenerOnMapLayer<Event> = {
   layerListener: Listener<Event>
@@ -110,7 +112,7 @@ export type WebObjectListenerOnMapLayer<Event> = {
 /**
  * A listener to be set on an event emitted by the HTMLElement associated with
  * the web object.
- * @group Types
+ * @group Web object abstraction types
  */
 export type WebObjectListenerOnHTMLElement<Event> = {
   elementListener: Listener<Event>
@@ -122,7 +124,7 @@ export type WebObjectListenerOnHTMLElement<Event> = {
  * them with the given replacements (e.g., HTMLElement that cannot be
  * instantiated in RN is replaced by HTMLElementDescriptor). Also, remove the
  * ones that should not be specified and used.
- * @group Types
+ * @group Web object abstraction types
  */
 export type WebObjectOptionsInferred<
   WebObjectOptions,
@@ -145,7 +147,7 @@ export type WebObjectOptionsInferred<
  * original return type.
  * To be used with the associated proxy to make the call to the methods
  * effective.
- * @group Types
+ * @group Web object abstraction types
  */
 export type WebObjectMethodsInferred<
   WebObject,
