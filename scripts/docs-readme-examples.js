@@ -6,8 +6,8 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 // Paths.
-const ROUTES_DIR = path.resolve(__dirname, 'example/src/app')
-const README_FILE = path.resolve(__dirname, 'README.md')
+const ROUTES_DIR = path.resolve(__dirname, '../example/src/app')
+const README_FILE = path.resolve(__dirname, '../README.md')
 
 // Markdown level of the example folders.
 const FOLDER_LEVEL = '###'
