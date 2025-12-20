@@ -1,93 +1,138 @@
-import fs from 'node:fs/promises'
-import path from 'node:path'
+import * as fs from 'fs'
+import * as path from 'path'
+import { fileURLToPath } from 'url'
 
-const ROUTES_DIR = 'example/src/app'
-const README = 'README.md'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+// Paths.
+const ROUTES_DIR = path.resolve(__dirname, 'example/src/app')
+const README_FILE = path.resolve(__dirname, 'README.md')
+
+// Markdown level of the example folders.
 const FOLDER_LEVEL = '###'
-const START = '<!-- EXAMPLES-LIST:START -->'
-const END = '<!-- EXAMPLES-LIST:END -->'
 
-// -------- utils --------
-const pretty = (s) =>
-  s
+// Markdown markers to be placed in README.
+const START_MARKER = '<!-- EXAMPLES-LIST:START -->'
+const END_MARKER = '<!-- EXAMPLES-LIST:END -->'
+
+/**
+ * Prettify a string for display.
+ * @param str - Raw string.
+ * @returns - Prettified string.
+ */
+const pretty = (str) => {
+  return str
     .replace(/[-_]/g, ' ')
     .replace(/([a-z])([A-Z])/g, '$1 $2')
     .trim()
-
-const walk = async (dir) => {
-  const entries = await fs.readdir(dir, { withFileTypes: true })
-  return (
-    await Promise.all(
-      entries.map((e) => {
-        const p = path.join(dir, e.name)
-        return e.isDirectory() ? walk(p) : p
-      }),
-    )
-  ).flat()
 }
 
-// -------- main --------
+/**
+ * Recursively walk a directory and return all file paths.
+ * @param dir - Directory to walk.
+ * @returns - An array of file paths.
+ */
+const walk = async (dir) => {
+  const entries = await fs.promises.readdir(dir, { withFileTypes: true })
+  const results = []
+
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name)
+    if (entry.isDirectory()) {
+      results.push(...(await walk(fullPath)))
+    } else {
+      results.push(fullPath)
+    }
+  }
+
+  return results
+}
+
+/**
+ * Generate the example list and inject it into README.md.
+ */
 const main = async () => {
-  const rootAbs = path.resolve(ROUTES_DIR)
-  const files = await walk(rootAbs)
+  // Collect route files.
+  const files = await walk(ROUTES_DIR)
 
   const routes = files
-    .map((f) => path.relative(rootAbs, f).split(path.sep).join('/'))
+    .map((file) => path.relative(ROUTES_DIR, file).split(path.sep).join('/'))
     .filter(
-      (f) => /\.tsx?$/.test(f) && !f.includes('_layout') && f !== 'index.tsx',
+      (file) =>
+        /\.tsx?$/.test(file) &&
+        !file.includes('_layout') &&
+        file !== 'index.tsx',
     )
-    .map((rel) => {
-      const clean = rel.replace(/\.tsx?$/, '')
-      const [folderRaw, ...rest] = clean.split('/')
-      const nameRaw = rest.length ? rest.join('/') : folderRaw
+    .map((relativePath) => {
+      const withoutExt = relativePath.replace(/\.tsx?$/, '')
+      const parts = withoutExt.split('/')
+
+      const folderRaw = parts[0]
+      const nameRaw = parts.length > 1 ? parts.slice(1).join('/') : folderRaw
 
       const title = pretty(nameRaw)
-      const [index, ...label] = title.split(' ')
+      const [first, ...rest] = title.split(' ')
+
+      const hasIndex = /^\d+$/.test(first)
 
       return {
         folder: pretty(folderRaw),
-        index: /^\d+$/.test(index) ? index : '',
-        title: /^\d+$/.test(index) ? label.join(' ') : title,
-        link: `./${ROUTES_DIR}/${rel}`,
+        index: hasIndex ? first : '',
+        title: hasIndex ? rest.join(' ') : title,
+        link: `./example/src/app/${relativePath}`,
       }
     })
-    .sort(
-      (a, b) =>
-        a.folder.localeCompare(b.folder) || a.index.localeCompare(b.index),
-    )
+    .sort((a, b) => {
+      if (a.folder !== b.folder) {
+        return a.folder.localeCompare(b.folder)
+      }
+      return a.index.localeCompare(b.index)
+    })
 
-  const grouped = Object.groupBy(routes, (r) => r.folder)
+  // Group by folder.
+  const grouped = Object.groupBy(routes, (route) => route.folder)
 
-  const md =
-    Object.keys(grouped)
-      .sort()
-      .map(
-        (folder) =>
-          `${FOLDER_LEVEL} ${folder}\n\n` +
-          grouped[folder]
-            .map((r) => {
-              const label = `${r.index ? r.index + ' ' : ''}${r.title}`.trim()
-              return `- [\`${label}\`](${r.link})`
-            })
-            .join('\n'),
-      )
-      .join('\n\n') || '_No example for now._'
+  // Build markdown.
+  let markdown = '_No example for now._'
 
-  const readme = await fs.readFile(README, 'utf8')
-  const s = readme.indexOf(START)
-  const e = readme.indexOf(END)
+  const folders = Object.keys(grouped).sort()
+  if (folders.length > 0) {
+    markdown = folders
+      .map((folder) => {
+        const items = grouped[folder]
+          .map((route) => {
+            const label =
+              `${route.index ? route.index + ' ' : ''}${route.title}`.trim()
+            return `- [\`${label}\`](${route.link})`
+          })
+          .join('\n')
 
-  if (s === -1 || e === -1 || e < s) {
-    throw new Error('README markers not found')
+        return `${FOLDER_LEVEL} ${folder}\n\n${items}`
+      })
+      .join('\n\n')
   }
 
-  const updated =
-    readme.slice(0, s + START.length) + `\n\n${md}\n\n` + readme.slice(e)
+  // Read README to find markers.
+  const readme = fs.readFileSync(README_FILE, 'utf8')
+  const startIndex = readme.indexOf(START_MARKER)
+  const endIndex = readme.indexOf(END_MARKER)
 
-  await fs.writeFile(README, updated)
+  if (startIndex === -1 || endIndex === -1 || endIndex < startIndex) {
+    throw new Error('README markers not found or invalid')
+  }
+
+  // Inject updated content.
+  const updatedReadme =
+    readme.slice(0, startIndex + START_MARKER.length) +
+    `\n\n${markdown}\n\n` +
+    readme.slice(endIndex)
+
+  fs.writeFileSync(README_FILE, updatedReadme, 'utf8')
+  console.log('README.md updated.')
 }
 
-main().catch((err) => {
-  console.error(err)
+main().catch((error) => {
+  console.error(error)
   process.exit(1)
 })
