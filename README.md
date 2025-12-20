@@ -2,10 +2,18 @@
   <h1>react-native-maplibre-gl-js</h1>
 </div>
 <div align="center">
-  <img src="https://img.shields.io/github/license/emilienaufauvre/react-native-maplibre-gl-js?style=for-the-badge&labelColor=black" />
-  <img src="https://img.shields.io/github/actions/workflow/status/emilienaufauvre/react-native-maplibre-gl-js/ci.yml?branch=main&style=for-the-badge&label=CI&labelColor=black" />
-  <img src="https://img.shields.io/github/actions/workflow/status/emilienaufauvre/react-native-maplibre-gl-js/cd.yml?branch=main&style=for-the-badge&label=CD&labelColor=black" />
-  <img src="https://img.shields.io/npm/v/react-native-maplibre-gl-js.svg?style=for-the-badge&label=NPM&labelColor=black" />
+  <a href="https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/emilienaufauvre/react-native-maplibre-gl-js?style=for-the-badge&labelColor=black" />
+  </a>
+  <a href="https://github.com/emilienaufauvre/react-native-maplibre-gl-js/actions/workflows/ci.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/emilienaufauvre/react-native-maplibre-gl-js/ci.yml?branch=main&style=for-the-badge&label=CI&labelColor=black" />
+  </a>
+  <a href="https://github.com/emilienaufauvre/react-native-maplibre-gl-js/actions/workflows/cd.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/emilienaufauvre/react-native-maplibre-gl-js/cd.yml?branch=main&style=for-the-badge&label=CD&labelColor=black" />
+  </a>
+  <a href="https://www.npmjs.com/package/react-native-maplibre-gl-js">
+    <img src="https://img.shields.io/npm/v/react-native-maplibre-gl-js.svg?style=for-the-badge&label=NPM&labelColor=black" />
+  </a>
 </div>
 
 <div align="center">
@@ -43,7 +51,6 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 - [Supported platforms](#supported-platforms)
 - [Installation](#installation)
@@ -52,37 +59,6 @@
   - [1. Map](#1-map)
   - [2. Marker](#2-marker)
   - [3. Popup](#3-popup)
-- [🏁 Getting started](#-getting-started)
-- [📝 Design rationale](#-design-rationale)
-  - [Existing React Native map solutions](#existing-react-native-map-solutions)
-  - [Architectural approach](#architectural-approach)
-- [Contributing](#contributing)
-- [Credits](#credits)
-- [License](#license)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-- [Supported platforms](#supported-platforms)
-- [Installation](#installation)
-- [📚 Documentation](#-documentation)
-- [🧪 Examples](#-examples)
-  - [1. Map](#1-map)
-  - [2. Marker](#2-marker)
-  - [3. Popup](#3-popup)
-- [🏁 Getting started](#-getting-started)
-- [📝 Design rationale](#-design-rationale)
-  - [Existing React Native map solutions](#existing-react-native-map-solutions)
-  - [Architectural approach](#architectural-approach)
-- [Contributing](#contributing)
-- [Credits](#credits)
-- [License](#license)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-- [Supported platforms](#supported-platforms)
-- [Installation](#installation)
-- [📚 Documentation](#-documentation)
-- [🧪 Examples](#-examples)
 - [🏁 Getting started](#-getting-started)
 - [📝 Design rationale](#-design-rationale)
   - [Existing React Native map solutions](#existing-react-native-map-solutions)
