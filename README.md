@@ -66,6 +66,23 @@
 - [Installation](#installation)
 - [📚 Documentation](#-documentation)
 - [🧪 Examples](#-examples)
+  - [1. Map](#1-map)
+  - [2. Marker](#2-marker)
+  - [3. Popup](#3-popup)
+- [🏁 Getting started](#-getting-started)
+- [📝 Design rationale](#-design-rationale)
+  - [Existing React Native map solutions](#existing-react-native-map-solutions)
+  - [Architectural approach](#architectural-approach)
+- [Contributing](#contributing)
+- [Credits](#credits)
+- [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+- [Supported platforms](#supported-platforms)
+- [Installation](#installation)
+- [📚 Documentation](#-documentation)
+- [🧪 Examples](#-examples)
 - [🏁 Getting started](#-getting-started)
 - [📝 Design rationale](#-design-rationale)
   - [Existing React Native map solutions](#existing-react-native-map-solutions)
