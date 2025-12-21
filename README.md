@@ -5,11 +5,11 @@
   <a href="https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/emilienaufauvre/react-native-maplibre-gl-js?style=for-the-badge&labelColor=black" />
   </a>
-  <a href="https://github.com/emilienaufauvre/react-native-maplibre-gl-js/actions/workflows/ci.yml">
-    <img src="https://img.shields.io/github/actions/workflow/status/emilienaufauvre/react-native-maplibre-gl-js/ci.yml?branch=main&style=for-the-badge&label=CI&labelColor=black" />
+  <a href="https://github.com/emilienaufauvre/react-native-maplibre-gl-js/actions/workflows/validate-commit.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/emilienaufauvre/react-native-maplibre-gl-js/validate-commit.yml?branch=main&style=for-the-badge&label=CI&labelColor=black" />
   </a>
-  <a href="https://github.com/emilienaufauvre/react-native-maplibre-gl-js/actions/workflows/cd.yml">
-    <img src="https://img.shields.io/github/actions/workflow/status/emilienaufauvre/react-native-maplibre-gl-js/cd.yml?branch=main&style=for-the-badge&label=CD&labelColor=black" />
+  <a href="https://github.com/emilienaufauvre/react-native-maplibre-gl-js/actions/workflows/delivery.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/emilienaufauvre/react-native-maplibre-gl-js/delivery.yml?branch=main&style=for-the-badge&label=CD&labelColor=black" />
   </a>
   <a href="https://codecov.io/github/emilienaufauvre/react-native-maplibre-gl-js" >
     <img src="https://img.shields.io/codecov/c/github/emilienaufauvre/react-native-maplibre-gl-js/main?style=for-the-badge&labelColor=black&label=TEST%20COVERAGE" />

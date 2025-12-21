@@ -58,7 +58,7 @@ your commit message matches this format when committing.
 ### Publishing to npm
 
 [semantic-release](https://github.com/semantic-release/semantic-release) is
-set up in the [CD workflow](./.github/workflows/cd.yml) to automatically release
+set up in the [CD workflow](./.github/workflows/delivery.yml) to automatically release
 the package on [npmjs](https://www.npmjs.com/) and the source code on GitHub
 with the corresponding tags, etc. once a pull request is merged (or a commit is
 pushed) into the `main` branch.
@@ -75,10 +75,10 @@ The `package.json` file contains various scripts for common tasks:
 - `yarn test:coverage`: run test coverage computation with [Jest](https://jestjs.io/).
 - `yarn docs:typedoc`: build the API reference documentation using
   [TypeDoc](https://typedoc.org/) (docs should not be committed, it is built
-  with the [CD workflow](./.github/workflows/cd.yml).
+  with the [CD workflow](./.github/workflows/delivery.yml).
 - `yarn docs:readme-toc`: build the table of contents in README (docs should not be committed, it is built
 - `yarn docs:readme-examples`: build the example links in README (docs should not be committed, it is built
-  with the [CD workflow](./.github/workflows/cd.yml).
+  with the [CD workflow](./.github/workflows/delivery.yml).
 - `yarn release:build`: build the final npm package (to test locally).
 - `yarn release:semantic-release`: perform release and publishing (to not be used
   directly).

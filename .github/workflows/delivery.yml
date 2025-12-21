@@ -1,8 +1,8 @@
-name: CD
+name: Delivery
 
 on:
   workflow_run:
-    workflows: ["CI"]
+    workflows: ["Validate commit"]
     types:
       - completed
 
