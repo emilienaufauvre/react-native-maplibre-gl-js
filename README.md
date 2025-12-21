@@ -108,14 +108,16 @@ Several real-world usage scenarios are available, you can explore them in two wa
 - [`1.2. Create a camera animation`](./example/src/app/1.-Map/1.2.-Create-a-camera-animation.tsx)
 - [`1.3. Use the globe projection`](./example/src/app/1.-Map/1.3.-Use-the-globe-projection.tsx)
 - [`1.4. Add a raster tile source directly on map`](./example/src/app/1.-Map/1.4.-Add-a-raster-tile-source-directly-on-map.tsx)
+- [`1.5. Use global css styles`](./example/src/app/1.-Map/1.5.-Use-global-css-styles.tsx)
 
 ### 2. Marker
 
 - [`2.1. Component basis`](./example/src/app/2.-Marker/2.1.-Component-basis.tsx)
-- [`2.2. Animate the coordinate`](./example/src/app/2.-Marker/2.2.-Animate-the-coordinate.tsx)
-- [`2.3. Use an detached popup`](./example/src/app/2.-Marker/2.3.-Use-an-detached-popup.tsx)
-- [`2.4. Use an attached popup`](./example/src/app/2.-Marker/2.4.-Use-an-attached-popup.tsx)
-- [`2.5. Propagates the events to a parent component`](./example/src/app/2.-Marker/2.5.-Propagates-the-events-to-a-parent-component.tsx)
+- [`2.2. Animate the coordinate with reanimated`](./example/src/app/2.-Marker/2.2.-Animate-the-coordinate-with-reanimated.tsx)
+- [`2.3. Animate on click with css`](./example/src/app/2.-Marker/2.3.-Animate-on-click-with-css.tsx)
+- [`2.4. Use an detached popup`](./example/src/app/2.-Marker/2.4.-Use-an-detached-popup.tsx)
+- [`2.5. Use an attached popup`](./example/src/app/2.-Marker/2.5.-Use-an-attached-popup.tsx)
+- [`2.6. Propagates the events to a parent component`](./example/src/app/2.-Marker/2.6.-Propagates-the-events-to-a-parent-component.tsx)
 
 ### 3. Popup
 
