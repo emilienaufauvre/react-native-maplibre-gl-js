@@ -1,5 +1,22 @@
 import { StyleSheet } from 'react-native'
-import { useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
+import type { MessageFromWebToRNHandlers } from './MapProvider.types'
+import type { WebViewMessageEvent } from 'react-native-webview'
+import RNLogger from '../../logger/rn-logger'
+import type { MessageFromWebToRN } from '../../../communication/messages.types'
+import {
+  isWebObjectListenerOnHTMLElement,
+  isWebObjectListenerOnMapLayer,
+  isWebObjectListenerOnObject,
+  isWebObjectListenerOnRN,
+} from '../../../communication/messages.utils'
+import useMapAtoms from '../../hooks/atoms/useMapAtoms'
+import type {
+  WebObjectListenerOnHTMLElement,
+  WebObjectListenerOnMapLayer,
+  WebObjectListenerOnObject,
+  WebObjectListenerOnRN,
+} from '../../components-factory/createWebObjectAsComponent.types'
 
 export const useStyles = () => {
   return useMemo(
@@ -10,4 +27,108 @@ export const useStyles = () => {
       }),
     [],
   )
+}
+
+/**
+ * On start, the map must be mounted before any other map element. When the
+ * mount message of the map is ready, we flush all the pending messages to
+ * the web world.
+ */
+export const useFlushMessagesOnMapMounted = () => {
+  // States.
+  // - Global.
+  const { isMapMountMessageReady, flushMessages } = useMapAtoms()
+
+  useEffect(() => {
+    if (isMapMountMessageReady) {
+      flushMessages()
+    }
+  }, [flushMessages, isMapMountMessageReady])
+}
+
+/**
+ * @returns - The handler that will receive the messages from the web world.
+ */
+export const useWebMessageHandler = () => {
+  // States.
+  // - Global.
+  const {
+    setIsWebWorldReady,
+    getWebObjectListeners,
+    resolveWebObjectPendingMethodResponse,
+  } = useMapAtoms()
+
+  const createWebViewMessageHandler = useCallback(
+    (handlers: MessageFromWebToRNHandlers) => {
+      // Not an anonymous function => get the function name for logger.
+      return function handleMessage(event: WebViewMessageEvent) {
+        try {
+          RNLogger.debug('RN', handleMessage.name, event?.nativeEvent?.data)
+          const message = JSON.parse(
+            event.nativeEvent.data,
+          ) as MessageFromWebToRN
+          const handler = handlers[message.type] as
+            | ((m: MessageFromWebToRN) => void)
+            | undefined
+          return handler?.(message)
+        } catch (error: any) {
+          RNLogger.error('RN', handleMessage.name, error.message)
+        }
+      }
+    },
+    [],
+  )
+
+  // Handle the messages from the web world by dispatching the message to the
+  // corresponding handler.
+  const handler = useMemo(() => {
+    return createWebViewMessageHandler({
+      console: ({
+        payload: { args, level },
+      }: Extract<MessageFromWebToRN, { type: 'console' }>) => {
+        RNLogger[level]('Web', args[0], ...args.slice(1))
+      },
+      ready: () => {
+        setIsWebWorldReady(true)
+      },
+      webObjectListenerEvent: ({
+        payload: { eventName, event, objectId },
+      }: Extract<MessageFromWebToRN, { type: 'webObjectListenerEvent' }>) => {
+        // Retrieve the corresponding object listener.
+        const listener = getWebObjectListeners({
+          objectId,
+        })?.[eventName]
+        // Then, call it.
+        if (isWebObjectListenerOnRN(listener)) {
+          ;(listener as WebObjectListenerOnRN<any>).rnListener(event)
+        }
+        if (isWebObjectListenerOnObject(listener)) {
+          ;(listener as WebObjectListenerOnObject<any>).objectListener(event)
+        }
+        if (isWebObjectListenerOnMapLayer(listener)) {
+          ;(listener as WebObjectListenerOnMapLayer<any>).layerListener(event)
+        }
+        if (isWebObjectListenerOnHTMLElement(listener)) {
+          ;(listener as WebObjectListenerOnHTMLElement<any>).elementListener(
+            event,
+          )
+        }
+      },
+      webObjectMethodResponse: ({
+        payload: { requestId, result },
+      }: Extract<MessageFromWebToRN, { type: 'webObjectMethodResponse' }>) => {
+        resolveWebObjectPendingMethodResponse({
+          requestId,
+          result,
+        })
+      },
+    })
+  }, [
+    createWebViewMessageHandler,
+    setIsWebWorldReady,
+    getWebObjectListeners,
+    resolveWebObjectPendingMethodResponse,
+  ])
+
+  return { handler }
 }
