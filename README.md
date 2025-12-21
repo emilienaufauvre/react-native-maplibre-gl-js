@@ -12,7 +12,7 @@
     <img src="https://img.shields.io/github/actions/workflow/status/emilienaufauvre/react-native-maplibre-gl-js/cd.yml?branch=main&style=for-the-badge&label=CD&labelColor=black" />
   </a>
   <a href="https://codecov.io/github/emilienaufauvre/react-native-maplibre-gl-js" >
-    <img src="https://img.shields.io/codecov/c/github/emilienaufauvre/react-native-maplibre-gl-js/main?style=for-the-badge&labelColor=black" />
+    <img src="https://img.shields.io/codecov/c/github/emilienaufauvre/react-native-maplibre-gl-js/main?style=for-the-badge&labelColor=black&label=TEST%20COVERAGE" />
   </a>
   <a href="https://www.npmjs.com/package/react-native-maplibre-gl-js">
     <img src="https://img.shields.io/npm/v/react-native-maplibre-gl-js.svg?style=for-the-badge&label=NPM&labelColor=black" />
