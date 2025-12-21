@@ -1,4 +1,4 @@
-name: Validate commit
+name: Validation
 
 on:
   push:

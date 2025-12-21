@@ -1,18 +1,14 @@
+
 <div align="center">
   <h1>react-native-maplibre-gl-js</h1>
-</div>
-<div align="center">
-  <a href="https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/emilienaufauvre/react-native-maplibre-gl-js?style=for-the-badge&labelColor=black" />
+  <a href="https://github.com/emilienaufauvre/react-native-maplibre-gl-js/actions/workflows/validation.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/emilienaufauvre/react-native-maplibre-gl-js/validation.yml?branch=main&style=for-the-badge&label=Validation&labelColor=black" />
   </a>
-  <a href="https://github.com/emilienaufauvre/react-native-maplibre-gl-js/actions/workflows/validate-commit.yml">
-    <img src="https://img.shields.io/github/actions/workflow/status/emilienaufauvre/react-native-maplibre-gl-js/validate-commit.yml?branch=main&style=for-the-badge&label=Validate%20commit&labelColor=black" />
+  <a href="https://codecov.io/github/emilienaufauvre/react-native-maplibre-gl-js">
+    <img src="https://img.shields.io/codecov/c/github/emilienaufauvre/react-native-maplibre-gl-js/main?style=for-the-badge&labelColor=black&label=Test%20coverage" />
   </a>
   <a href="https://github.com/emilienaufauvre/react-native-maplibre-gl-js/actions/workflows/delivery.yml">
     <img src="https://img.shields.io/github/actions/workflow/status/emilienaufauvre/react-native-maplibre-gl-js/delivery.yml?branch=main&style=for-the-badge&label=Delivery&labelColor=black" />
-  </a>
-  <a href="https://codecov.io/github/emilienaufauvre/react-native-maplibre-gl-js" >
-    <img src="https://img.shields.io/codecov/c/github/emilienaufauvre/react-native-maplibre-gl-js/main?style=for-the-badge&labelColor=black&label=TEST%20COVERAGE" />
   </a>
   <a href="https://www.npmjs.com/package/react-native-maplibre-gl-js">
     <img src="https://img.shields.io/npm/v/react-native-maplibre-gl-js.svg?style=for-the-badge&label=NPM&labelColor=black" />
