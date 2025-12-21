@@ -47,7 +47,8 @@ jobs:
 
       - name: Run unit tests
         run: yarn test:coverage
-      - name: Upload coverage reports to Codecov
+
+      - name: Upload coverage reports to CodeCov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
