@@ -2,7 +2,7 @@ name: Delivery
 
 on:
   workflow_run:
-    workflows: ["Validate commit"]
+    workflows: ["Validation"]
     types:
       - completed
 
