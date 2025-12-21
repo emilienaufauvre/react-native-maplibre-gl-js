@@ -7,6 +7,7 @@ import type {
 import type { WebObjectType } from '../../communication/messages.types'
 import useWebObjectMountOnLaunch from './hooks/useWebObjectMountOnLaunch'
 import useWebObjectMethodsProxy from './hooks/useWebObjectMethodsProxy'
+import useWebObjectPropertiesUpdater from './hooks/useWebObjectPropertiesUpdater'
 
 const createWebObjectAsComponent = <
   Ref extends WebObjectRef<any>,
@@ -21,10 +22,8 @@ const createWebObjectAsComponent = <
     useWebObjectMountOnLaunch<Props>(props, id, objectType)
     // Forward a method call on the RN object to the web object.
     useWebObjectMethodsProxy<Ref>(ref, id)
-    // TODO needed?
-    //useWebObjectOptionsUpdater<Options, Listener>(
-    //  props, id, dispatchMessage
-    //)
+    // Update the web object properties when they changed in the component body.
+    useWebObjectPropertiesUpdater<Props>(props as Props, id)
 
     return null
   })

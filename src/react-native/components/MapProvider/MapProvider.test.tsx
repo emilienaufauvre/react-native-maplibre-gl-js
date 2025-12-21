@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import { render, renderHook, screen } from '@testing-library/react-native'
 import MapProvider from './MapProvider'
 import { useWebMessageHandler } from './MapProvider.hooks'
-import RNLogger from '../../logger/rn-logger.mock'
+import RNLogger from '../../logger/rn-logger'
 import {
   getWebObjectListenersMock,
   resolveWebObjectPendingMethodResponseMock,
@@ -20,6 +20,7 @@ describe('MapProvider', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
+
   describe('Given the component is rendered with children', () => {
     beforeEach(() => {
       render(
@@ -30,11 +31,13 @@ describe('MapProvider', () => {
         </MapProvider>,
       )
     })
+
     describe('When nothing', () => {
       test('Then the children are rendered', () => {
         const child = screen.getByTestId('child')
         expect(child).toBeTruthy()
       })
+
       test('Then the internal WebView is rendered', () => {
         const webView = screen.getByTestId('map-provider-webview')
         expect(webView).toBeTruthy()
