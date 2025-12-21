@@ -4,11 +4,11 @@ import {
   Marker,
   type MarkerRef,
 } from 'react-native-maplibre-gl-js'
-import { Event } from 'maplibre-gl'
 import { useRef } from 'react'
 
 /**
- * @returns - Example of the marker component usage.
+ * @returns - Example of the marker component usage, with an animation
+ *  implemented using CSS keyframes.
  */
 const Screen = () => {
   // Refs.
@@ -27,8 +27,6 @@ const Screen = () => {
         ref={markerRef}
         options={{
           draggable: true,
-          // The element to be used as the marker (a descriptor of an
-          // HTMLElement).
           element: {
             tagName: 'div',
             innerHTML: `
@@ -39,38 +37,41 @@ const Screen = () => {
                   justify-content: center;
                   width: 32px;
                   height: 32px;
-                  padding: 4px;
                   margin: 0;
+                  padding: 4px;
                   border-radius: 50%;
                   background-color: #FFF;
                   box-shadow: 0 0 10px #000A;
                 }
+                /* Animation, triggered once the marker is added to the map. */
+                @keyframes pin-pop {
+                  from {
+                    transform: scale(0.1);
+                    opacity: 0.25;
+                  }
+                  to {
+                    transform: scale(1);
+                    opacity: 1;
+                  }
+                }
+                .pin--pop {
+                  animation: pin-pop 400ms ease-out;
+                }
               </style>
-              <div class="pin">
+              <div class="pin pin--pop">
                 <h1>📍</h1>
               </div>`,
           },
         }}
         listeners={{
           mount: {
-            rnListener: () => {
-              // The marker coordinate must be set on mount.
-              markerRef.current?.setLngLat([2.32, 48.86])
-              // That's it! The marker is visible at the indicated coordinate.
-              // No need to call "addTo()", the marker is automatically added to
-              // the map when mounted.
-            },
-          },
-          unmount: {
-            rnListener: () => console.log('Marker unmounted'),
-          },
-          dragend: {
-            objectListener: (_: Event) => console.log('Marker drag ended'),
+            rnListener: () => markerRef.current?.setLngLat([2.32, 48.86]),
           },
           click: {
-            elementListener: async (_: MouseEvent) => {
-              const lngLat = await markerRef.current?.getLngLat()
-              console.log('Marker clicked at', lngLat)
+            elementListener: () => {
+              // The animation is triggered once the marker is added to the map;
+              // therefore, we add it again to the map to trigger the animation.
+              markerRef.current?.addTo()
             },
           },
         }}

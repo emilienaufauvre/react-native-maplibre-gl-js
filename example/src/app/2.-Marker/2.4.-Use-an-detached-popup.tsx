@@ -59,26 +59,23 @@ const Screen = () => {
           element: {
             tagName: 'div',
             innerHTML: `
-                <style>
-                  .no-margin * {
-                    margin: 0;
-                  }
-                </style>
-                <div
-                  class="no-margin"
-                  style="
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    aspect-ratio: 1;
-                    padding: 4px;
-                    border-radius: 50%;
-                    background-color: #FFF;
-                    box-shadow: 0 0 10px #000A;
-                  "
-                >
-                  <h1>📍</h1>
-                </div>`,
+              <style>
+                .pin {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 32px;
+                  height: 32px;
+                  padding: 4px;
+                  margin: 0;
+                  border-radius: 50%;
+                  background-color: #FFF;
+                  box-shadow: 0 0 10px #000A;
+                }
+              </style>
+              <div class="pin">
+                <h1>📍</h1>
+              </div>`,
           },
         }}
         listeners={{
@@ -94,8 +91,10 @@ const Screen = () => {
                 return
               }
               popupRef.current?.setLngLat(lngLat)
+              popupRef.current?.addTo()
               // Note: if you drag the marker, the popup won't follow. It is not
-              // attached to the marker.
+              // attached to the marker. One should implement drag listeners to
+              // keep the popup in sync with the marker coordinate.
             },
           },
         }}
