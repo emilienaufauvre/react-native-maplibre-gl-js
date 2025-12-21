@@ -4,6 +4,8 @@ import { WEBVIEW_STATIC_HTML } from '../../../web/generated/webview_static_html'
 import useMapAtoms from '../../hooks/atoms/useMapAtoms'
 import {
   useFlushMessagesOnMapMounted,
+  useCssInjectionScript,
+  useInjectJavaScriptIfInjectedCssChanged,
   useStyles,
   useWebMessageHandler,
 } from './MapProvider.hooks'
@@ -24,7 +26,12 @@ import type { MapProviderProps } from './MapProvider.types'
  * </MapProvider>
  * ```
  */
-const MapProvider = ({ style, webViewStyle, children }: MapProviderProps) => {
+const MapProvider = ({
+  style,
+  webViewStyle,
+  children,
+  injectedCss,
+}: MapProviderProps) => {
   // States.
   // - Global.
   const { setWebView } = useMapAtoms()
@@ -33,6 +40,8 @@ const MapProvider = ({ style, webViewStyle, children }: MapProviderProps) => {
   // Behaviors.
   useFlushMessagesOnMapMounted()
   const { handler } = useWebMessageHandler()
+  const { cssInjectionScript } = useCssInjectionScript(injectedCss)
+  useInjectJavaScriptIfInjectedCssChanged(cssInjectionScript)
 
   return (
     <View style={[styles.container, style]}>
@@ -40,15 +49,12 @@ const MapProvider = ({ style, webViewStyle, children }: MapProviderProps) => {
         testID={'map-provider-webview'}
         ref={setWebView}
         style={[styles.webView, webViewStyle]}
-        originWhitelist={['*']}
-        javaScriptEnabled={true}
-        allowFileAccess={true}
-        domStorageEnabled={true}
         scrollEnabled={false}
-        allowUniversalAccessFromFileURLs={true}
-        mixedContentMode={'always'}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
         onMessage={handler}
         source={{ html: WEBVIEW_STATIC_HTML }}
+        injectedJavaScriptBeforeContentLoaded={cssInjectionScript}
       />
       {children}
     </View>
