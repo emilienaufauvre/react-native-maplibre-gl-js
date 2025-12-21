@@ -30,7 +30,6 @@ const Screen = () => {
         options={{
           draggable: true,
           element: {
-            tagName: 'div',
             innerHTML: `
               <style>
                 .pin {

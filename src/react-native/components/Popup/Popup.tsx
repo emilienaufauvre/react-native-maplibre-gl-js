@@ -16,9 +16,11 @@ import type { PopupProps, PopupRef } from './Popup.types'
  *   listeners={{
  *     mount: {
  *       rnListener: () => {
- *         // The popup is opened once the coordinates are set.
  *         popupRef.current?.setLngLat([2.32, 48.86])
  *         popupRef.current?.setText('This is a popup')
+ *         // The popup is opened once added to the map (as in the official
+ *         // MapLibre GL JS docs).
+ *         popupRef.current?.addTo()
  *       },
  *     },
  *     open: {

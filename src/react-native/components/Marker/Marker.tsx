@@ -14,26 +14,22 @@ import type { MarkerProps, MarkerRef } from './Marker.types'
  *     draggable: true,
  *     // The element to be used as the marker (a descriptor of an HTMLElement).
  *     element: {
- *       tagName: 'div',
  *       innerHTML: `
  *           <style>
- *             .no-margin * {
- *               margin: 0;
- *             }
- *           </style>
- *           <div
- *             class="no-margin"
- *             style="
+ *             .pin {
  *               display: flex;
  *               align-items: center;
  *               justify-content: center;
- *               aspect-ratio: 1;
+ *               width: 32px;
+ *               height: 32px;
+ *               margin: 0;
  *               padding: 4px;
  *               border-radius: 50%;
  *               background-color: #FFF;
  *               box-shadow: 0 0 10px #000A;
- *             "
- *           >
+ *             }
+ *           </style>
+ *           <div class="pin">
  *             <h1>📍</h1>
  *           </div>`,
  *     },

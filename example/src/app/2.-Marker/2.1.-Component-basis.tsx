@@ -30,7 +30,6 @@ const Screen = () => {
           // The element to be used as the marker (a descriptor of an
           // HTMLElement).
           element: {
-            tagName: 'div',
             innerHTML: `
               <style>
                 .pin {
