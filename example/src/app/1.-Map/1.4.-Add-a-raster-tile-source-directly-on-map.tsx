@@ -2,8 +2,8 @@ import { MapProvider, Map, type MapRef } from 'react-native-maplibre-gl-js'
 import { useRef } from 'react'
 
 /**
- * @returns - Example of the map component with a RasterTileSource, but not
- *  instantiated as a component.
+ * @returns - Example of the map component usage, with a RasterTileSource, but
+ *  not instantiated as a component.
  */
 const Screen = () => {
   // Refs.
