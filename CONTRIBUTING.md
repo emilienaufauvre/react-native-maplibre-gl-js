@@ -71,7 +71,8 @@ The `package.json` file contains various scripts for common tasks:
 - `yarn build:webview-code`: build the WebView injected code (to test it locally).
 - `yarn lint`: lint files with [ESLint](https://eslint.org/).
 - `yarn typecheck`: type-check files with TypeScript.
-- `yarn test`: run unit tests with [Jest](https://jestjs.io/).
+- `yarn test:run`: run unit tests with [Jest](https://jestjs.io/).
+- `yarn test:coverage`: run test coverage computation with [Jest](https://jestjs.io/).
 - `yarn docs:typedoc`: build the API reference documentation using
   [TypeDoc](https://typedoc.org/) (docs should not be committed, it is built
   with the [CD workflow](./.github/workflows/cd.yml).

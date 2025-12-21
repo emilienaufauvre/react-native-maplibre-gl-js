@@ -11,6 +11,9 @@
   <a href="https://github.com/emilienaufauvre/react-native-maplibre-gl-js/actions/workflows/cd.yml">
     <img src="https://img.shields.io/github/actions/workflow/status/emilienaufauvre/react-native-maplibre-gl-js/cd.yml?branch=main&style=for-the-badge&label=CD&labelColor=black" />
   </a>
+  <a href="https://codecov.io/github/emilienaufauvre/react-native-maplibre-gl-js" >
+    <img src="https://img.shields.io/codecov/c/github/emilienaufauvre/react-native-maplibre-gl-js/main?style=for-the-badge&labelColor=black" />
+  </a>
   <a href="https://www.npmjs.com/package/react-native-maplibre-gl-js">
     <img src="https://img.shields.io/npm/v/react-native-maplibre-gl-js.svg?style=for-the-badge&label=NPM&labelColor=black" />
   </a>

@@ -47,6 +47,10 @@ jobs:
 
       - name: Run unit tests
         run: yarn test --maxWorkers=2 --coverage
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   docs:
     name: Check docs generation
