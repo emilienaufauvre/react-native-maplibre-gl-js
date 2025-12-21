@@ -30,11 +30,12 @@ const Screen = () => {
         listeners={{
           mount: {
             rnListener: () => {
-              // The popup is opened once the coordinates are set.
+              // Setup the popup properties.
               popupRef.current?.setLngLat([2.32, 48.86])
-              // Then it is closed before the text is set.
               popupRef.current?.setText('This is a popup')
-              // And finally, it is opened again because the text is set.
+              // And finally, open it (it's equivalent to addTo(map) in official
+              // MapLibre GL JS docs).
+              popupRef.current?.addTo()
             },
           },
           open: {

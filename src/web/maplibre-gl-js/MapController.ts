@@ -165,12 +165,6 @@ export default class MapController {
       result = await this.#runNormalMethod(message, object)
     }
 
-    if (!(object instanceof maplibregl.Map)) {
-      // Always add the object back to the map in case it was removed
-      // (e.g., Popup's setLngLat or setHTML methods remove it from the map).
-      object.addTo(this.map)
-    }
-
     this.reactNativeBridge.postMessage({
       type: 'webObjectMethodResponse',
       payload: { requestId: message.payload.requestId, result },

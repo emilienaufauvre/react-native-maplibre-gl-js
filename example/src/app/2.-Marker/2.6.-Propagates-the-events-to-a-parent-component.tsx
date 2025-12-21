@@ -29,7 +29,7 @@ const Screen = () => {
         options={{
           draggable: false,
           element: {
-            innerHTML: '<b>undraggable marker</b>',
+            innerHTML: '<b>Undraggable Marker</b>',
           },
         }}
         listeners={{
@@ -50,7 +50,7 @@ const Screen = () => {
         options={{
           draggable: true,
           element: {
-            innerHTML: '<b>draggable marker</b>',
+            innerHTML: '<b>Draggable Marker</b>',
           },
         }}
         listeners={{

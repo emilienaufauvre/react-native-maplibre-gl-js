@@ -17,6 +17,12 @@ export type MapProviderProps = {
    */
   webViewStyle?: StyleProp<ViewStyle>
   /**
+   * CSS (or list of CSS) to inject globally into the WebView document head.
+   * Useful to share classes/animations across Marker components and/or other
+   * elements that use HTMLElement (descriptors).
+   */
+  injectedCss?: string | string[]
+  /**
    * The map elements (e.g., Map) as direct children.
    */
   children?: ReactNode

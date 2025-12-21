@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import type { MessageFromWebToRNHandlers } from './MapProvider.types'
 import type { WebViewMessageEvent } from 'react-native-webview'
 import RNLogger from '../../logger/rn-logger'
@@ -17,6 +17,7 @@ import type {
   WebObjectListenerOnObject,
   WebObjectListenerOnRN,
 } from '../../components-factory/createWebObjectAsComponent.types'
+import { buildCssInjectionScript, normalizeCss } from './MapProvider.utils'
 
 export const useStyles = () => {
   return useMemo(
@@ -131,4 +132,44 @@ export const useWebMessageHandler = () => {
   ])
 
   return { handler }
+}
+
+/**
+ * @param injectedCss - The CSS to be injected.
+ * @returns - The given CSS in a format that can be injected into the WebView.
+ */
+export const useCssInjectionScript = (injectedCss?: string | string[]) => {
+  const cssInjectionScript = useMemo(() => {
+    const normalizedCss = normalizeCss(injectedCss)
+    return normalizedCss ? buildCssInjectionScript(normalizedCss) : undefined
+  }, [injectedCss])
+  return { cssInjectionScript }
+}
+
+/**
+ * Inject the given script into the WebView if it changed.
+ * @param cssInjectionScript - A script that injects CSS once executed within
+ *  the WebView.
+ */
+export const useInjectJavaScriptIfInjectedCssChanged = (
+  cssInjectionScript?: string,
+) => {
+  // Refs.
+  const lastInjectedScriptRef = useRef<string>(undefined)
+  // States.
+  // - Global.
+  const { webView, isWebWorldReady } = useMapAtoms()
+
+  useEffect(() => {
+    if (
+      !cssInjectionScript ||
+      !isWebWorldReady ||
+      !webView ||
+      lastInjectedScriptRef.current === cssInjectionScript
+    ) {
+      return
+    }
+    webView?.injectJavaScript(cssInjectionScript)
+    lastInjectedScriptRef.current = cssInjectionScript
+  }, [cssInjectionScript, isWebWorldReady, webView])
 }
