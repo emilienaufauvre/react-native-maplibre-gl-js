@@ -1,5 +1,5 @@
 import { consoleTransport, logger } from 'react-native-logs'
-import pkg from '../../../package.json'
+import pkg from 'react-native-maplibre-gl-js/package.json'
 
 type LogOrigin = 'RN' | 'Web'
 
