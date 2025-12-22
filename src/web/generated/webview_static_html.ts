@@ -23359,6 +23359,11 @@ uniform mat4 u_projection_matrix;
             message.payload.objectId,
             message.payload.listeners
           );
+          this.#objects.entries().forEach(([, object]) => {
+            if (!(object instanceof import_maplibre_gl.default.Map)) {
+              object.addTo(map);
+            }
+          });
           break;
         }
         case "marker": {
@@ -23419,8 +23424,6 @@ uniform mat4 u_projection_matrix;
       let result;
       if (!this.#runIfSpecialMethod(message, object)) {
         result = await this.#runNormalMethod(message, object);
-      }
-      if (!(object instanceof import_maplibre_gl.default.Map)) {
       }
       this.reactNativeBridge.postMessage({
         type: "webObjectMethodResponse",

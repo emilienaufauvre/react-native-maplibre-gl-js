@@ -1,79 +1,29 @@
-import { type PropsWithoutRef, useCallback, useEffect, useRef } from 'react'
+import { type PropsWithoutRef, useEffect } from 'react'
 import type { WebObjectProps } from '../createWebObjectAsComponent.types'
-import type { WebObjectType } from '../../../communication/messages.types'
-import useMapAtoms from '../../hooks/atoms/useMapAtoms'
+import type { MountUnmountCallbacksOptions } from './useWebObjectMountUnmountCallbacks.types'
 
 /**
- * Mount the web object once the React Native one is mounted.
+ * Mount and unmount the web object once the React Native one is mounted /
+ * unmounted.
  * @param props - The RN object props.
  * @param objectId - The ID of the web object that owns the method.
- * @param objectType - The type of the associated web object.
+ * @param mount - Callback.
+ * @param unmount - Callback.
  */
 const useWebObjectMountOnLaunch = <Props extends WebObjectProps<any, any>>(
   props: PropsWithoutRef<Props>,
   objectId: string,
-  objectType: WebObjectType,
+  mount: (options?: MountUnmountCallbacksOptions) => void,
+  unmount: (options?: MountUnmountCallbacksOptions) => void,
 ) => {
-  // Refs.
-  const isMounted = useRef<boolean>(false)
-  // States.
-  // - Global.
-  const {
-    isWebWorldReady,
-    dispatchMessage,
-    setWebObjectListeners,
-    deleteWebObjectListeners,
-  } = useMapAtoms()
-
-  const mount = useCallback(() => {
-    // Mount the component as a web object on the web world.
-    dispatchMessage({
-      type: `webObjectMount`,
-      payload: {
-        objectId: objectId,
-        objectType,
-        options: props.options ?? {},
-        listeners: props.listeners ?? {},
-      },
-    })
-    // Register listeners on event from the web world.
-    setWebObjectListeners({
-      objectId: objectId,
-      listeners: props.listeners ?? {},
-    })
-    isMounted.current = true
-  }, [
-    objectId,
-    objectType,
-    props.options,
-    props.listeners,
-    dispatchMessage,
-    setWebObjectListeners,
-  ])
-
-  const unmount = useCallback(() => {
-    dispatchMessage({
-      type: `webObjectUnmount`,
-      payload: { objectId },
-    })
-    deleteWebObjectListeners({ objectId })
-    isMounted.current = false
-  }, [objectId, dispatchMessage, deleteWebObjectListeners])
-
-  // On mount/unmount update the web object.
+  // On mount/unmount, do the same for the web object.
   useEffect(() => {
-    if (!isWebWorldReady) {
-      return
-    }
-
-    if (!isMounted.current) {
-      mount()
-    }
+    mount()
     // TODO verify if we unmount here? it sure that it must not be in this
     //  use effect, otherwise on start if mount then unmount then mount, but
     //  we may have to unmount in another effect
-    //return unmount
-  }, [objectId, isWebWorldReady, dispatchMessage, props, unmount, mount])
+    //return unmount()
+  }, [objectId, props, mount, unmount])
 }
 
 export default useWebObjectMountOnLaunch
