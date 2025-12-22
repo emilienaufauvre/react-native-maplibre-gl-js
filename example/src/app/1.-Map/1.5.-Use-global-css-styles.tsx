@@ -7,7 +7,8 @@ import {
 import { useRef } from 'react'
 
 /**
- * @returns - Example of the marker component usage.
+ * @returns - Example of the map component usage, with global CSS styles shared
+ *  across markers.
  */
 const Screen = () => {
   // Refs.
