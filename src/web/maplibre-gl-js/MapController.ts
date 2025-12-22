@@ -82,6 +82,13 @@ export default class MapController {
           message.payload.objectId,
           message.payload.listeners,
         )
+        // 3) If the map was unmounted and mounted back again (e.g., on
+        //    "options" props changed), add back the existing objects to it.
+        this.#objects.entries().forEach(([, object]) => {
+          if (!(object instanceof maplibregl.Map)) {
+            object.addTo(map)
+          }
+        })
         break
       }
       case 'marker': {
