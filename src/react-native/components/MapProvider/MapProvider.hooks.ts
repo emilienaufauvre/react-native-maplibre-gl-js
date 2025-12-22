@@ -155,7 +155,7 @@ export const useInjectJavaScriptIfInjectedCssChanged = (
   cssInjectionScript?: string,
 ) => {
   // Refs.
-  const lastInjectedScriptRef = useRef<string>(undefined)
+  const lastInjectedScriptRef = useRef<string | null>(null)
   // States.
   // - Global.
   const { webView, isWebWorldReady } = useMapAtoms()

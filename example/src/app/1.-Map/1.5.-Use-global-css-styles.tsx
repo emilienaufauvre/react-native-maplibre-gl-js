@@ -12,9 +12,9 @@ import { useRef } from 'react'
  */
 const Screen = () => {
   // Refs.
-  const marker1Ref = useRef<MarkerRef>(null)
-  const marker2Ref = useRef<MarkerRef>(null)
-  const marker3Ref = useRef<MarkerRef>(null)
+  const marker1Ref = useRef<MarkerRef | null>(null)
+  const marker2Ref = useRef<MarkerRef | null>(null)
+  const marker3Ref = useRef<MarkerRef | null>(null)
 
   // CSS styles to be used among components. Can also be defined as a list of
   // strings (CSS styles).

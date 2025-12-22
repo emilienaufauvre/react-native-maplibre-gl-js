@@ -11,7 +11,7 @@ import { useRef } from 'react'
  */
 const Screen = () => {
   // Refs.
-  const popupRef = useRef<PopupRef>(null)
+  const popupRef = useRef<PopupRef | null>(null)
 
   return (
     <MapProvider>

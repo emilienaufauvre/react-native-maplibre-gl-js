@@ -7,7 +7,7 @@ import { useRef } from 'react'
  */
 const Screen = () => {
   // Refs.
-  const mapRef = useRef<MapRef>(null)
+  const mapRef = useRef<MapRef | null>(null)
 
   return (
     <MapProvider>

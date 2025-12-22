@@ -12,8 +12,8 @@ import { useRef } from 'react'
  */
 const Screen = () => {
   // Refs.
-  const marker1Ref = useRef<MarkerRef>(null)
-  const marker2Ref = useRef<MarkerRef>(null)
+  const marker1Ref = useRef<MarkerRef | null>(null)
+  const marker2Ref = useRef<MarkerRef | null>(null)
 
   return (
     <MapProvider>

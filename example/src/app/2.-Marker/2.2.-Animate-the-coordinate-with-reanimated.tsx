@@ -19,7 +19,7 @@ import { scheduleOnRN } from 'react-native-worklets'
  */
 const Screen = () => {
   // Refs.
-  const markerRef = useRef<MarkerRef>(null)
+  const markerRef = useRef<MarkerRef | null>(null)
   // Animation to smoothly update the marker coordinate.
   const markerLng = useSharedValue(0)
   const markerLat = useSharedValue(0)
