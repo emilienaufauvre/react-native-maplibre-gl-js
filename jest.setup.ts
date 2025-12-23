@@ -1,23 +1,5 @@
 import { jest } from '@jest/globals'
 
-jest.mock(
-  './src/react-native/components-factory/hooks/useWebObjectMethodsProxy',
-  () =>
-    require('./src/react-native/components-factory/hooks/useWebObjectMethodsProxy.mock'),
-)
-
-jest.mock(
-  './src/react-native/components-factory/hooks/useWebObjectMountOnLaunch',
-  () =>
-    require('./src/react-native/components-factory/hooks/useWebObjectMountOnLaunch.mock'),
-)
-
-jest.mock(
-  './src/react-native/components-factory/hooks/useWebObjectPropertiesUpdater',
-  () =>
-    require('./src/react-native/components-factory/hooks/useWebObjectPropertiesUpdater.mock'),
-)
-
 jest.mock('./src/react-native/hooks/atoms/useMapAtoms', () =>
   require('./src/react-native/hooks/atoms/useMapAtoms.mock'),
 )

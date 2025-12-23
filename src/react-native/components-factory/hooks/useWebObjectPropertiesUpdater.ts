@@ -18,7 +18,7 @@ export const useWebObjectPropertiesUpdater = <
   unmount: (options?: MountUnmountCallbacksOptions) => void,
 ) => {
   // Refs.
-  const optionsAsStringPrevious = useRef<string>('')
+  const optionsAsStringPrevious = useRef<string | undefined>(undefined)
 
   const optionsAsString = useMemo(() => stableStringify(props.options), [props])
 
