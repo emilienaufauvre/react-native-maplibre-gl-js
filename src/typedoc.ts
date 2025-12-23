@@ -10,21 +10,21 @@ export type {
   MapMethods,
   MapOptions,
   MapListeners,
-} from './react-native/components/Map/Map.types'
+} from './react-native/components/web-objects/Map/Map.types'
 
 // @group Marker types.
 export type {
   MarkerMethods,
   MarkerOptions,
   MarkerListeners,
-} from './react-native/components/Marker/Marker.types'
+} from './react-native/components/web-objects/Marker/Marker.types'
 
 // @group Popup types.
 export type {
   PopupMethods,
   PopupOptions,
   PopupListeners,
-} from './react-native/components/Popup/Popup.types'
+} from './react-native/components/web-objects/Popup/Popup.types'
 
 // @group Web objects abstractions.
 export type {
@@ -40,4 +40,4 @@ export type {
   WebObjectListenerOnHTMLElement,
   WebObjectOptionsInferred,
   WebObjectMethodsInferred,
-} from './react-native/components-factory/createWebObjectAsComponent.types'
+} from './react-native/web-objects-factory/createWebObjectAsComponent.types'

@@ -5,7 +5,7 @@ import type {
   MessageFromRNToWeb,
   WebObjectId,
 } from '../../../communication/messages.types'
-import type { WebObjectListeners } from '../../components-factory/createWebObjectAsComponent.types'
+import type { WebObjectListeners } from '../../web-objects-factory/createWebObjectAsComponent.types'
 import { stableStringify } from './useMapAtoms.utils'
 
 /**

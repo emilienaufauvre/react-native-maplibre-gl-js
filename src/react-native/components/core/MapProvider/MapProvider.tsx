@@ -1,7 +1,7 @@
 import { View } from 'react-native'
 import { WebView } from 'react-native-webview'
-import { WEBVIEW_STATIC_HTML } from '../../../web/generated/webview_static_html'
-import useMapAtoms from '../../hooks/atoms/useMapAtoms'
+import { WEBVIEW_STATIC_HTML } from '../../../../web/generated/webview_static_html'
+import useMapAtoms from '../../../hooks/atoms/useMapAtoms'
 import {
   useFlushMessagesOnMapMounted,
   useCssInjectionScript,

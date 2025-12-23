@@ -14,7 +14,7 @@ import {
 import type {
   WebObjectListenerOnMapLayer,
   WebObjectListeners,
-} from '../../react-native/components-factory/createWebObjectAsComponent.types'
+} from '../../react-native/web-objects-factory/createWebObjectAsComponent.types'
 
 /**
  * Manage the `MapLibre GL JS` map and its objects. Receive messages from the

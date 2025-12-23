@@ -2,21 +2,21 @@ import { StyleSheet } from 'react-native'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import type { MessageFromWebToRNHandlers } from './MapProvider.types'
 import type { WebViewMessageEvent } from 'react-native-webview'
-import RNLogger from '../../logger/rn-logger'
-import type { MessageFromWebToRN } from '../../../communication/messages.types'
+import RNLogger from '../../../logger/rn-logger'
+import type { MessageFromWebToRN } from '../../../../communication/messages.types'
 import {
   isWebObjectListenerOnHTMLElement,
   isWebObjectListenerOnMapLayer,
   isWebObjectListenerOnObject,
   isWebObjectListenerOnRN,
-} from '../../../communication/messages.utils'
-import useMapAtoms from '../../hooks/atoms/useMapAtoms'
+} from '../../../../communication/messages.utils'
+import useMapAtoms from '../../../hooks/atoms/useMapAtoms'
 import type {
   WebObjectListenerOnHTMLElement,
   WebObjectListenerOnMapLayer,
   WebObjectListenerOnObject,
   WebObjectListenerOnRN,
-} from '../../components-factory/createWebObjectAsComponent.types'
+} from '../../../web-objects-factory/createWebObjectAsComponent.types'
 import { buildCssInjectionScript, normalizeCss } from './MapProvider.utils'
 
 export const useStyles = () => {

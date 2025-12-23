@@ -2,12 +2,12 @@ import { View, Text } from 'react-native'
 import { render, renderHook, screen } from '@testing-library/react-native'
 import MapProvider from './MapProvider'
 import { useWebMessageHandler } from './MapProvider.hooks'
-import RNLogger from '../../logger/rn-logger'
+import RNLogger from '../../../logger/rn-logger'
 import {
   getWebObjectListenersMock,
   resolveWebObjectPendingMethodResponseMock,
   setIsWebWorldReadyMock,
-} from '../../hooks/atoms/useMapAtoms.mock'
+} from '../../../hooks/atoms/useMapAtoms.mock'
 import { jest } from '@jest/globals'
 
 const createEvent = (data: unknown) =>

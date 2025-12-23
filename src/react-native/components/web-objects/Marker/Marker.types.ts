@@ -11,8 +11,8 @@ import type {
   WebObjectOptionsInferred,
   WebObjectProps,
   WebObjectRef,
-} from '../../components-factory/createWebObjectAsComponent.types'
-import type { HTMLElementDescriptor } from '../../../communication/messages.types'
+} from '../../../web-objects-factory/createWebObjectAsComponent.types'
+import type { HTMLElementDescriptor } from '../../../../communication/messages.types'
 
 /**
  * Marker component ref.

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import type { StyleProp, ViewStyle } from 'react-native'
-import type { MessageFromWebToRN } from '../../../communication/messages.types'
+import type { MessageFromWebToRN } from '../../../../communication/messages.types'
 
 /**
  * MapProvider component props.

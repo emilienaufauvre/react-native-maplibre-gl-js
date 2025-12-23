@@ -6,7 +6,7 @@ import type {
 import type {
   WebObjectListeners,
   WebObjectOptionsInferred,
-} from '../react-native/components-factory/createWebObjectAsComponent.types'
+} from '../react-native/web-objects-factory/createWebObjectAsComponent.types'
 
 /**
  * The web objects that are supported by this library.
