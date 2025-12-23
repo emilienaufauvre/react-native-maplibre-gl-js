@@ -8,6 +8,7 @@ import {
   resolveWebObjectPendingMethodResponseMock,
   setIsWebWorldReadyMock,
 } from '../../hooks/atoms/useMapAtoms.mock'
+import { jest } from '@jest/globals'
 
 const createEvent = (data: unknown) =>
   ({
@@ -15,6 +16,10 @@ const createEvent = (data: unknown) =>
       data: typeof data === 'string' ? data : JSON.stringify(data),
     },
   }) as any
+
+jest.mock('./../../hooks/atoms/useMapAtoms', () =>
+  require('./../../hooks/atoms/useMapAtoms.mock'),
+)
 
 describe('MapProvider', () => {
   beforeEach(() => {

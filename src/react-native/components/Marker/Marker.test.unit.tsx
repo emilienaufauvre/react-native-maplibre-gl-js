@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react-native'
 import Marker from './Marker'
+import { jest } from '@jest/globals'
 
 describe('Marker', () => {
   beforeEach(() => {

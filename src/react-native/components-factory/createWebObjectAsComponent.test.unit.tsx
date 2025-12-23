@@ -1,20 +1,15 @@
 import { render } from '@testing-library/react-native'
 import createWebObjectAsComponent from './createWebObjectAsComponent'
-import useWebObjectMountOnLaunch from './hooks/useWebObjectMountOnLaunch'
 import useWebObjectMethodsProxy from './hooks/useWebObjectMethodsProxy'
-import useWebObjectPropertiesUpdater from './hooks/useWebObjectPropertiesUpdater'
+import useWebObjectMountUnmountWithProps from './hooks/useWebObjectMountUnmountWithProps'
 import { jest } from '@jest/globals'
 
 jest.mock('./hooks/useWebObjectMethodsProxy', () =>
   require('./hooks/useWebObjectMethodsProxy.mock'),
 )
 
-jest.mock('./hooks/useWebObjectMountOnLaunch', () =>
-  require('./hooks/useWebObjectMountOnLaunch.mock'),
-)
-
-jest.mock('./hooks/useWebObjectPropertiesUpdater', () =>
-  require('./hooks/useWebObjectPropertiesUpdater.mock'),
+jest.mock('./hooks/useWebObjectMountUnmountWithProps', () =>
+  require('./hooks/useWebObjectMountUnmountWithProps.mock'),
 )
 
 describe('createWebObjectAsComponent', () => {
@@ -29,16 +24,12 @@ describe('createWebObjectAsComponent', () => {
     })
 
     describe('When nothing', () => {
-      test('Then it has been mount on launch', () => {
-        expect(useWebObjectMountOnLaunch).toHaveBeenCalledTimes(1)
-      })
-
       test('Then it has set the methods proxy', () => {
         expect(useWebObjectMethodsProxy).toHaveBeenCalledTimes(1)
       })
 
-      test('Then it has set the properties updater', () => {
-        expect(useWebObjectPropertiesUpdater).toHaveBeenCalledTimes(1)
+      test('Then it has been mount on launch', () => {
+        expect(useWebObjectMountUnmountWithProps).toHaveBeenCalledTimes(1)
       })
     })
   })

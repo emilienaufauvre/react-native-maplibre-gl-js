@@ -25,21 +25,14 @@ const useWebObjectMountUnmountCallbacks = <
   const areListenersMounted = useRef<boolean>(false)
   // States.
   // - Global.
-  const {
-    isWebWorldReady,
-    dispatchMessage,
-    setWebObjectListeners,
-    deleteWebObjectListeners,
-  } = useMapAtoms()
+  const { dispatchMessage, setWebObjectListeners, deleteWebObjectListeners } =
+    useMapAtoms()
 
   const mount = useCallback(
     ({
       options = true,
       listeners = true,
     }: MountUnmountCallbacksOptions = {}) => {
-      if (!isWebWorldReady) {
-        return
-      }
       // Mount the component as a web object within the web world.
       if (options && !areOptionsMounted.current) {
         dispatchMessage({
@@ -67,7 +60,6 @@ const useWebObjectMountUnmountCallbacks = <
       objectType,
       props.options,
       props.listeners,
-      isWebWorldReady,
       dispatchMessage,
       setWebObjectListeners,
     ],
@@ -78,9 +70,6 @@ const useWebObjectMountUnmountCallbacks = <
       options = true,
       listeners = true,
     }: MountUnmountCallbacksOptions = {}) => {
-      if (!isWebWorldReady) {
-        return
-      }
       // Mount the component as a web object within the web world.
       if (options && areOptionsMounted.current) {
         dispatchMessage({
@@ -95,7 +84,7 @@ const useWebObjectMountUnmountCallbacks = <
         areListenersMounted.current = false
       }
     },
-    [objectId, isWebWorldReady, dispatchMessage, deleteWebObjectListeners],
+    [objectId, dispatchMessage, deleteWebObjectListeners],
   )
 
   return { mount, unmount }
