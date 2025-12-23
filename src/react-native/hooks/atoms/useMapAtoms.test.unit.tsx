@@ -8,12 +8,12 @@ describe('useMapAtoms', () => {
   })
 
   describe('Given a Probe using useMapAtoms is rendered', () => {
-    let atoms: ReturnType<typeof useMapAtoms>
     const createWebViewMock = () => ({ postMessage: jest.fn() })
+    let atoms: ReturnType<typeof useMapAtoms>
 
     beforeEach(() => {
       /**
-       * ...
+       * Probe that uses useMapAtoms.
        */
       const Probe = () => {
         atoms = useMapAtoms()

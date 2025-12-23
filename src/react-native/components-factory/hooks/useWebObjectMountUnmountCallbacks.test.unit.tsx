@@ -1,58 +1,11 @@
-import { render, fireEvent, screen } from '@testing-library/react-native'
+import { render, act } from '@testing-library/react-native'
 import { jest } from '@jest/globals'
 import useWebObjectMountUnmountCallbacks from './useWebObjectMountUnmountCallbacks'
-import type { WebObjectProps } from '../createWebObjectAsComponent.types'
-import type { PropsWithChildren } from 'react'
-import { TouchableOpacity } from 'react-native'
 import {
   deleteWebObjectListenersMock,
   dispatchMessageMock,
   setWebObjectListenersMock,
 } from '../../hooks/atoms/useMapAtoms.mock'
-
-const Harness = ({
-  options,
-  listeners,
-  objectId = 'obj-1',
-  objectType = 'map',
-}: PropsWithChildren<
-  WebObjectProps<any, any> & { objectId?: string; objectType?: any }
->) => {
-  const { mount, unmount } = useWebObjectMountUnmountCallbacks(
-    { options, listeners },
-    objectId,
-    objectType,
-  )
-
-  return (
-    <>
-      <TouchableOpacity
-        testID="mount-default"
-        onPress={() => mount()}
-      />
-      <TouchableOpacity
-        testID="mount-options-only"
-        onPress={() => mount({ options: true, listeners: false })}
-      />
-      <TouchableOpacity
-        testID="mount-listeners-only"
-        onPress={() => mount({ options: false, listeners: true })}
-      />
-      <TouchableOpacity
-        testID="unmount-default"
-        onPress={() => unmount()}
-      />
-      <TouchableOpacity
-        testID="unmount-options-only"
-        onPress={() => unmount({ options: true, listeners: false })}
-      />
-      <TouchableOpacity
-        testID="unmount-listeners-only"
-        onPress={() => unmount({ options: false, listeners: true })}
-      />
-    </>
-  )
-}
 
 jest.mock('./../../hooks/atoms/useMapAtoms', () =>
   require('./../../hooks/atoms/useMapAtoms.mock'),
@@ -63,20 +16,36 @@ describe('useWebObjectMountUnmountCallbacks', () => {
     jest.clearAllMocks()
   })
 
-  describe('Given the web object that uses the hook is rendered', () => {
+  describe('Given a Probe using useWebObjectMountUnmountCallbacks is rendered', () => {
+    const options = { foo: 'bar' }
+    const listeners = { onTap: 'tapFunction' }
+    const objectId = 'obj-1'
+    const objectType = 'map'
+
+    let mount: (args?: { options?: boolean; listeners?: boolean }) => void
+    let unmount: (args?: { options?: boolean; listeners?: boolean }) => void
+
     beforeEach(() => {
-      render(
-        <Harness
-          options={{ foo: 'bar' }}
-          listeners={{ onTap: 'tapFunction' }}
-        />,
-      )
+      /**
+       * Probe that uses useWebObjectMountUnmountCallbacks.
+       */
+      const Probe = () => {
+        const callbacks = useWebObjectMountUnmountCallbacks(
+          { options, listeners },
+          objectId,
+          objectType,
+        )
+        mount = callbacks.mount
+        unmount = callbacks.unmount
+        return null
+      }
+
+      render(<Probe />)
     })
 
-    describe('When mount-default is pressed', () => {
+    describe('When mount is called without parameters', () => {
       beforeEach(() => {
-        const button = screen.getByTestId('mount-default')
-        fireEvent(button, 'click')
+        act(() => mount())
       })
 
       test('Then the options and the listeners are mounted', () => {
@@ -98,11 +67,12 @@ describe('useWebObjectMountUnmountCallbacks', () => {
       })
     })
 
-    describe('When mount-default is pressed twice', () => {
+    describe('When mount is called twice without parameters', () => {
       beforeEach(() => {
-        const button = screen.getByTestId('mount-default')
-        fireEvent(button, 'click')
-        fireEvent(button, 'click')
+        act(() => {
+          mount()
+          mount()
+        })
       })
 
       test('Then mount is executed only once', () => {
@@ -111,10 +81,9 @@ describe('useWebObjectMountUnmountCallbacks', () => {
       })
     })
 
-    describe('When mount-options-only is pressed', () => {
+    describe('When mount is called called with options only', () => {
       beforeEach(() => {
-        const button = screen.getByTestId('mount-options-only')
-        fireEvent(button, 'click')
+        act(() => mount({ options: true, listeners: false }))
       })
 
       test('Then only the options are mounted', () => {
@@ -132,13 +101,12 @@ describe('useWebObjectMountUnmountCallbacks', () => {
       })
     })
 
-    describe('When mount-listeners-only is pressed', () => {
+    describe('When mount is called called with listeners only', () => {
       beforeEach(() => {
-        const button = screen.getByTestId('mount-listeners-only')
-        fireEvent(button, 'click')
+        act(() => mount({ options: false, listeners: true }))
       })
 
-      test('Then only the options are mounted', () => {
+      test('Then only the listeners are mounted', () => {
         expect(dispatchMessageMock).not.toHaveBeenCalled()
         expect(setWebObjectListenersMock).toHaveBeenCalledTimes(1)
         expect(setWebObjectListenersMock).toHaveBeenCalledWith({
@@ -148,12 +116,12 @@ describe('useWebObjectMountUnmountCallbacks', () => {
       })
     })
 
-    describe('When after being mounted, unmount-default is pressed', () => {
+    describe('When after being mounted, unmount is called without parameters', () => {
       beforeEach(() => {
-        const mountButton = screen.getByTestId('mount-default')
-        const unmountButton = screen.getByTestId('unmount-default')
-        fireEvent(mountButton, 'click')
-        fireEvent(unmountButton, 'click')
+        act(() => {
+          mount()
+          unmount()
+        })
       })
 
       test('Then the options and the listeners are unmounted', () => {
@@ -168,13 +136,13 @@ describe('useWebObjectMountUnmountCallbacks', () => {
       })
     })
 
-    describe('When after being mounted, unmount-default is pressed twice', () => {
+    describe('When after being mounted, unmount is called twice without parameters', () => {
       beforeEach(() => {
-        const mountButton = screen.getByTestId('mount-default')
-        const unmountButton = screen.getByTestId('unmount-default')
-        fireEvent(mountButton, 'click')
-        fireEvent(unmountButton, 'click')
-        fireEvent(unmountButton, 'click')
+        act(() => {
+          mount()
+          unmount()
+          unmount()
+        })
       })
 
       test('Then unmount is executed once', () => {
@@ -186,12 +154,12 @@ describe('useWebObjectMountUnmountCallbacks', () => {
       })
     })
 
-    describe('When after being mounted, unmount-options-only is pressed', () => {
+    describe('When after being mounted, unmount is called with options only', () => {
       beforeEach(() => {
-        const mountButton = screen.getByTestId('mount-options-only')
-        const unmountButton = screen.getByTestId('unmount-options-only')
-        fireEvent(mountButton, 'click')
-        fireEvent(unmountButton, 'click')
+        act(() => {
+          mount({ options: true, listeners: false })
+          unmount({ options: true, listeners: false })
+        })
       })
 
       test('Then only the options are unmounted', () => {
@@ -203,12 +171,12 @@ describe('useWebObjectMountUnmountCallbacks', () => {
       })
     })
 
-    describe('When after being mounted, unmount-listeners-only is pressed', () => {
+    describe('When after being mounted, unmount is called with listeners only', () => {
       beforeEach(() => {
-        const mountButton = screen.getByTestId('mount-listeners-only')
-        const unmountButton = screen.getByTestId('unmount-listeners-only')
-        fireEvent(mountButton, 'click')
-        fireEvent(unmountButton, 'click')
+        act(() => {
+          mount({ options: false, listeners: true })
+          unmount({ options: false, listeners: true })
+        })
       })
 
       test('Then only the listeners are unmounted', () => {
