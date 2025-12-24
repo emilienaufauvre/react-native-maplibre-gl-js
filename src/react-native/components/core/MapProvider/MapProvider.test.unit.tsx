@@ -4,6 +4,7 @@ import MapProvider from './MapProvider'
 import { useWebMessageHandler } from './MapProvider.hooks'
 import RNLogger from '../../../logger/rn-logger'
 import {
+  getMapSourceListenersMock,
   getWebObjectListenersMock,
   resolveWebObjectPendingMethodResponseMock,
   setIsWebWorldReadyMock,
@@ -144,6 +145,35 @@ describe('useWebMessageHandler', () => {
 
       test('Then dispatches the event to the corresponding listener', () => {
         expect(rnListener).toHaveBeenCalledWith(eventPayload)
+      })
+
+      describe('When handling a message of type "mapSourceListenerEvent"', () => {
+        let listener: jest.Mock
+        let eventPayload: { x: number }
+        beforeEach(() => {
+          listener = jest.fn()
+          eventPayload = { x: Math.random() }
+          getMapSourceListenersMock.mockReturnValue({
+            click: {
+              listener,
+            },
+          })
+          handler(
+            createEvent({
+              type: 'mapSourceListenerEvent',
+              payload: {
+                sourceId: 'src-1',
+                layerId: 'layer-1',
+                eventName: 'click',
+                event: eventPayload,
+              },
+            }),
+          )
+        })
+
+        test('Then dispatches the event to the corresponding listener', () => {
+          expect(listener).toHaveBeenCalledWith(eventPayload)
+        })
       })
     })
 
