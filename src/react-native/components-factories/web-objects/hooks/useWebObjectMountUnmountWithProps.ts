@@ -2,7 +2,7 @@ import type {
   WebObjectId,
   WebObjectProps,
   WebObjectType,
-} from '../../web-objects/createWebObjectAsComponent.types'
+} from '../createWebObjectAsComponent.types'
 import { type PropsWithoutRef, useEffect, useMemo, useRef } from 'react'
 import { stableStringify } from '../../../hooks/atoms/useMapAtoms.utils'
 import useMapAtoms from '../../../hooks/atoms/useMapAtoms'

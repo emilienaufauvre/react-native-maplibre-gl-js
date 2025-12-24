@@ -147,7 +147,7 @@ describe('useWebObjectMountUnmountCallbacks', () => {
 
       test('Then unmount is executed once', () => {
         const unmountCalls = dispatchMessageMock.mock.calls.filter(
-          (item) => item[0]?.type === 'webObjectUnmount',
+          (c) => c[0]?.type === 'webObjectUnmount',
         )
         expect(unmountCalls).toHaveLength(1)
         expect(deleteWebObjectListenersMock).toHaveBeenCalledTimes(1)
@@ -186,7 +186,7 @@ describe('useWebObjectMountUnmountCallbacks', () => {
         })
         expect(
           dispatchMessageMock.mock.calls.filter(
-            (item) => item[0]?.type === 'webObjectUnmount',
+            (c) => c[0]?.type === 'webObjectUnmount',
           ),
         ).toHaveLength(0)
       })

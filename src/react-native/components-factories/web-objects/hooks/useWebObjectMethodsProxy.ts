@@ -8,7 +8,7 @@ import type {
   WebObjectId,
   WebObjectMethodCallRequestId,
   WebObjectRef,
-} from '../../web-objects/createWebObjectAsComponent.types'
+} from '../createWebObjectAsComponent.types'
 import useMapAtoms from '../../../hooks/atoms/useMapAtoms'
 
 /**

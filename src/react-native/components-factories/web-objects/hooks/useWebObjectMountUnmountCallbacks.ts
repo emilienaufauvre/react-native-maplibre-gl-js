@@ -1,7 +1,7 @@
 import type {
   WebObjectProps,
   WebObjectType,
-} from '../../web-objects/createWebObjectAsComponent.types'
+} from '../createWebObjectAsComponent.types'
 import { type PropsWithoutRef, useCallback, useRef } from 'react'
 import useMapAtoms from '../../../hooks/atoms/useMapAtoms'
 import type { MountUnmountCallbacksOptions } from './useWebObjectMountUnmountCallbacks.types'
