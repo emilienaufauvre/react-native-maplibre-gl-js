@@ -7,8 +7,8 @@ import {
   setWebObjectListenersMock,
 } from '../../../hooks/atoms/useMapAtoms.mock'
 
-jest.mock('./../../hooks/atoms/useMapAtoms', () =>
-  require('./../../hooks/atoms/useMapAtoms.mock'),
+jest.mock('./../../../hooks/atoms/useMapAtoms', () =>
+  require('./../../../hooks/atoms/useMapAtoms.mock'),
 )
 
 describe('useWebObjectMountUnmountCallbacks', () => {

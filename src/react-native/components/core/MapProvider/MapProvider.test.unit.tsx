@@ -17,8 +17,8 @@ const createEvent = (data: unknown) =>
     },
   }) as any
 
-jest.mock('./../../hooks/atoms/useMapAtoms', () =>
-  require('./../../hooks/atoms/useMapAtoms.mock'),
+jest.mock('./../../../hooks/atoms/useMapAtoms', () =>
+  require('./../../../hooks/atoms/useMapAtoms.mock'),
 )
 
 describe('MapProvider', () => {
