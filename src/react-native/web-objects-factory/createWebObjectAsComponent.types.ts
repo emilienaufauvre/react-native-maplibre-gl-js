@@ -3,6 +3,28 @@ import {
   type PropsWithoutRef,
   type RefAttributes,
 } from 'react'
+import type {
+  Map as MapLibreMap,
+  Marker as MapLibreMarker,
+  Popup as MapLibrePopup,
+} from 'maplibre-gl'
+
+/**
+ * The web objects that are supported by this library.
+ * A string version to be used as an identifier on the RN side (cannot use
+ * MapLibre classes directly).
+ * Must correspond to `WebObjectClass`.
+ * @group Web object abstraction types
+ */
+export type WebObjectType = 'map' | 'marker' | 'popup'
+
+/**
+ * The web objects that are supported by this library.
+ * A class version to be used on the web side.
+ * Must correspond to `WebObjectType`.
+ * @group Web object abstraction types
+ */
+export type WebObjectClass = MapLibreMap | MapLibreMarker | MapLibrePopup
 
 /**
  * React Native component that corresponds and perform actions with a web object
@@ -50,9 +72,9 @@ export type WebObjectProps<
  * By default, the mount/unmount events are available (they are custom, added
  * on top of the `MapLibre GL JS` events).
  *
- * Note: sadly, listeners cannot be inferred as Methods and Options, therefore,
- * when adding a new listener, one must ensure that the listeners correspond to
- * the real web object events.
+ * Note: sadly, listeners cannot be inferred from the MapLibre GL JS library.
+ * Therefore, if a new listener is added within the library, it must also be
+ * added here.
  * @group Web object abstraction types
  */
 export type WebObjectListeners = WebObjectListenersDefault &
@@ -176,3 +198,15 @@ type Merge<M, N> = {
       ? M[K]
       : never
 }
+
+/**
+ * UID of a web object in the web world.
+ * @group Web object abstraction types
+ */
+export type WebObjectId = string
+
+/**
+ * UID of a request for a web object method to be executed.
+ * @group Web object abstraction types
+ */
+export type WebObjectMethodCallRequestId = string

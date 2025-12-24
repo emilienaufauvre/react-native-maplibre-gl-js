@@ -1,9 +1,12 @@
-import type { WebObjectProps } from '../createWebObjectAsComponent.types'
+import type {
+  WebObjectId,
+  WebObjectProps,
+  WebObjectType,
+} from '../createWebObjectAsComponent.types'
 import { type PropsWithoutRef, useEffect, useMemo, useRef } from 'react'
 import { stableStringify } from '../../hooks/atoms/useMapAtoms.utils'
 import useMapAtoms from '../../hooks/atoms/useMapAtoms'
 import useWebObjectMountUnmountCallbacks from './useWebObjectMountUnmountCallbacks'
-import type { WebObjectType } from '../../../communication/messages.types'
 
 /**
  * Mount the component as a web object within the web world on component mount.
@@ -17,7 +20,7 @@ export const useWebObjectMountUnmountWithProps = <
   Props extends WebObjectProps<any, any>,
 >(
   props: PropsWithoutRef<Props>,
-  objectId: string,
+  objectId: WebObjectId,
   objectType: WebObjectType,
 ) => {
   // Refs.

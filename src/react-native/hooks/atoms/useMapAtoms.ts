@@ -1,11 +1,12 @@
 import { atom, useSetAtom } from 'jotai'
 import type { WebView } from 'react-native-webview'
 import { useAtom } from 'jotai'
+import type { MessageFromRNToWeb } from '../../../communication/messages.types'
 import type {
-  MessageFromRNToWeb,
   WebObjectId,
-} from '../../../communication/messages.types'
-import type { WebObjectListeners } from '../../web-objects-factory/createWebObjectAsComponent.types'
+  WebObjectListeners,
+  WebObjectMethodCallRequestId,
+} from '../../web-objects-factory/createWebObjectAsComponent.types'
 import { stableStringify } from './useMapAtoms.utils'
 
 /**
@@ -142,7 +143,10 @@ const setWebObjectPendingMethodResponseAtom = atom(
     {
       requestId,
       resolve,
-    }: { requestId: string; resolve: (result: any) => void },
+    }: {
+      requestId: WebObjectMethodCallRequestId
+      resolve: (result: any) => void
+    },
   ) => {
     const map = new Map(get(webObjectPendingMethodResponses))
     map.set(requestId, resolve)
@@ -155,7 +159,17 @@ const setWebObjectPendingMethodResponseAtom = atom(
  */
 const resolveWebObjectPendingMethodResponseAtom = atom(
   null,
-  (get, set, { requestId, result }: { requestId: string; result: any }) => {
+  (
+    get,
+    set,
+    {
+      requestId,
+      result,
+    }: {
+      requestId: WebObjectMethodCallRequestId
+      result: any
+    },
+  ) => {
     const map = new Map(get(webObjectPendingMethodResponses))
     const resolver = map.get(requestId)
     if (resolver) {
@@ -171,7 +185,7 @@ const resolveWebObjectPendingMethodResponseAtom = atom(
  */
 const deleteWebObjectPendingMethodResponseAtom = atom(
   null,
-  (get, set, requestId: string) => {
+  (get, set, requestId: WebObjectMethodCallRequestId) => {
     const map = new Map(get(webObjectPendingMethodResponses))
     map.delete(requestId)
     set(webObjectPendingMethodResponses, map)
@@ -190,7 +204,10 @@ const setWebObjectListenersAtom = atom(
     {
       objectId,
       listeners,
-    }: { objectId: WebObjectId; listeners: WebObjectListeners },
+    }: {
+      objectId: WebObjectId
+      listeners: WebObjectListeners
+    },
   ) => {
     const map = new Map(get(webObjectsListenersAtom))
     map.set(objectId, listeners)

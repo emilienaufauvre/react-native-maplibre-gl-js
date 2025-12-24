@@ -4,7 +4,11 @@ import {
   useImperativeHandle,
   useMemo,
 } from 'react'
-import type { WebObjectRef } from '../createWebObjectAsComponent.types'
+import type {
+  WebObjectId,
+  WebObjectMethodCallRequestId,
+  WebObjectRef,
+} from '../createWebObjectAsComponent.types'
 import useMapAtoms from '../../hooks/atoms/useMapAtoms'
 
 /**
@@ -16,7 +20,7 @@ import useMapAtoms from '../../hooks/atoms/useMapAtoms'
  */
 export const useWebObjectMethodsProxy = <Ref extends WebObjectRef<any>>(
   ref: ForwardedRef<Ref>,
-  objectId: string,
+  objectId: WebObjectId,
 ) => {
   // States.
   // - Global.
@@ -33,7 +37,9 @@ export const useWebObjectMethodsProxy = <Ref extends WebObjectRef<any>>(
           return (...args: any[]) => {
             return new Promise((resolve) => {
               // TODO generator.
-              const requestId = Math.random().toString(36).slice(2, 11)
+              const requestId: WebObjectMethodCallRequestId = Math.random()
+                .toString(36)
+                .slice(2, 11)
               // Store the resolver as a pending response.
               setWebObjectPendingMethodResponse({ requestId, resolve })
               // Send the method call message to the WebView.
