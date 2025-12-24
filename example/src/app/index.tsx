@@ -114,15 +114,10 @@ type RouteDef = {
 const ctx = require.context('./', true, /\.tsx?$/)
 
 const pretty = (value: string): string => {
-  return (
-    value
-      // Remove .tsx/ts.
-      .replace(/[-_]/g, ' ')
-      // Separate camelCase and kebab case: someName/some-Name → some Name.
-      .replace(/([a-z])([A-Z])/g, '$1 $2')
-      // Capitalize the first letter of each word.
-      .trim()
-  )
+  return value
+    .replace(/[-_]/g, ' ')
+    .replace(/([a-z]) ([A-Z])/g, '$1 $2')
+    .trim()
 }
 
 // List all the routes/examples available.
