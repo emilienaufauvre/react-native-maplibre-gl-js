@@ -1,37 +1,15 @@
 import type {
-  Map as MapLibreMap,
-  Marker as MapLibreMarker,
-  Popup as MapLibrePopup,
-} from 'maplibre-gl'
-import type {
+  WebObjectId,
   WebObjectListeners,
+  WebObjectMethodCallRequestId,
   WebObjectOptionsInferred,
+  WebObjectType,
 } from '../react-native/web-objects-factory/createWebObjectAsComponent.types'
-
-/**
- * The web objects that are supported by this library.
- * A string version to be used as an identifier on the RN side (cannot use
- * MapLibre classes directly).
- * Must correspond to `WebObjectClass`.
- */
-export type WebObjectType = 'map' | 'marker' | 'popup'
-
-/**
- * The web objects that are supported by this library.
- * A class version to be used on the web side.
- * Must correspond to `WebObjectType`.
- */
-export type WebObjectClass = MapLibreMap | MapLibreMarker | MapLibrePopup
-
-/**
- * UID of a web object in the web world.
- */
-export type WebObjectId = string
-
-/**
- * UID of a request for a web object method to be executed.
- */
-export type WebObjectMethodCallRequestId = string
+import type {
+  MapSourceId,
+  MapSourceLayerListeners,
+  MapSourceProps,
+} from '../react-native/map-sources-factory/createMapSourceAsComponent.types'
 
 export type MessageFromRNToWeb =
   /**
@@ -66,6 +44,16 @@ export type MessageFromRNToWeb =
       payload: {
         objectId: WebObjectId
         options: WebObjectOptionsInferred<any>
+      }
+    }
+  | {
+      type: 'mapSourceMount'
+      payload: MapSourceProps<any>
+    }
+  | {
+      type: 'mapSourceUnmount'
+      payload: {
+        sourceId: MapSourceId
       }
     }
 
@@ -105,6 +93,18 @@ export type MessageFromWebToRN =
       payload: {
         requestId: WebObjectMethodCallRequestId
         result: any
+      }
+    }
+  /**
+   * Event issued by a map source layer, eligible to be listened to from the RN
+   * world.
+   */
+  | {
+      type: 'mapSourceListenerEvent'
+      payload: {
+        sourceId: MapSourceId
+        eventName: keyof MapSourceLayerListeners
+        event?: any
       }
     }
 

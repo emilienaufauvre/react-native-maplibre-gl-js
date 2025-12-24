@@ -1,4 +1,4 @@
-import type MapController from '../maplibre-gl-js/MapController'
+import type CoreController from '../controllers/CoreController'
 import WebLogger from '../logger/web-logger'
 import type {
   MessageFromRNToWeb,
@@ -10,7 +10,7 @@ import type {
  * one by receiving and sending messages.
  */
 export default class ReactNativeBridge {
-  #mapController?: MapController
+  #controller?: CoreController
 
   constructor() {
     const messageHandler = (raw: any) => {
@@ -18,24 +18,28 @@ export default class ReactNativeBridge {
         WebLogger.debug(this.constructor.name, raw?.data)
         const data = typeof raw?.data === 'string' ? raw.data : raw
         const message = JSON.parse(data) as MessageFromRNToWeb
-        this.mapController?.handleMessage(message)
+        this.controller?.handleMessage(message, this)
       } catch (error: any) {
         WebLogger.error(this.constructor.name, error.message)
       }
     }
-    // Listen to React Native messages and forward them to the map controller.
+    // Listen to React Native messages and forward them to the controller.
     document.addEventListener?.('message', messageHandler)
     window.addEventListener?.('message', messageHandler)
   }
 
-  set mapController(controller: MapController) {
-    this.#mapController = controller
+  set controller(controller: CoreController) {
+    this.#controller = controller
   }
 
-  get mapController(): MapController | undefined {
-    return this.#mapController
+  get controller(): CoreController | undefined {
+    return this.#controller
   }
 
+  /**
+   * Post a message to the React Native world.
+   * @param message - The message to be sent.
+   */
   postMessage(message: MessageFromWebToRN) {
     WebLogger.debug(this.postMessage.name, message)
     // @ts-ignore

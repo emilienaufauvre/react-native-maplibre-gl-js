@@ -1,40 +1,23 @@
-import maplibregl, { type MapLayerEventType } from 'maplibre-gl'
-import type ReactNativeBridge from '../bridge/ReactNativeBridge'
 import type {
   HTMLElementDescriptor,
   MessageFromRNToWeb,
-  WebObjectClass,
 } from '../../communication/messages.types'
-import WebLogger from '../logger/web-logger'
+import maplibregl, { type MapLayerEventType } from 'maplibre-gl'
 import {
   isWebObjectListenerOnHTMLElement,
   isWebObjectListenerOnMapLayer,
   isWebObjectListenerOnObject,
 } from '../../communication/messages.utils'
 import type {
+  WebObjectClass,
   WebObjectListenerOnMapLayer,
   WebObjectListeners,
 } from '../../react-native/web-objects-factory/createWebObjectAsComponent.types'
+import type ReactNativeBridge from '../bridge/ReactNativeBridge'
 
-/**
- * Manage the `MapLibre GL JS` map and its objects. Receive messages from the
- * React Native world and act accordingly.
- */
-export default class MapController {
-  #reactNativeBridge?: ReactNativeBridge
+export default class WebObjectsController {
   #objects = new Map<string, WebObjectClass>()
   #mapId: string | undefined
-
-  get reactNativeBridge(): ReactNativeBridge {
-    if (!this.#reactNativeBridge) {
-      throw new Error('React Native bridge not available')
-    }
-    return this.#reactNativeBridge
-  }
-
-  set reactNativeBridge(bridge: ReactNativeBridge) {
-    this.#reactNativeBridge = bridge
-  }
 
   get map(): maplibregl.Map {
     const map = this.#objects.get(this.#mapId ?? '')
@@ -44,91 +27,62 @@ export default class MapController {
     return map as maplibregl.Map
   }
 
-  handleMessage = (message: MessageFromRNToWeb) => {
-    WebLogger.info(this.handleMessage.name, message)
-
-    switch (message.type) {
-      case 'webObjectMount': {
-        this.#handleWebObjectMountMessage(message)
-        break
-      }
-      case 'webObjectUnmount': {
-        this.#handleWebObjectUnmountMessage(message)
-        break
-      }
-      case 'webObjectMethodCall': {
-        this.#handleWebObjectMethodCall(message).then()
-        break
-      }
-    }
-  }
-
-  #handleWebObjectMountMessage = (
+  handleMountMessage = (
     message: Extract<MessageFromRNToWeb, { type: 'webObjectMount' }>,
+    reactNativeBridge: ReactNativeBridge,
   ) => {
+    let element: WebObjectClass
+
     switch (message.payload.objectType) {
       case 'map': {
-        // 1) Create the MapLibre element.
-        const container = document.getElementById('app')!
-        const map = new maplibregl.Map({
+        const htmlContainer = document.getElementById('app')!
+        element = new maplibregl.Map({
           ...message.payload.options,
-          container,
+          container: htmlContainer,
         })
-        this.#objects.set(message.payload.objectId, map)
         this.#mapId = message.payload.objectId
-        // 2) Add listeners on the map and/or HTML element.
-        this.#setObjectListeners(
-          map,
-          message.payload.objectId,
-          message.payload.listeners,
-        )
-        // 3) If the map was unmounted and mounted back again (e.g., on
-        //    "options" props changed), add back the existing objects to it.
+        // If the map was unmounted and mounted back again (e.g., on "options"
+        // props changed), add back the existing objects to it.
         this.#objects.entries().forEach(([, object]) => {
           if (!(object instanceof maplibregl.Map)) {
-            object.addTo(map)
+            object.addTo(element as any)
           }
         })
         break
       }
       case 'marker': {
-        // default marker element
-        const element = this.#buildHTMLElement(message.payload.options.element)
-        // 1) Create the MapLibre element.
-        const marker = new maplibregl.Marker({
+        const htmlElement = this.#buildHTMLElement(
+          message.payload.options.element,
+        )
+        element = new maplibregl.Marker({
           ...message.payload.options,
-          element,
+          element: htmlElement,
         })
           // TODO setup default location (needed by default)
           .setLngLat([0, 0])
           .addTo(this.map)
-        this.#objects.set(message.payload.objectId, marker)
-        // 2) Add listeners on the map and/or HTML element.
-        this.#setObjectListeners(
-          marker,
-          message.payload.objectId,
-          message.payload.listeners,
-        )
         break
       }
       case 'popup': {
-        // 1) Create the MapLibre element.
-        const popup = new maplibregl.Popup({
+        element = new maplibregl.Popup({
           ...message.payload.options,
         })
         //.addTo(this.map)
-        this.#objects.set(message.payload.objectId, popup)
-        // 2) Add listeners on the map and/or HTML element.
-        this.#setObjectListeners(
-          popup,
-          message.payload.objectId,
-          message.payload.listeners,
-        )
         break
       }
     }
-    // TODO confirm its indeed mounted.
-    this.reactNativeBridge.postMessage({
+
+    // Save the object.
+    this.#objects.set(message.payload.objectId, element)
+    // Add listeners on the map and/or HTML element.
+    this.#setObjectListeners(
+      reactNativeBridge,
+      element,
+      message.payload.objectId,
+      message.payload.listeners,
+    )
+    // Send the "mount" event to the React Native listener.
+    reactNativeBridge.postMessage({
       type: 'webObjectListenerEvent',
       payload: {
         objectId: message.payload.objectId,
@@ -137,18 +91,19 @@ export default class MapController {
     })
   }
 
-  #handleWebObjectUnmountMessage = (
+  handleUnmountMessage = (
     message: Extract<MessageFromRNToWeb, { type: 'webObjectUnmount' }>,
+    reactNativeBridge: ReactNativeBridge,
   ) => {
     const object = this.#objects.get(message.payload.objectId)
     if (!object) {
       return
     }
-
+    // Remove the object from the map.
     object.remove()
     this.#objects.delete(message.payload.objectId)
-
-    this.reactNativeBridge.postMessage({
+    // Send the "unmount" event to the React Native listener.
+    reactNativeBridge.postMessage({
       type: 'webObjectListenerEvent',
       payload: {
         objectId: message.payload.objectId,
@@ -157,8 +112,9 @@ export default class MapController {
     })
   }
 
-  #handleWebObjectMethodCall = async (
+  handleMethodCall = async (
     message: Extract<MessageFromRNToWeb, { type: 'webObjectMethodCall' }>,
+    reactNativeBridge: ReactNativeBridge,
   ) => {
     const object = this.#objects.get(message.payload.objectId)
 
@@ -172,7 +128,7 @@ export default class MapController {
       result = await this.#runNormalMethod(message, object)
     }
 
-    this.reactNativeBridge.postMessage({
+    reactNativeBridge.postMessage({
       type: 'webObjectMethodResponse',
       payload: { requestId: message.payload.requestId, result },
     })
@@ -270,6 +226,7 @@ export default class MapController {
   }
 
   #setObjectListeners = (
+    reactNativeBridge: ReactNativeBridge,
     object: WebObjectClass,
     objectId: string,
     listeners?: WebObjectListeners,
@@ -282,7 +239,7 @@ export default class MapController {
         // Remove circular references that cannot be serialized.
         delete event.target
         // Send the event to the React Native listener.
-        this.reactNativeBridge.postMessage({
+        reactNativeBridge.postMessage({
           type: 'webObjectListenerEvent',
           payload: {
             objectId,
