@@ -40,7 +40,15 @@ export type MapSourceComponent<SourceSpec extends MapSourceClass> = FC<
  * @group Map source abstraction types
  */
 export type MapSourceProps<SourceSpec extends MapSourceClass> = {
+  /**
+   * The source identifier. It must be unique among all the sources of the map;
+   * otherwise, unexpected behaviors may occur.
+   */
   id: MapSourceId
+  /**
+   * The source specification to be added to the map (as defined in the
+   * `MapLibre GL JS` documentation).
+   */
   source: SourceSpec
   /**
    * One or more layers to be added to the map. The layers are based on the
