@@ -15,14 +15,14 @@ import type {
 /**
  * Popup component ref.
  * @interface
- * @group Types
+ * @group Types (web objects)
  */
 export type PopupRef = WebObjectRef<PopupMethods>
 
 /**
  * Popup component props.
  * @interface
- * @group Types
+ * @group Types (web objects)
  */
 export type PopupProps = WebObjectProps<PopupOptions, PopupListeners>
 

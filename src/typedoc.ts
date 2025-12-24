@@ -28,6 +28,8 @@ export type {
 
 // @group Web objects abstractions.
 export type {
+  WebObjectType,
+  WebObjectClass,
   WebObjectComponent,
   WebObjectRef,
   WebObjectProps,
@@ -40,4 +42,18 @@ export type {
   WebObjectListenerOnHTMLElement,
   WebObjectOptionsInferred,
   WebObjectMethodsInferred,
+  WebObjectId,
+  WebObjectMethodCallRequestId,
 } from './react-native/components-factories/web-objects/createWebObjectAsComponent.types'
+
+// @group Map sources abstractions.
+export type {
+  MapSourceClass,
+  MapSourceComponent,
+  MapSourceProps,
+  MapSourceLayer,
+  MapSourceLayerListeners,
+  MapSourceLayerWithSourceId,
+  MapSourceId,
+  MapSourceLayerId,
+} from './react-native/components-factories/map-sources/createMapSourceAsComponent.types'

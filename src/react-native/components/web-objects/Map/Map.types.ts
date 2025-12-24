@@ -27,13 +27,13 @@ import type {
 /**
  * Map component ref.
  * @interface
- * @group Types
+ * @group Types (web objects)
  */
 export type MapRef = WebObjectRef<MapMethods>
 
 /**
  * Map component props.
- * @group Types
+ * @group Types (web objects)
  */
 export type MapProps = WebObjectProps<MapOptions, MapListeners>
 
