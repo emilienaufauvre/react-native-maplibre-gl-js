@@ -1,12 +1,18 @@
 import { atom, useSetAtom } from 'jotai'
 import type { WebView } from 'react-native-webview'
 import { useAtom } from 'jotai'
+import type { MessageFromRNToWeb } from '../../../communication/messages.types'
 import type {
-  MessageFromRNToWeb,
   WebObjectId,
-} from '../../../communication/messages.types'
-import type { WebObjectListeners } from '../../components-factory/createWebObjectAsComponent.types'
+  WebObjectListeners,
+  WebObjectMethodCallRequestId,
+} from '../../components-factories/web-objects/createWebObjectAsComponent.types'
 import { stableStringify } from './useMapAtoms.utils'
+import type {
+  MapSourceId,
+  MapSourceLayerId,
+  MapSourceLayerListeners,
+} from '../../components-factories/map-sources/createMapSourceAsComponent.types'
 
 /**
  * The WebView used to render `MapLibre GL JS` views (the web world).
@@ -49,6 +55,16 @@ const webObjectPendingMethodResponses = atom<
 export const webObjectsListenersAtom = atom<Map<string, WebObjectListeners>>(
   new Map(),
 )
+
+/**
+ * The callbacks registered to react to map sources layers events.
+ */
+export const mapSourcesListenersAtom = atom<
+  Map<
+    string,
+    { layerId: MapSourceLayerId; listeners: MapSourceLayerListeners }[]
+  >
+>(new Map())
 
 /**
  * Enqueue message to be sent to the web world.
@@ -142,7 +158,10 @@ const setWebObjectPendingMethodResponseAtom = atom(
     {
       requestId,
       resolve,
-    }: { requestId: string; resolve: (result: any) => void },
+    }: {
+      requestId: WebObjectMethodCallRequestId
+      resolve: (result: any) => void
+    },
   ) => {
     const map = new Map(get(webObjectPendingMethodResponses))
     map.set(requestId, resolve)
@@ -155,7 +174,17 @@ const setWebObjectPendingMethodResponseAtom = atom(
  */
 const resolveWebObjectPendingMethodResponseAtom = atom(
   null,
-  (get, set, { requestId, result }: { requestId: string; result: any }) => {
+  (
+    get,
+    set,
+    {
+      requestId,
+      result,
+    }: {
+      requestId: WebObjectMethodCallRequestId
+      result: any
+    },
+  ) => {
     const map = new Map(get(webObjectPendingMethodResponses))
     const resolver = map.get(requestId)
     if (resolver) {
@@ -171,7 +200,7 @@ const resolveWebObjectPendingMethodResponseAtom = atom(
  */
 const deleteWebObjectPendingMethodResponseAtom = atom(
   null,
-  (get, set, requestId: string) => {
+  (get, set, requestId: WebObjectMethodCallRequestId) => {
     const map = new Map(get(webObjectPendingMethodResponses))
     map.delete(requestId)
     set(webObjectPendingMethodResponses, map)
@@ -190,7 +219,10 @@ const setWebObjectListenersAtom = atom(
     {
       objectId,
       listeners,
-    }: { objectId: WebObjectId; listeners: WebObjectListeners },
+    }: {
+      objectId: WebObjectId
+      listeners: WebObjectListeners
+    },
   ) => {
     const map = new Map(get(webObjectsListenersAtom))
     map.set(objectId, listeners)
@@ -225,6 +257,60 @@ const deleteWebObjectListenersAtom = atom(
   },
 )
 
+/**
+ * Set the callbacks to be executed when receiving an event of a specific native
+ * map source layer.
+ */
+const setMapSourceListenersAtom = atom(
+  null,
+  (
+    get,
+    set,
+    {
+      sourceId,
+      listeners,
+    }: {
+      sourceId: MapSourceId
+      listeners: {
+        layerId: MapSourceLayerId
+        listeners: MapSourceLayerListeners
+      }[]
+    },
+  ) => {
+    const map = new Map(get(mapSourcesListenersAtom))
+    map.set(sourceId, listeners)
+    set(mapSourcesListenersAtom, map)
+  },
+)
+
+/**
+ * Get the callbacks on a specific map source.
+ */
+const getMapSourceListenersAtom = atom(
+  null,
+  (
+    get,
+    _set,
+    { sourceId, layerId }: { sourceId: MapSourceId; layerId: MapSourceLayerId },
+  ): MapSourceLayerListeners | undefined => {
+    const map = get(mapSourcesListenersAtom)
+    return map.get(sourceId)?.filter((item) => item.layerId === layerId)[0]
+      ?.listeners
+  },
+)
+
+/**
+ * Delete callbacks associated with a map source.
+ */
+const deleteMapSourceListenersAtom = atom(
+  null,
+  (get, set, { sourceId }: { sourceId: MapSourceId }) => {
+    const map = new Map(get(mapSourcesListenersAtom))
+    map.delete(sourceId)
+    set(mapSourcesListenersAtom, map)
+  },
+)
+
 const useMapAtoms = () => {
   const [webView, setWebView] = useAtom(webViewAtom)
   const [isWebWorldReady, setIsWebWorldReady] = useAtom(isWebWorldReadyAtom)
@@ -255,6 +341,10 @@ const useMapAtoms = () => {
     setWebObjectListeners: useSetAtom(setWebObjectListenersAtom),
     getWebObjectListeners: useSetAtom(getWebObjectListenersAtom),
     deleteWebObjectListeners: useSetAtom(deleteWebObjectListenersAtom),
+    // Callbacks to be executed on web world event issued by a source layer.
+    setMapSourceListeners: useSetAtom(setMapSourceListenersAtom),
+    getMapSourceListeners: useSetAtom(getMapSourceListenersAtom),
+    deleteMapSourceListeners: useSetAtom(deleteMapSourceListenersAtom),
   }
 }
 

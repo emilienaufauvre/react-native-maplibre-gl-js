@@ -1,5 +1,5 @@
 import 'maplibre-gl/dist/maplibre-gl.css'
-import MapController from '../maplibre-gl-js/MapController'
+import CoreController from '../controllers/CoreController'
 import ReactNativeBridge from '../bridge/ReactNativeBridge'
 
 /**
@@ -7,10 +7,9 @@ import ReactNativeBridge from '../bridge/ReactNativeBridge'
  * and the bridge to communicate with React Native, then send a ready message.
  */
 const main = () => {
-  const controller = new MapController()
+  const controller = new CoreController()
   const bridge = new ReactNativeBridge()
-  controller.reactNativeBridge = bridge
-  bridge.mapController = controller
+  bridge.controller = controller
   bridge.postMessage({ type: 'ready' })
 }
 

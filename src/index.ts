@@ -5,20 +5,27 @@
  * @sortStrategy sort-order
  */
 
-// @group Types
-export type { MapProviderProps } from './react-native/components/MapProvider/MapProvider.types'
-export type { MapRef, MapProps } from './react-native/components/Map/Map.types'
+// @group Types (web objects)
+export type { MapProviderProps } from './react-native/components/core/MapProvider/MapProvider.types'
+export type {
+  MapRef,
+  MapProps,
+} from './react-native/components/web-objects/Map/Map.types'
 export type {
   MarkerRef,
   MarkerProps,
-} from './react-native/components/Marker/Marker.types'
+} from './react-native/components/web-objects/Marker/Marker.types'
 export type {
   PopupRef,
   PopupProps,
-} from './react-native/components/Popup/Popup.types'
+} from './react-native/components/web-objects/Popup/Popup.types'
+// @group Types (map sources)
+export type { GeoJSONSourceProps } from './react-native/components/map-sources/GeoJSONSource/GeoJSONSource.types'
 
-// @group Components
-export { default as MapProvider } from './react-native/components/MapProvider/MapProvider'
-export { default as Map } from './react-native/components/Map/Map'
-export { default as Marker } from './react-native/components/Marker/Marker'
-export { default as Popup } from './react-native/components/Popup/Popup'
+// @group Components (web objects)
+export { default as MapProvider } from './react-native/components/core/MapProvider/MapProvider'
+export { default as Map } from './react-native/components/web-objects/Map/Map'
+export { default as Marker } from './react-native/components/web-objects/Marker/Marker'
+export { default as Popup } from './react-native/components/web-objects/Popup/Popup'
+// @group Components (map sources)
+export { default as GeoJSONSource } from './react-native/components/map-sources/GeoJSONSource/GeoJSONSource'

@@ -17,7 +17,7 @@ const Index = () => {
   }, [])
 
   //TODO remove
-  //return <Redirect href={'/Components/2.5.MarkerPropagatesEvents'} />
+  //return <Redirect href={'/4.-GeoJSONSource/4.1.-Component-basis'} />
   /////////////
   return (
     <ScrollView

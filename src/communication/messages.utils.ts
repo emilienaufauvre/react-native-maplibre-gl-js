@@ -3,7 +3,7 @@ import type {
   WebObjectListenerOnMapLayer,
   WebObjectListenerOnObject,
   WebObjectListenerOnRN,
-} from '../react-native/components-factory/createWebObjectAsComponent.types'
+} from '../react-native/components-factories/web-objects/createWebObjectAsComponent.types'
 
 export const isWebObjectListenerOnRN = (
   listener?:

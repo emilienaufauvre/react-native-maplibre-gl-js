@@ -49,7 +49,7 @@ export const WEBVIEW_STATIC_HTML = `<!doctype html>
         typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, global.maplibregl = factory());
       })(exports, (function() {
         "use strict";
-        var maplibregl2 = {};
+        var maplibregl3 = {};
         var modules = {};
         function define2(moduleName, _dependencies, moduleFactory) {
           modules[moduleName] = moduleFactory;
@@ -59,11 +59,11 @@ export const WEBVIEW_STATIC_HTML = `<!doctype html>
           var workerBundleString = "var sharedModule = {}; (" + modules.shared + ")(sharedModule); (" + modules.worker + ")(sharedModule);";
           var sharedModule = {};
           modules.shared(sharedModule);
-          modules.index(maplibregl2, sharedModule);
+          modules.index(maplibregl3, sharedModule);
           if (typeof window !== "undefined") {
-            maplibregl2.setWorkerUrl(window.URL.createObjectURL(new Blob([workerBundleString], { type: "text/javascript" })));
+            maplibregl3.setWorkerUrl(window.URL.createObjectURL(new Blob([workerBundleString], { type: "text/javascript" })));
           }
-          return maplibregl2;
+          return maplibregl3;
         }
         ;
         define2("shared", ["exports"], (function(t) {
@@ -23249,14 +23249,11 @@ uniform mat4 u_projection_matrix;
             t.c.WORKER_URL = e2;
           };
         }));
-        var maplibregl$1 = maplibregl2;
+        var maplibregl$1 = maplibregl3;
         return maplibregl$1;
       }));
     }
   });
-
-  // src/web/maplibre-gl-js/MapController.ts
-  var import_maplibre_gl = __toESM(require_maplibre_gl());
 
   // src/web/logger/web-logger.ts
   var __DEV__ = true;
@@ -23286,6 +23283,9 @@ uniform mat4 u_projection_matrix;
   };
   var web_logger_default = WebLogger;
 
+  // src/web/controllers/WebObjectsController.ts
+  var import_maplibre_gl = __toESM(require_maplibre_gl());
+
   // src/communication/messages.utils.ts
   var isWebObjectListenerOnObject = (listener) => {
     if (!listener) {
@@ -23306,20 +23306,10 @@ uniform mat4 u_projection_matrix;
     return "elementListener" in listener;
   };
 
-  // src/web/maplibre-gl-js/MapController.ts
-  var MapController = class {
-    #reactNativeBridge;
+  // src/web/controllers/WebObjectsController.ts
+  var WebObjectsController = class {
     #objects = /* @__PURE__ */ new Map();
     #mapId;
-    get reactNativeBridge() {
-      if (!this.#reactNativeBridge) {
-        throw new Error("React Native bridge not available");
-      }
-      return this.#reactNativeBridge;
-    }
-    set reactNativeBridge(bridge) {
-      this.#reactNativeBridge = bridge;
-    }
     get map() {
       const map = this.#objects.get(this.#mapId ?? "");
       if (!map) {
@@ -23327,73 +23317,60 @@ uniform mat4 u_projection_matrix;
       }
       return map;
     }
-    handleMessage = (message) => {
-      web_logger_default.info(this.handleMessage.name, message);
-      switch (message.type) {
-        case "webObjectMount": {
-          this.#handleWebObjectMountMessage(message);
-          break;
-        }
-        case "webObjectUnmount": {
-          this.#handleWebObjectUnmountMessage(message);
-          break;
-        }
-        case "webObjectMethodCall": {
-          this.#handleWebObjectMethodCall(message).then();
-          break;
-        }
-      }
-    };
-    #handleWebObjectMountMessage = (message) => {
-      switch (message.payload.objectType) {
-        case "map": {
-          const container = document.getElementById("app");
-          const map = new import_maplibre_gl.default.Map({
-            ...message.payload.options,
-            container
-          });
-          this.#objects.set(message.payload.objectId, map);
-          this.#mapId = message.payload.objectId;
-          this.#setObjectListeners(
-            map,
-            message.payload.objectId,
-            message.payload.listeners
-          );
-          this.#objects.entries().forEach(([, object]) => {
-            if (!(object instanceof import_maplibre_gl.default.Map)) {
-              object.addTo(map);
+    addExistingObjectsToMap = (reactNativeBridge, map) => {
+      this.#objects.entries().forEach(([id, object]) => {
+        if (!(object instanceof import_maplibre_gl.default.Map)) {
+          object.addTo(map);
+          reactNativeBridge.postMessage({
+            type: "webObjectListenerEvent",
+            payload: {
+              objectId: id,
+              eventName: "mount"
             }
           });
+        }
+      });
+    };
+    handleMountMessage = (message, reactNativeBridge) => {
+      let element;
+      switch (message.payload.objectType) {
+        case "map": {
+          const htmlContainer = document.getElementById("app");
+          element = new import_maplibre_gl.default.Map({
+            ...message.payload.options,
+            container: htmlContainer
+          });
+          this.#mapId = message.payload.objectId;
           break;
         }
         case "marker": {
-          const element = this.#buildHTMLElement(message.payload.options.element);
-          const marker = new import_maplibre_gl.default.Marker({
-            ...message.payload.options,
-            element
-          }).setLngLat([0, 0]).addTo(this.map);
-          this.#objects.set(message.payload.objectId, marker);
-          this.#setObjectListeners(
-            marker,
-            message.payload.objectId,
-            message.payload.listeners
+          const htmlElement = this.#buildHTMLElement(
+            message.payload.options.element
           );
+          element = new import_maplibre_gl.default.Marker({
+            ...message.payload.options,
+            element: htmlElement
+          }).setLngLat([0, 0]).addTo(this.map);
           break;
         }
         case "popup": {
-          const popup = new import_maplibre_gl.default.Popup({
+          element = new import_maplibre_gl.default.Popup({
             ...message.payload.options
           });
-          this.#objects.set(message.payload.objectId, popup);
-          this.#setObjectListeners(
-            popup,
-            message.payload.objectId,
-            message.payload.listeners
-          );
           break;
         }
       }
-      this.reactNativeBridge.postMessage({
+      if (!element) {
+        return;
+      }
+      this.#objects.set(message.payload.objectId, element);
+      this.#setObjectListeners(
+        reactNativeBridge,
+        element,
+        message.payload.objectId,
+        message.payload.listeners
+      );
+      reactNativeBridge.postMessage({
         type: "webObjectListenerEvent",
         payload: {
           objectId: message.payload.objectId,
@@ -23401,14 +23378,14 @@ uniform mat4 u_projection_matrix;
         }
       });
     };
-    #handleWebObjectUnmountMessage = (message) => {
+    handleUnmountMessage = (message, reactNativeBridge) => {
       const object = this.#objects.get(message.payload.objectId);
       if (!object) {
         return;
       }
       object.remove();
       this.#objects.delete(message.payload.objectId);
-      this.reactNativeBridge.postMessage({
+      reactNativeBridge.postMessage({
         type: "webObjectListenerEvent",
         payload: {
           objectId: message.payload.objectId,
@@ -23416,7 +23393,7 @@ uniform mat4 u_projection_matrix;
         }
       });
     };
-    #handleWebObjectMethodCall = async (message) => {
+    handleMethodCall = async (message, reactNativeBridge) => {
       const object = this.#objects.get(message.payload.objectId);
       if (!object) {
         return;
@@ -23425,7 +23402,7 @@ uniform mat4 u_projection_matrix;
       if (!this.#runIfSpecialMethod(message, object)) {
         result = await this.#runNormalMethod(message, object);
       }
-      this.reactNativeBridge.postMessage({
+      reactNativeBridge.postMessage({
         type: "webObjectMethodResponse",
         payload: { requestId: message.payload.requestId, result }
       });
@@ -23503,14 +23480,14 @@ uniform mat4 u_projection_matrix;
       }
       return element;
     };
-    #setObjectListeners = (object, objectId, listeners) => {
+    #setObjectListeners = (reactNativeBridge, object, objectId, listeners) => {
       if (!listeners) {
         return;
       }
       Object.entries(listeners).forEach(([eventName, listener]) => {
         const sendEventToReactNative = (event) => {
           delete event.target;
-          this.reactNativeBridge.postMessage({
+          reactNativeBridge.postMessage({
             type: "webObjectListenerEvent",
             payload: {
               objectId,
@@ -23540,16 +23517,191 @@ uniform mat4 u_projection_matrix;
     };
   };
 
+  // src/web/controllers/MapSourcesController.ts
+  var import_maplibre_gl2 = __toESM(require_maplibre_gl());
+  var MapSourcesController = class {
+    #sources = /* @__PURE__ */ new Map();
+    addExistingSourcesToMap = (reactNativeBridge, map) => {
+      this.#sources.entries().forEach(([, source]) => {
+        if (map.isStyleLoaded()) {
+          this.#addSourceAndItsLayers(source, reactNativeBridge, map);
+        } else {
+          map.once(
+            "load",
+            () => this.#addSourceAndItsLayers(source, reactNativeBridge, map)
+          );
+        }
+      });
+    };
+    handleMountMessage = (message, reactNativeBridge, map) => {
+      const run = (mapReady) => {
+        this.#addSourceAndItsLayers(message.payload, reactNativeBridge, mapReady);
+        this.#sources.set(message.payload.id, message.payload);
+      };
+      if (map.isStyleLoaded()) {
+        run(map);
+      } else {
+        map.once("load", () => run(map));
+      }
+    };
+    handleUnmountMessage = (message, reactNativeBridge, map) => {
+      const source = this.#sources.get(message.payload.sourceId);
+      if (!source) {
+        return;
+      }
+      this.#removeSourceAndItsLayers(
+        map,
+        reactNativeBridge,
+        message.payload.sourceId
+      );
+      this.#sources.delete(message.payload.sourceId);
+    };
+    #addSourceAndItsLayers = (source, reactNativeBridge, map) => {
+      map.addSource(source.id, source.source);
+      source.layers.forEach(({ layer, beforeId }) => {
+        map.addLayer(
+          {
+            source: source.id,
+            ...layer
+          },
+          beforeId
+        );
+        reactNativeBridge.postMessage({
+          type: "mapSourceListenerEvent",
+          payload: {
+            sourceId: source.id,
+            layerId: layer.id,
+            eventName: "mount"
+          }
+        });
+      });
+      this.#setSourceListeners(reactNativeBridge, map, source.id, source.layers);
+    };
+    #removeSourceAndItsLayers = (map, reactNativeBridge, sourceId) => {
+      const style = map.getStyle();
+      if (style && style.layers) {
+        const layerIds = style.layers.filter(
+          (layer) => "source" in layer && layer.source === sourceId
+        ).map((layer) => layer.id);
+        layerIds.forEach((id) => {
+          if (map.getLayer(id)) {
+            map.removeLayer(id);
+          }
+          reactNativeBridge.postMessage({
+            type: "mapSourceListenerEvent",
+            payload: {
+              sourceId,
+              layerId: id,
+              eventName: "unmount"
+            }
+          });
+        });
+      }
+      if (map.getSource(sourceId)) {
+        map.removeSource(sourceId);
+      }
+    };
+    #setSourceListeners = (reactNativeBridge, map, sourceId, layers) => {
+      layers?.forEach(({ layer, listeners }) => {
+        Object.entries(listeners ?? {}).forEach(([eventName]) => {
+          if (eventName === "mount" || eventName === "unmount") {
+            return;
+          }
+          const sendEventToReactNative = (event) => {
+            delete event.target;
+            reactNativeBridge.postMessage({
+              type: "mapSourceListenerEvent",
+              payload: {
+                sourceId,
+                layerId: layer.id,
+                eventName,
+                event
+              }
+            });
+          };
+          map.on(
+            eventName,
+            layer.id,
+            sendEventToReactNative
+          );
+        });
+      });
+    };
+  };
+
+  // src/web/controllers/CoreController.ts
+  var CoreController = class {
+    #webObjectsController;
+    #mapSourcesController;
+    constructor() {
+      this.#webObjectsController = new WebObjectsController();
+      this.#mapSourcesController = new MapSourcesController();
+    }
+    handleMessage = (message, reactNativeBridge) => {
+      web_logger_default.info(this.handleMessage.name, message);
+      try {
+        switch (message.type) {
+          case "webObjectMount": {
+            this.#webObjectsController.handleMountMessage(
+              message,
+              reactNativeBridge
+            );
+            break;
+          }
+          case "webObjectUnmount": {
+            this.#webObjectsController.handleUnmountMessage(
+              message,
+              reactNativeBridge
+            );
+            break;
+          }
+          case "webObjectMethodCall": {
+            this.#webObjectsController.handleMethodCall(message, reactNativeBridge).then();
+            break;
+          }
+          case "mapSourceMount": {
+            this.#mapSourcesController.handleMountMessage(
+              message,
+              reactNativeBridge,
+              this.#webObjectsController.map
+            );
+            break;
+          }
+          case "mapSourceUnmount": {
+            this.#mapSourcesController.handleUnmountMessage(
+              message,
+              reactNativeBridge,
+              this.#webObjectsController.map
+            );
+            break;
+          }
+        }
+        if (message.type === "webObjectMount" && message.payload.objectType === "map") {
+          this.#webObjectsController.addExistingObjectsToMap(
+            reactNativeBridge,
+            this.#webObjectsController.map
+          );
+          this.#mapSourcesController.addExistingSourcesToMap(
+            reactNativeBridge,
+            this.#webObjectsController.map
+          );
+        }
+      } catch (error) {
+        web_logger_default.error(this.handleMessage.name, error.message);
+      }
+    };
+  };
+
   // src/web/bridge/ReactNativeBridge.ts
   var ReactNativeBridge = class {
-    #mapController;
+    #controller;
     constructor() {
       const messageHandler = (raw) => {
         try {
           web_logger_default.debug(this.constructor.name, raw?.data);
           const data = typeof raw?.data === "string" ? raw.data : raw;
           const message = JSON.parse(data);
-          this.mapController?.handleMessage(message);
+          this.controller?.handleMessage(message, this);
         } catch (error) {
           web_logger_default.error(this.constructor.name, error.message);
         }
@@ -23557,12 +23709,16 @@ uniform mat4 u_projection_matrix;
       document.addEventListener?.("message", messageHandler);
       window.addEventListener?.("message", messageHandler);
     }
-    set mapController(controller) {
-      this.#mapController = controller;
+    set controller(controller) {
+      this.#controller = controller;
     }
-    get mapController() {
-      return this.#mapController;
+    get controller() {
+      return this.#controller;
     }
+    /**
+     * Post a message to the React Native world.
+     * @param message - The message to be sent.
+     */
     postMessage(message) {
       web_logger_default.debug(this.postMessage.name, message);
       window.ReactNativeWebView?.postMessage(JSON.stringify(message));
@@ -23571,10 +23727,9 @@ uniform mat4 u_projection_matrix;
 
   // src/web/generated/index.ts
   var main = () => {
-    const controller = new MapController();
+    const controller = new CoreController();
     const bridge = new ReactNativeBridge();
-    controller.reactNativeBridge = bridge;
-    bridge.mapController = controller;
+    bridge.controller = controller;
     bridge.postMessage({ type: "ready" });
   };
   main();
