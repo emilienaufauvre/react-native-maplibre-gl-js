@@ -23317,6 +23317,20 @@ uniform mat4 u_projection_matrix;
       }
       return map;
     }
+    addExistingObjectsToMap = (reactNativeBridge, map) => {
+      this.#objects.entries().forEach(([id, object]) => {
+        if (!(object instanceof import_maplibre_gl.default.Map)) {
+          object.addTo(map);
+          reactNativeBridge.postMessage({
+            type: "webObjectListenerEvent",
+            payload: {
+              objectId: id,
+              eventName: "mount"
+            }
+          });
+        }
+      });
+    };
     handleMountMessage = (message, reactNativeBridge) => {
       let element;
       switch (message.payload.objectType) {
@@ -23327,11 +23341,6 @@ uniform mat4 u_projection_matrix;
             container: htmlContainer
           });
           this.#mapId = message.payload.objectId;
-          this.#objects.entries().forEach(([, object]) => {
-            if (!(object instanceof import_maplibre_gl.default.Map)) {
-              object.addTo(element);
-            }
-          });
           break;
         }
         case "marker": {
@@ -23350,6 +23359,9 @@ uniform mat4 u_projection_matrix;
           });
           break;
         }
+      }
+      if (!element) {
+        return;
       }
       this.#objects.set(message.payload.objectId, element);
       this.#setObjectListeners(
@@ -23509,19 +23521,28 @@ uniform mat4 u_projection_matrix;
   var import_maplibre_gl2 = __toESM(require_maplibre_gl());
   var MapSourcesController = class {
     #sources = /* @__PURE__ */ new Map();
-    handleMountMessage = (message, reactNativeBridge, map) => {
-      map.addSource(message.payload.id, message.payload.source);
-      message.payload.layers.forEach((item) => {
-        map.addLayer({ source: message.payload.id, ...item.layer }, item.beforeId);
-      });
-      this.#sources.set(message.payload.id, message.payload);
-      reactNativeBridge.postMessage({
-        type: "mapSourceListenerEvent",
-        payload: {
-          sourceId: message.payload.id,
-          eventName: "mount"
+    addExistingSourcesToMap = (reactNativeBridge, map) => {
+      this.#sources.entries().forEach(([, source]) => {
+        if (map.isStyleLoaded()) {
+          this.#addSourceAndItsLayers(source, reactNativeBridge, map);
+        } else {
+          map.once(
+            "load",
+            () => this.#addSourceAndItsLayers(source, reactNativeBridge, map)
+          );
         }
       });
+    };
+    handleMountMessage = (message, reactNativeBridge, map) => {
+      const run = (mapReady) => {
+        this.#addSourceAndItsLayers(message.payload, reactNativeBridge, mapReady);
+        this.#sources.set(message.payload.id, message.payload);
+      };
+      if (map.isStyleLoaded()) {
+        run(map);
+      } else {
+        map.once("load", () => run(map));
+      }
     };
     handleUnmountMessage = (message, reactNativeBridge, map) => {
       const source = this.#sources.get(message.payload.sourceId);
@@ -23538,12 +23559,31 @@ uniform mat4 u_projection_matrix;
         }
       });
     };
-    /**
-     * Safe removal of the source and its layers from the map.
-     * @param map - The map where the source and its layers are located.
-     * @param sourceId - The ID of the source to remove.
-     */
-    #removeSourceAndItsLayers(map, sourceId) {
+    #addSourceAndItsLayers = (source, reactNativeBridge, map) => {
+      map.addSource(source.id, source.source);
+      source.layers.forEach(
+        ({
+          layer,
+          beforeId
+        }) => {
+          map.addLayer(
+            {
+              source: source.id,
+              ...layer
+            },
+            beforeId
+          );
+        }
+      );
+      reactNativeBridge.postMessage({
+        type: "mapSourceListenerEvent",
+        payload: {
+          sourceId: source.id,
+          eventName: "mount"
+        }
+      });
+    };
+    #removeSourceAndItsLayers = (map, sourceId) => {
       const style = map.getStyle();
       if (style && style.layers) {
         const layerIds = style.layers.filter(
@@ -23558,7 +23598,7 @@ uniform mat4 u_projection_matrix;
       if (map.getSource(sourceId)) {
         map.removeSource(sourceId);
       }
-    }
+    };
   };
 
   // src/web/controllers/CoreController.ts
@@ -23607,6 +23647,16 @@ uniform mat4 u_projection_matrix;
             );
             break;
           }
+        }
+        if (message.type === "webObjectMount" && message.payload.objectType === "map") {
+          this.#webObjectsController.addExistingObjectsToMap(
+            reactNativeBridge,
+            this.#webObjectsController.map
+          );
+          this.#mapSourcesController.addExistingSourcesToMap(
+            reactNativeBridge,
+            this.#webObjectsController.map
+          );
         }
       } catch (error) {
         web_logger_default.error(this.handleMessage.name, error.message);

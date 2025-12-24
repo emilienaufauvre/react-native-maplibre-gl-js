@@ -10,39 +10,37 @@ import maplibregl, { type LayerSpecification } from 'maplibre-gl'
 export default class MapSourcesController {
   #sources = new Map<string, MapSourceProps<any>>()
 
+  addExistingSourcesToMap = (
+    reactNativeBridge: ReactNativeBridge,
+    map: maplibregl.Map,
+  ) => {
+    this.#sources.entries().forEach(([, source]) => {
+      if (map.isStyleLoaded()) {
+        this.#addSourceAndItsLayers(source, reactNativeBridge, map)
+      } else {
+        map.once('load', () =>
+          this.#addSourceAndItsLayers(source, reactNativeBridge, map),
+        )
+      }
+    })
+  }
+
   handleMountMessage = (
     message: Extract<MessageFromRNToWeb, { type: 'mapSourceMount' }>,
     reactNativeBridge: ReactNativeBridge,
     map: maplibregl.Map,
   ) => {
-    map.addSource(message.payload.id, message.payload.source)
-    message.payload.layers.forEach(
-      ({
-        layer,
-        beforeId,
-      }: {
-        layer: Omit<MapSourceLayerWithSourceId, 'source'>
-        beforeId?: string
-      }) => {
-        map.addLayer(
-          {
-            source: message.payload.id,
-            ...layer,
-          } as maplibregl.AddLayerObject,
-          beforeId,
-        )
-      },
-    )
-    // Save the source.
-    this.#sources.set(message.payload.id, message.payload)
-    // Send the "mount" event to the React Native listener.
-    reactNativeBridge.postMessage({
-      type: 'mapSourceListenerEvent',
-      payload: {
-        sourceId: message.payload.id,
-        eventName: 'mount',
-      },
-    })
+    const run = (mapReady: maplibregl.Map) => {
+      // Add the source and its layers from the map.
+      this.#addSourceAndItsLayers(message.payload, reactNativeBridge, mapReady)
+      this.#sources.set(message.payload.id, message.payload)
+    }
+    // Need the map to be loaded before adding the source and its layers.
+    if (map.isStyleLoaded()) {
+      run(map)
+    } else {
+      map.once('load', () => run(map))
+    }
   }
 
   handleUnmountMessage = (
@@ -67,12 +65,40 @@ export default class MapSourcesController {
     })
   }
 
-  /**
-   * Safe removal of the source and its layers from the map.
-   * @param map - The map where the source and its layers are located.
-   * @param sourceId - The ID of the source to remove.
-   */
-  #removeSourceAndItsLayers(map: maplibregl.Map, sourceId: MapSourceId) {
+  #addSourceAndItsLayers = (
+    source: MapSourceProps<any>,
+    reactNativeBridge: ReactNativeBridge,
+    map: maplibregl.Map,
+  ) => {
+    map.addSource(source.id, source.source)
+    source.layers.forEach(
+      ({
+        layer,
+        beforeId,
+      }: {
+        layer: Omit<MapSourceLayerWithSourceId, 'source'>
+        beforeId?: string
+      }) => {
+        map.addLayer(
+          {
+            source: source.id,
+            ...layer,
+          } as maplibregl.AddLayerObject,
+          beforeId,
+        )
+      },
+    )
+    // Send the "mount" event to the React Native listener.
+    reactNativeBridge.postMessage({
+      type: 'mapSourceListenerEvent',
+      payload: {
+        sourceId: source.id,
+        eventName: 'mount',
+      },
+    })
+  }
+
+  #removeSourceAndItsLayers = (map: maplibregl.Map, sourceId: MapSourceId) => {
     const style = map.getStyle()
 
     if (style && style.layers) {

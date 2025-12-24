@@ -27,6 +27,24 @@ export default class WebObjectsController {
     return map as maplibregl.Map
   }
 
+  addExistingObjectsToMap = (
+    reactNativeBridge: ReactNativeBridge,
+    map: maplibregl.Map,
+  ) => {
+    this.#objects.entries().forEach(([id, object]) => {
+      if (!(object instanceof maplibregl.Map)) {
+        object.addTo(map)
+        reactNativeBridge.postMessage({
+          type: 'webObjectListenerEvent',
+          payload: {
+            objectId: id,
+            eventName: 'mount',
+          },
+        })
+      }
+    })
+  }
+
   handleMountMessage = (
     message: Extract<MessageFromRNToWeb, { type: 'webObjectMount' }>,
     reactNativeBridge: ReactNativeBridge,
@@ -41,13 +59,6 @@ export default class WebObjectsController {
           container: htmlContainer,
         })
         this.#mapId = message.payload.objectId
-        // If the map was unmounted and mounted back again (e.g., on "options"
-        // props changed), add back the existing objects to it.
-        this.#objects.entries().forEach(([, object]) => {
-          if (!(object instanceof maplibregl.Map)) {
-            object.addTo(element as any)
-          }
-        })
         break
       }
       case 'marker': {

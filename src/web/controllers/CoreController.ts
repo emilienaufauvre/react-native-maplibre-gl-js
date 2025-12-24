@@ -63,6 +63,23 @@ export default class CoreController {
           break
         }
       }
+
+      if (
+        message.type === 'webObjectMount' &&
+        message.payload.objectType === 'map'
+      ) {
+        // If the map was unmounted and mounted back again (e.g., on map
+        // "options" props changed), add back the existing objects and
+        // sources to it.
+        this.#webObjectsController.addExistingObjectsToMap(
+          reactNativeBridge,
+          this.#webObjectsController.map,
+        )
+        this.#mapSourcesController.addExistingSourcesToMap(
+          reactNativeBridge,
+          this.#webObjectsController.map,
+        )
+      }
     } catch (error: any) {
       WebLogger.error(this.handleMessage.name, error.message)
     }
