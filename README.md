@@ -58,7 +58,7 @@
   - [1. Map](#1-map)
   - [2. Marker](#2-marker)
   - [3. Popup](#3-popup)
-  - [4. Geo JSONSource](#4-geo-jsonsource)
+  - [4. GeoJSONSource](#4-geojsonsource)
 - [🏁 Getting started](#-getting-started)
 - [📝 Design rationale](#-design-rationale)
   - [Existing React Native map solutions](#existing-react-native-map-solutions)
