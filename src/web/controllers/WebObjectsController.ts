@@ -12,7 +12,7 @@ import type {
   WebObjectClass,
   WebObjectListenerOnMapLayer,
   WebObjectListeners,
-} from '../../react-native/web-objects-factory/createWebObjectAsComponent.types'
+} from '../../react-native/components-factories/web-objects/createWebObjectAsComponent.types'
 import type ReactNativeBridge from '../bridge/ReactNativeBridge'
 
 export default class WebObjectsController {
@@ -31,7 +31,7 @@ export default class WebObjectsController {
     message: Extract<MessageFromRNToWeb, { type: 'webObjectMount' }>,
     reactNativeBridge: ReactNativeBridge,
   ) => {
-    let element: WebObjectClass
+    let element: WebObjectClass | undefined
 
     switch (message.payload.objectType) {
       case 'map': {
@@ -70,6 +70,10 @@ export default class WebObjectsController {
         //.addTo(this.map)
         break
       }
+    }
+
+    if (!element) {
+      return
     }
 
     // Save the object.

@@ -11,7 +11,7 @@ import type {
   WebObjectOptionsInferred,
   WebObjectProps,
   WebObjectRef,
-} from '../../../web-objects-factory/createWebObjectAsComponent.types'
+} from '../../../components-factories/web-objects/createWebObjectAsComponent.types'
 import type { HTMLElementDescriptor } from '../../../../communication/messages.types'
 
 /**

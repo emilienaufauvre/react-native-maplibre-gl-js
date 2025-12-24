@@ -16,7 +16,7 @@ import type {
   WebObjectListenerOnMapLayer,
   WebObjectListenerOnObject,
   WebObjectListenerOnRN,
-} from '../../../web-objects-factory/createWebObjectAsComponent.types'
+} from '../../../components-factories/web-objects/createWebObjectAsComponent.types'
 import { buildCssInjectionScript, normalizeCss } from './MapProvider.utils'
 
 export const useStyles = () => {

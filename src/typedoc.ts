@@ -40,4 +40,4 @@ export type {
   WebObjectListenerOnHTMLElement,
   WebObjectOptionsInferred,
   WebObjectMethodsInferred,
-} from './react-native/web-objects-factory/createWebObjectAsComponent.types'
+} from './react-native/components-factories/web-objects/createWebObjectAsComponent.types'

@@ -22,7 +22,7 @@ import type {
   WebObjectListenerOnRN,
   WebObjectProps,
   WebObjectRef,
-} from '../../../web-objects-factory/createWebObjectAsComponent.types'
+} from '../../../components-factories/web-objects/createWebObjectAsComponent.types'
 
 /**
  * Map component ref.

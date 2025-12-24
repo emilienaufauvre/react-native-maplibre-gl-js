@@ -1,5 +1,5 @@
-import createWebObjectAsComponent from '../../../web-objects-factory/createWebObjectAsComponent'
 import type { MapProps, MapRef } from './Map.types'
+import createWebObjectAsComponent from '../../../components-factories/web-objects/createWebObjectAsComponent'
 
 /**
  * MapLibre Map view.

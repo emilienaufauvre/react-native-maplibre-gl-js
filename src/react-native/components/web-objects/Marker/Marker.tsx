@@ -1,4 +1,4 @@
-import createWebObjectAsComponent from '../../../web-objects-factory/createWebObjectAsComponent'
+import createWebObjectAsComponent from '../../../components-factories/web-objects/createWebObjectAsComponent'
 import type { MarkerProps, MarkerRef } from './Marker.types'
 
 /**

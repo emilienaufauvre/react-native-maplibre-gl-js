@@ -8,8 +8,8 @@ import type {
   WebObjectId,
   WebObjectMethodCallRequestId,
   WebObjectRef,
-} from '../createWebObjectAsComponent.types'
-import useMapAtoms from '../../hooks/atoms/useMapAtoms'
+} from '../../web-objects/createWebObjectAsComponent.types'
+import useMapAtoms from '../../../hooks/atoms/useMapAtoms'
 
 /**
  * Create a proxy to call the methods of the corresponding web world object,

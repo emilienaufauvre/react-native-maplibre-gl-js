@@ -2,10 +2,10 @@ import type {
   WebObjectId,
   WebObjectProps,
   WebObjectType,
-} from '../createWebObjectAsComponent.types'
+} from '../../web-objects/createWebObjectAsComponent.types'
 import { type PropsWithoutRef, useEffect, useMemo, useRef } from 'react'
-import { stableStringify } from '../../hooks/atoms/useMapAtoms.utils'
-import useMapAtoms from '../../hooks/atoms/useMapAtoms'
+import { stableStringify } from '../../../hooks/atoms/useMapAtoms.utils'
+import useMapAtoms from '../../../hooks/atoms/useMapAtoms'
 import useWebObjectMountUnmountCallbacks from './useWebObjectMountUnmountCallbacks'
 
 /**

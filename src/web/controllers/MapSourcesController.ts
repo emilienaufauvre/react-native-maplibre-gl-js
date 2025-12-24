@@ -2,8 +2,9 @@ import type { MessageFromRNToWeb } from '../../communication/messages.types'
 import type ReactNativeBridge from '../bridge/ReactNativeBridge'
 import type {
   MapSourceId,
+  MapSourceLayerWithSourceId,
   MapSourceProps,
-} from '../../react-native/map-sources-factory/createMapSourceAsComponent.types'
+} from '../../react-native/components-factories/map-sources/createMapSourceAsComponent.types'
 import maplibregl, { type LayerSpecification } from 'maplibre-gl'
 
 export default class MapSourcesController {
@@ -15,15 +16,23 @@ export default class MapSourcesController {
     map: maplibregl.Map,
   ) => {
     map.addSource(message.payload.id, message.payload.source)
-    message.payload.layers.forEach((item) => {
-      map.addLayer(
-        {
-          source: message.payload.id,
-          ...item.layer,
-        } as maplibregl.AddLayerObject,
-        item.beforeId,
-      )
-    })
+    message.payload.layers.forEach(
+      ({
+        layer,
+        beforeId,
+      }: {
+        layer: Omit<MapSourceLayerWithSourceId, 'source'>
+        beforeId?: string
+      }) => {
+        map.addLayer(
+          {
+            source: message.payload.id,
+            ...layer,
+          } as maplibregl.AddLayerObject,
+          beforeId,
+        )
+      },
+    )
     // Save the source.
     this.#sources.set(message.payload.id, message.payload)
     // Send the "mount" event to the React Native listener.

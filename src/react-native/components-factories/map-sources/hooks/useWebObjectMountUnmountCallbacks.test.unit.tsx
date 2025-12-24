@@ -5,7 +5,7 @@ import {
   deleteWebObjectListenersMock,
   dispatchMessageMock,
   setWebObjectListenersMock,
-} from '../../hooks/atoms/useMapAtoms.mock'
+} from '../../../hooks/atoms/useMapAtoms.mock'
 
 jest.mock('./../../hooks/atoms/useMapAtoms', () =>
   require('./../../hooks/atoms/useMapAtoms.mock'),
@@ -147,7 +147,7 @@ describe('useWebObjectMountUnmountCallbacks', () => {
 
       test('Then unmount is executed once', () => {
         const unmountCalls = dispatchMessageMock.mock.calls.filter(
-          (c) => c[0]?.type === 'webObjectUnmount',
+          (item) => item[0]?.type === 'webObjectUnmount',
         )
         expect(unmountCalls).toHaveLength(1)
         expect(deleteWebObjectListenersMock).toHaveBeenCalledTimes(1)
@@ -186,7 +186,7 @@ describe('useWebObjectMountUnmountCallbacks', () => {
         })
         expect(
           dispatchMessageMock.mock.calls.filter(
-            (c) => c[0]?.type === 'webObjectUnmount',
+            (item) => item[0]?.type === 'webObjectUnmount',
           ),
         ).toHaveLength(0)
       })

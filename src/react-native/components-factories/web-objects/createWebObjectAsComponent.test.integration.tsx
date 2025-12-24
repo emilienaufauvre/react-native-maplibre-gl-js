@@ -7,7 +7,7 @@ import type {
   WebObjectProps,
 } from './createWebObjectAsComponent.types'
 import { mount, unmount } from './hooks/useWebObjectMountUnmountCallbacks.mock'
-import { setIsWebWorldReady } from '../hooks/atoms/useMapAtoms.mock'
+import { setIsWebWorldReady } from '../../hooks/atoms/useMapAtoms.mock'
 
 jest.mock('./../hooks/atoms/useMapAtoms', () =>
   require('./../hooks/atoms/useMapAtoms.mock'),

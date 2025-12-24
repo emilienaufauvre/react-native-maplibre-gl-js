@@ -4,12 +4,12 @@ import type {
   WebObjectMethodCallRequestId,
   WebObjectOptionsInferred,
   WebObjectType,
-} from '../react-native/web-objects-factory/createWebObjectAsComponent.types'
+} from '../react-native/components-factories/web-objects/createWebObjectAsComponent.types'
 import type {
   MapSourceId,
   MapSourceLayerListeners,
   MapSourceProps,
-} from '../react-native/map-sources-factory/createMapSourceAsComponent.types'
+} from '../react-native/components-factories/map-sources/createMapSourceAsComponent.types'
 
 export type MessageFromRNToWeb =
   /**

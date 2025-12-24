@@ -10,7 +10,7 @@ import type {
   WebObjectOptionsInferred,
   WebObjectProps,
   WebObjectRef,
-} from '../../../web-objects-factory/createWebObjectAsComponent.types'
+} from '../../../components-factories/web-objects/createWebObjectAsComponent.types'
 
 /**
  * Popup component ref.

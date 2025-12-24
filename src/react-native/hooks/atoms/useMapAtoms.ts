@@ -6,7 +6,7 @@ import type {
   WebObjectId,
   WebObjectListeners,
   WebObjectMethodCallRequestId,
-} from '../../web-objects-factory/createWebObjectAsComponent.types'
+} from '../../components-factories/web-objects/createWebObjectAsComponent.types'
 import { stableStringify } from './useMapAtoms.utils'
 
 /**
