@@ -85,7 +85,7 @@ describe('useMapAtoms', () => {
       })
     })
 
-    describe('When listeners are set, retrieved, and deleted', () => {
+    describe('When web objects listeners are set, retrieved, and deleted', () => {
       test('Then get returns the set value and delete removes it', () => {
         act(() =>
           atoms.setWebObjectListeners({
@@ -107,6 +107,35 @@ describe('useMapAtoms', () => {
             arg: any,
           ) => any
           got = get({ objectId: 'obj-1' })
+        })
+        expect(got).toBeUndefined()
+      })
+    })
+
+    describe('When map sources listeners are set, retrieved, and deleted', () => {
+      test('Then get returns the set value and delete removes it', () => {
+        act(() =>
+          atoms.setMapSourceListeners({
+            sourceId: 'src-1',
+            listeners: [
+              { layerId: 'layer-1', listeners: { onTap: 'tapFunction' } },
+            ] as any,
+          }),
+        )
+        let got: any
+        act(() => {
+          const get = atoms.getMapSourceListeners as unknown as (
+            arg: any,
+          ) => any
+          got = get({ sourceId: 'src-1', layerId: 'layer-1' })
+        })
+        expect(got).toEqual({ onTap: 'tapFunction' })
+        act(() => atoms.deleteMapSourceListeners({ sourceId: 'src-1' }))
+        act(() => {
+          const get = atoms.getMapSourceListeners as unknown as (
+            arg: any,
+          ) => any
+          got = get({ sourceId: 'src-1', layerId: 'layer-1' })
         })
         expect(got).toBeUndefined()
       })
