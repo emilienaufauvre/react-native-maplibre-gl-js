@@ -47,12 +47,7 @@ export const useWebObjectMountUnmountWithProps = <
     if (!isWebWorldReady) {
       return
     }
-    console.log(
-      'optionsAsStringPrevious',
-      optionsAsStringPrevious.current,
-      optionsAsString,
-      hasBeenMountedAtLeastOnce.current,
-    )
+
     const areOptionsEqual = optionsAsStringPrevious.current === optionsAsString
     const shouldMountOptions =
       !areOptionsEqual || !hasBeenMountedAtLeastOnce.current
