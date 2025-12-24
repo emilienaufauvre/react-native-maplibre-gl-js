@@ -114,10 +114,7 @@ type RouteDef = {
 const ctx = require.context('./', true, /\.tsx?$/)
 
 const pretty = (value: string): string => {
-  return value
-    .replace(/[-_]/g, ' ')
-    .replace(/([a-z]) ([A-Z])/g, '$1 $2')
-    .trim()
+  return value.replace(/[-_]/g, ' ').trim()
 }
 
 // List all the routes/examples available.

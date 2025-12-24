@@ -22,10 +22,7 @@ const END_MARKER = '<!-- EXAMPLES-LIST:END -->'
  * @returns - Prettified string.
  */
 const pretty = (str) => {
-  return str
-    .replace(/[-_]/g, ' ')
-    .replace(/([a-z])([A-Z])/g, '$1 $2')
-    .trim()
+  return str.replace(/[-_]/g, ' ').trim()
 }
 
 /**
