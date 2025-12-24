@@ -10,12 +10,6 @@ Public API of `react-native-maplibre-gl-js`.
 | ------ | ------ |
 | [MapProvider](functions/MapProvider.md) | Must be used as a parent component to allow instantiation of map elements. Every child must be a direct component. This is the bridge to the web world / the `MapLibre GL JS` library. |
 
-## Components (map sources)
-
-| Variable | Description |
-| ------ | ------ |
-| [GeoJSONSource](variables/GeoJSONSource.md) | MapLibre GeoJSONSource view. |
-
 ## Components (web objects)
 
 | Variable | Description |
@@ -24,11 +18,11 @@ Public API of `react-native-maplibre-gl-js`.
 | [Marker](variables/Marker.md) | MapLibre Marker view. |
 | [Popup](variables/Popup.md) | MapLibre Popup view. |
 
-## Types (map sources)
+## Components (map sources)
 
-| Type Alias | Description |
+| Variable | Description |
 | ------ | ------ |
-| [GeoJSONSourceProps](type-aliases/GeoJSONSourceProps.md) | GeoJSONSource component props. |
+| [GeoJSONSource](variables/GeoJSONSource.md) | MapLibre GeoJSONSource view. |
 
 ## Types (web objects)
 
@@ -41,3 +35,9 @@ Public API of `react-native-maplibre-gl-js`.
 | [MarkerProps](interfaces/MarkerProps.md) | Marker component props. |
 | [PopupRef](interfaces/PopupRef.md) | Popup component ref. |
 | [PopupProps](interfaces/PopupProps.md) | Popup component props. |
+
+## Types (map sources)
+
+| Interface | Description |
+| ------ | ------ |
+| [GeoJSONSourceProps](interfaces/GeoJSONSourceProps.md) | GeoJSONSource component props. |

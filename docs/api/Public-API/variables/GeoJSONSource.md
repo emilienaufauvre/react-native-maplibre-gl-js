@@ -2,7 +2,7 @@
 
 # GeoJSONSource()
 
-> `const` **GeoJSONSource**: (`props`: [`GeoJSONSourceProps`](../type-aliases/GeoJSONSourceProps.md)) => `null`
+> `const` **GeoJSONSource**: (`props`: [`GeoJSONSourceProps`](../interfaces/GeoJSONSourceProps.md)) => `null`
 
 Defined in: [src/react-native/components/map-sources/GeoJSONSource/GeoJSONSource.tsx:78](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/map-sources/GeoJSONSource/GeoJSONSource.tsx#L78)
 
@@ -12,7 +12,7 @@ MapLibre GeoJSONSource view.
 
 | Parameter | Type |
 | ------ | ------ |
-| `props` | [`GeoJSONSourceProps`](../type-aliases/GeoJSONSourceProps.md) |
+| `props` | [`GeoJSONSourceProps`](../interfaces/GeoJSONSourceProps.md) |
 
 ## Returns
 
@@ -20,7 +20,7 @@ MapLibre GeoJSONSource view.
 
 ## Props
 
-[GeoJSONSourceProps](../type-aliases/GeoJSONSourceProps.md)
+[GeoJSONSourceProps](../interfaces/GeoJSONSourceProps.md)
 
 ## See
 
