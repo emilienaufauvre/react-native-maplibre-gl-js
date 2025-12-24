@@ -124,7 +124,7 @@ Several real-world usage scenarios are available, you can explore them in two wa
 
 - [`3.1. Component basis`](./example/src/app/3.-Popup/3.1.-Component-basis.tsx)
 
-### 4. Geo JSONSource
+### 4. GeoJSONSource
 
 - [`4.1. Component basis`](./example/src/app/4.-GeoJSONSource/4.1.-Component-basis.tsx)
 
