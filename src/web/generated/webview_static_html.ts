@@ -23537,12 +23537,6 @@ uniform mat4 u_projection_matrix;
       const run = (mapReady) => {
         this.#addSourceAndItsLayers(message.payload, reactNativeBridge, mapReady);
         this.#sources.set(message.payload.id, message.payload);
-        this.#setSourceListeners(
-          reactNativeBridge,
-          map,
-          message.payload.id,
-          message.payload.layers
-        );
       };
       if (map.isStyleLoaded()) {
         run(map);
@@ -23555,16 +23549,12 @@ uniform mat4 u_projection_matrix;
       if (!source) {
         return;
       }
-      this.#removeSourceAndItsLayers(map, message.payload.sourceId);
+      this.#removeSourceAndItsLayers(
+        map,
+        reactNativeBridge,
+        message.payload.sourceId
+      );
       this.#sources.delete(message.payload.sourceId);
-      reactNativeBridge.postMessage({
-        type: "mapSourceListenerEvent",
-        payload: {
-          sourceId: message.payload.sourceId,
-          layerId: "",
-          eventName: "unmount"
-        }
-      });
     };
     #addSourceAndItsLayers = (source, reactNativeBridge, map) => {
       map.addSource(source.id, source.source);
@@ -23576,17 +23566,18 @@ uniform mat4 u_projection_matrix;
           },
           beforeId
         );
+        reactNativeBridge.postMessage({
+          type: "mapSourceListenerEvent",
+          payload: {
+            sourceId: source.id,
+            layerId: layer.id,
+            eventName: "mount"
+          }
+        });
       });
-      reactNativeBridge.postMessage({
-        type: "mapSourceListenerEvent",
-        payload: {
-          sourceId: source.id,
-          layerId: "",
-          eventName: "mount"
-        }
-      });
+      this.#setSourceListeners(reactNativeBridge, map, source.id, source.layers);
     };
-    #removeSourceAndItsLayers = (map, sourceId) => {
+    #removeSourceAndItsLayers = (map, reactNativeBridge, sourceId) => {
       const style = map.getStyle();
       if (style && style.layers) {
         const layerIds = style.layers.filter(
@@ -23596,6 +23587,14 @@ uniform mat4 u_projection_matrix;
           if (map.getLayer(id)) {
             map.removeLayer(id);
           }
+          reactNativeBridge.postMessage({
+            type: "mapSourceListenerEvent",
+            payload: {
+              sourceId,
+              layerId: id,
+              eventName: "unmount"
+            }
+          });
         });
       }
       if (map.getSource(sourceId)) {
