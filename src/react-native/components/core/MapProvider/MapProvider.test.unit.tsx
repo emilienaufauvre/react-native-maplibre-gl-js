@@ -10,8 +10,11 @@ import {
   setIsWebWorldReadyMock,
 } from '../../../hooks/atoms/useMapAtoms.mock'
 import { jest } from '@jest/globals'
+import type { MessageFromWebToRN } from '../../../../communication/messages.types'
 
-const createEvent = (data: unknown) =>
+const createEvent = (
+  data: MessageFromWebToRN | { type: 'unknown-type' } | 'not a message',
+) =>
   ({
     nativeEvent: {
       data: typeof data === 'string' ? data : JSON.stringify(data),
@@ -146,34 +149,32 @@ describe('useWebMessageHandler', () => {
       test('Then dispatches the event to the corresponding listener', () => {
         expect(rnListener).toHaveBeenCalledWith(eventPayload)
       })
+    })
 
-      describe('When handling a message of type "mapSourceListenerEvent"', () => {
-        let listener: jest.Mock
-        let eventPayload: { x: number }
-        beforeEach(() => {
-          listener = jest.fn()
-          eventPayload = { x: Math.random() }
-          getMapSourceListenersMock.mockReturnValue({
-            click: {
-              listener,
+    describe('When handling a message of type "mapSourceListenerEvent"', () => {
+      let listener: jest.Mock
+      let eventPayload: { x: number }
+      beforeEach(() => {
+        listener = jest.fn()
+        eventPayload = { x: Math.random() }
+        getMapSourceListenersMock.mockReturnValue({
+          click: listener,
+        })
+        handler(
+          createEvent({
+            type: 'mapSourceListenerEvent',
+            payload: {
+              sourceId: 'src-1',
+              layerId: 'layer-1',
+              eventName: 'click',
+              event: eventPayload,
             },
-          })
-          handler(
-            createEvent({
-              type: 'mapSourceListenerEvent',
-              payload: {
-                sourceId: 'src-1',
-                layerId: 'layer-1',
-                eventName: 'click',
-                event: eventPayload,
-              },
-            }),
-          )
-        })
+          }),
+        )
+      })
 
-        test('Then dispatches the event to the corresponding listener', () => {
-          expect(listener).toHaveBeenCalledWith(eventPayload)
-        })
+      test('Then dispatches the event to the corresponding listener', () => {
+        expect(listener).toHaveBeenCalledWith(eventPayload)
       })
     })
 
