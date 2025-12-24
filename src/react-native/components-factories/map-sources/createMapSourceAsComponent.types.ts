@@ -46,11 +46,18 @@ export type MapSourceProps<SourceSpec extends MapSourceClass> = {
    * One or more layers to be added to the map. The layers are based on the
    * current source.
    */
-  layers: {
-    layer: Omit<MapSourceLayerWithSourceId, 'source'>
-    beforeId?: string
-    listeners?: MapSourceLayerListeners
-  }[]
+  layers: MapSourceLayer[]
+}
+
+/**
+ * A layer specification that can be added to a map source.
+ * @interface
+ * @group Map source abstraction types
+ */
+export type MapSourceLayer = {
+  layer: Omit<MapSourceLayerWithSourceId, 'source'>
+  beforeId?: string
+  listeners?: MapSourceLayerListeners
 }
 
 /**
@@ -101,3 +108,9 @@ export type Listener<Event> = (event: Event) => void
  * @group Map source abstraction types
  */
 export type MapSourceId = string
+
+/**
+ * UID of a map source layer in the web world.
+ * @group Map source abstraction types
+ */
+export type MapSourceLayerId = string

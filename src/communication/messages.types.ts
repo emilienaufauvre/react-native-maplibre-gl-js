@@ -7,6 +7,7 @@ import type {
 } from '../react-native/components-factories/web-objects/createWebObjectAsComponent.types'
 import type {
   MapSourceId,
+  MapSourceLayerId,
   MapSourceLayerListeners,
   MapSourceProps,
 } from '../react-native/components-factories/map-sources/createMapSourceAsComponent.types'
@@ -103,6 +104,7 @@ export type MessageFromWebToRN =
       type: 'mapSourceListenerEvent'
       payload: {
         sourceId: MapSourceId
+        layerId: MapSourceLayerId
         eventName: keyof MapSourceLayerListeners
         event?: any
       }

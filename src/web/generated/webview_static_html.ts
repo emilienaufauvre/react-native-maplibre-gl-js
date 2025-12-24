@@ -23537,6 +23537,12 @@ uniform mat4 u_projection_matrix;
       const run = (mapReady) => {
         this.#addSourceAndItsLayers(message.payload, reactNativeBridge, mapReady);
         this.#sources.set(message.payload.id, message.payload);
+        this.#setSourceListeners(
+          reactNativeBridge,
+          map,
+          message.payload.id,
+          message.payload.layers
+        );
       };
       if (map.isStyleLoaded()) {
         run(map);
@@ -23555,30 +23561,27 @@ uniform mat4 u_projection_matrix;
         type: "mapSourceListenerEvent",
         payload: {
           sourceId: message.payload.sourceId,
+          layerId: "",
           eventName: "unmount"
         }
       });
     };
     #addSourceAndItsLayers = (source, reactNativeBridge, map) => {
       map.addSource(source.id, source.source);
-      source.layers.forEach(
-        ({
-          layer,
+      source.layers.forEach(({ layer, beforeId }) => {
+        map.addLayer(
+          {
+            source: source.id,
+            ...layer
+          },
           beforeId
-        }) => {
-          map.addLayer(
-            {
-              source: source.id,
-              ...layer
-            },
-            beforeId
-          );
-        }
-      );
+        );
+      });
       reactNativeBridge.postMessage({
         type: "mapSourceListenerEvent",
         payload: {
           sourceId: source.id,
+          layerId: "",
           eventName: "mount"
         }
       });
@@ -23598,6 +23601,32 @@ uniform mat4 u_projection_matrix;
       if (map.getSource(sourceId)) {
         map.removeSource(sourceId);
       }
+    };
+    #setSourceListeners = (reactNativeBridge, map, sourceId, layers) => {
+      layers?.forEach(({ layer, listeners }) => {
+        Object.entries(listeners ?? {}).forEach(([eventName]) => {
+          if (eventName === "mount" || eventName === "unmount") {
+            return;
+          }
+          const sendEventToReactNative = (event) => {
+            delete event.target;
+            reactNativeBridge.postMessage({
+              type: "mapSourceListenerEvent",
+              payload: {
+                sourceId,
+                layerId: layer.id,
+                eventName,
+                event
+              }
+            });
+          };
+          map.on(
+            eventName,
+            layer.id,
+            sendEventToReactNative
+          );
+        });
+      });
     };
   };
 

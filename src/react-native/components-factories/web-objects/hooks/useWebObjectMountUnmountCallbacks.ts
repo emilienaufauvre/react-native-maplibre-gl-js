@@ -72,7 +72,7 @@ const useWebObjectMountUnmountCallbacks = <
       options = true,
       listeners = true,
     }: MountUnmountCallbacksOptions = {}) => {
-      // Mount the component as a web object within the web world.
+      // Unmount the component.
       if (options && areOptionsMounted.current) {
         dispatchMessage({
           type: `webObjectUnmount`,
@@ -80,7 +80,7 @@ const useWebObjectMountUnmountCallbacks = <
         })
         areOptionsMounted.current = false
       }
-      // Register listeners on event from the web world.
+      // Unregister listeners on event from the web world.
       if (listeners && areListenersMounted.current) {
         deleteWebObjectListeners({ objectId })
         areListenersMounted.current = false

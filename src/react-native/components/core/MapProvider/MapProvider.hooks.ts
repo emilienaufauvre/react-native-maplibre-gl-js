@@ -56,6 +56,7 @@ export const useWebMessageHandler = () => {
   const {
     setIsWebWorldReady,
     getWebObjectListeners,
+    getMapSourceListeners,
     resolveWebObjectPendingMethodResponse,
   } = useMapAtoms()
 
@@ -93,7 +94,7 @@ export const useWebMessageHandler = () => {
         setIsWebWorldReady(true)
       },
       webObjectListenerEvent: ({
-        payload: { eventName, event, objectId },
+        payload: { objectId, eventName, event },
       }: Extract<MessageFromWebToRN, { type: 'webObjectListenerEvent' }>) => {
         // Retrieve the corresponding object listener.
         const listener = getWebObjectListeners({
@@ -123,11 +124,23 @@ export const useWebMessageHandler = () => {
           result,
         })
       },
+      mapSourceListenerEvent: ({
+        payload: { sourceId, layerId, eventName, event },
+      }: Extract<MessageFromWebToRN, { type: 'mapSourceListenerEvent' }>) => {
+        // Retrieve the corresponding object listener.
+        const listener = getMapSourceListeners({
+          sourceId,
+          layerId,
+        })?.[eventName]
+        // Then, call it.
+        listener?.(event)
+      },
     })
   }, [
     createWebViewMessageHandler,
     setIsWebWorldReady,
     getWebObjectListeners,
+    getMapSourceListeners,
     resolveWebObjectPendingMethodResponse,
   ])
 
