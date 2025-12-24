@@ -5,7 +5,7 @@ import type { MessageFromWebToRN } from '../../../../communication/messages.type
 /**
  * MapProvider component props.
  * @interface
- * @group Types
+ * @group Types (web objects)
  */
 export type MapProviderProps = {
   /**

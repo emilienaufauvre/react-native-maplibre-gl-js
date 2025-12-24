@@ -8,7 +8,7 @@ import createMapSourceAsComponent from '../../../components-factories/map-source
  * @example
  * ```tsx
  * ```
- * @group Components
+ * @group Components (map sources)
  */
 const GeoJSONSource = createMapSourceAsComponent<GeoJSONSourceProps>()
 

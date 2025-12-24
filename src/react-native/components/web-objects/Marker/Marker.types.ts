@@ -17,14 +17,14 @@ import type { HTMLElementDescriptor } from '../../../../communication/messages.t
 /**
  * Marker component ref.
  * @interface
- * @group Types
+ * @group Types (web objects)
  */
 export type MarkerRef = WebObjectRef<MarkerMethods>
 
 /**
  * Marker component props.
  * @interface
- * @group Types
+ * @group Types (web objects)
  */
 export type MarkerProps = WebObjectProps<MarkerOptions, MarkerListeners>
 
