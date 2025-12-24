@@ -13,12 +13,16 @@ export default {
   out: 'docs/api',
   // Order.
   groupOrder: [
-    'Components',
-    'Types',
+    'Components (core)',
+    'Components (web objects)',
+    'Components (map sources)',
+    'Types (web objects)',
+    'Types (map sources)',
     'Map types',
     'Marker types',
     'Popup types',
     'Web object abstraction types',
+    'Map source abstraction types',
     '*',
   ],
   sort: ['source-order'],
