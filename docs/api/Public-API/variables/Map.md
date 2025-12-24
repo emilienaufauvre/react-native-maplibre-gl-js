@@ -4,7 +4,7 @@
 
 > `const` **Map**: [`WebObjectComponent`](../../Internal-types/type-aliases/WebObjectComponent.md)\<[`MapRef`](../interfaces/MapRef.md), [`MapProps`](../type-aliases/MapProps.md)\>
 
-Defined in: [src/react-native/components/Map/Map.tsx:38](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/Map/Map.tsx#L38)
+Defined in: [src/react-native/components/web-objects/Map/Map.tsx:38](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Map/Map.tsx#L38)
 
 MapLibre Map view.
 

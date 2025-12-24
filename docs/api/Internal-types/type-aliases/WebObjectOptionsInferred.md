@@ -4,7 +4,7 @@
 
 > **WebObjectOptionsInferred**\<`WebObjectOptions`, `ReplacedOptions`, `RemovedOptions`\> = `Omit`\<`Omit`\<`WebObjectOptions`, keyof `ReplacedOptions`\> & `ReplacedOptions`, `RemovedOptions`\>
 
-Defined in: [src/react-native/components-factory/createWebObjectAsComponent.types.ts:129](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L129)
+Defined in: [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:151](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L151)
 
 Options that are used to instantiate a web object.
 Filter out those options that cannot be set from the RN world and replace

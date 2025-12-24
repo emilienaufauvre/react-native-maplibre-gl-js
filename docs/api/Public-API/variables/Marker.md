@@ -4,7 +4,7 @@
 
 > `const` **Marker**: [`WebObjectComponent`](../../Internal-types/type-aliases/WebObjectComponent.md)\<[`MarkerRef`](../interfaces/MarkerRef.md), [`MarkerProps`](../interfaces/MarkerProps.md)\>
 
-Defined in: [src/react-native/components/Marker/Marker.tsx:55](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/Marker/Marker.tsx#L55)
+Defined in: [src/react-native/components/web-objects/Marker/Marker.tsx:55](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.tsx#L55)
 
 MapLibre Marker view.
 

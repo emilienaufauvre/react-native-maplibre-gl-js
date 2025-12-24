@@ -4,7 +4,7 @@
 
 > **WebObjectRef**\<`Methods`\> = `Omit`\<`Methods`, `0`\>
 
-Defined in: [src/react-native/components-factory/createWebObjectAsComponent.types.ts:22](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L22)
+Defined in: [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:44](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L44)
 
 React Native ref of a component (corresponds to the web object methods in the
 web world).

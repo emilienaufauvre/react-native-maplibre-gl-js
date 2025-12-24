@@ -2,7 +2,7 @@
 
 # PopupRef
 
-Defined in: [src/react-native/components/Popup/Popup.types.ts:20](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/Popup/Popup.types.ts#L20)
+Defined in: [src/react-native/components/web-objects/Popup/Popup.types.ts:20](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Popup/Popup.types.ts#L20)
 
 Popup component ref.
 

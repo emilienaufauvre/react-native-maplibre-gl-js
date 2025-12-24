@@ -4,7 +4,7 @@
 
 > **WebObjectListenerOnMapLayer**\<`Event`\> = \{ `layerListener`: `Listener`\<`Event`\>; `layerId`: `string`; \}
 
-Defined in: [src/react-native/components-factory/createWebObjectAsComponent.types.ts:107](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L107)
+Defined in: [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:129](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L129)
 
 A listener to be set on an event emitted by the web object, but specific to
 a map layer.
@@ -19,5 +19,5 @@ a map layer.
 
 | Property | Type | Defined in |
 | ------ | ------ | ------ |
-| <a id="layerlistener"></a> `layerListener` | `Listener`\<`Event`\> | [src/react-native/components-factory/createWebObjectAsComponent.types.ts:108](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L108) |
-| <a id="layerid"></a> `layerId` | `string` | [src/react-native/components-factory/createWebObjectAsComponent.types.ts:109](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L109) |
+| <a id="layerlistener"></a> `layerListener` | `Listener`\<`Event`\> | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:130](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L130) |
+| <a id="layerid"></a> `layerId` | `string` | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:131](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L131) |

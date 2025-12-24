@@ -4,7 +4,7 @@
 
 > **WebObjectComponent**\<`Ref`, `Props`\> = `ForwardRefExoticComponent`\<`PropsWithoutRef`\<`Props`\> & `RefAttributes`\<`Ref`\>\>
 
-Defined in: [src/react-native/components-factory/createWebObjectAsComponent.types.ts:12](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factory/createWebObjectAsComponent.types.ts#L12)
+Defined in: [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:34](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L34)
 
 React Native component that corresponds and perform actions with a web object
 in the web world.
