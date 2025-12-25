@@ -23525,17 +23525,30 @@ uniform mat4 u_projection_matrix;
       this.#sources.entries().forEach(([, source]) => {
         if (map.isStyleLoaded()) {
           this.#addSourceAndItsLayers(source, reactNativeBridge, map);
+          this.#setSourceListeners(source, reactNativeBridge, map);
         } else {
-          map.once(
-            "load",
-            () => this.#addSourceAndItsLayers(source, reactNativeBridge, map)
-          );
+          map.once("load", () => {
+            this.#addSourceAndItsLayers(source, reactNativeBridge, map);
+            this.#setSourceListeners(source, reactNativeBridge, map);
+          });
         }
       });
     };
     handleMountMessage = (message, reactNativeBridge, map) => {
       const run = (mapReady) => {
         this.#addSourceAndItsLayers(message.payload, reactNativeBridge, mapReady);
+        this.#setSourceListeners(message.payload, reactNativeBridge, mapReady);
+        this.#sources.set(message.payload.id, message.payload);
+      };
+      if (map.isStyleLoaded()) {
+        run(map);
+      } else {
+        map.once("load", () => run(map));
+      }
+    };
+    handleUpdateMessage = (message, reactNativeBridge, map) => {
+      const run = (mapReady) => {
+        this.#setSourceListeners(message.payload, reactNativeBridge, mapReady);
         this.#sources.set(message.payload.id, message.payload);
       };
       if (map.isStyleLoaded()) {
@@ -23575,7 +23588,6 @@ uniform mat4 u_projection_matrix;
           }
         });
       });
-      this.#setSourceListeners(reactNativeBridge, map, source.id, source.layers);
     };
     #removeSourceAndItsLayers = (map, reactNativeBridge, sourceId) => {
       const style = map.getStyle();
@@ -23601,8 +23613,8 @@ uniform mat4 u_projection_matrix;
         map.removeSource(sourceId);
       }
     };
-    #setSourceListeners = (reactNativeBridge, map, sourceId, layers) => {
-      layers?.forEach(({ layer, listeners }) => {
+    #setSourceListeners = (source, reactNativeBridge, map) => {
+      source.layers?.forEach(({ layer, listeners }) => {
         Object.entries(listeners ?? {}).forEach(([eventName]) => {
           if (eventName === "mount" || eventName === "unmount") {
             return;
@@ -23612,7 +23624,7 @@ uniform mat4 u_projection_matrix;
             reactNativeBridge.postMessage({
               type: "mapSourceListenerEvent",
               payload: {
-                sourceId,
+                sourceId: source.id,
                 layerId: layer.id,
                 eventName,
                 event
@@ -23669,6 +23681,14 @@ uniform mat4 u_projection_matrix;
           }
           case "mapSourceUnmount": {
             this.#mapSourcesController.handleUnmountMessage(
+              message,
+              reactNativeBridge,
+              this.#webObjectsController.map
+            );
+            break;
+          }
+          case "mapSourceUpdate": {
+            this.#mapSourcesController.handleUpdateMessage(
               message,
               reactNativeBridge,
               this.#webObjectsController.map

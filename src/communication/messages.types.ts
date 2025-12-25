@@ -52,6 +52,10 @@ export type MessageFromRNToWeb =
       payload: MapSourceProps<any>
     }
   | {
+      type: 'mapSourceUpdate'
+      payload: MapSourceProps<any>
+    }
+  | {
       type: 'mapSourceUnmount'
       payload: {
         sourceId: MapSourceId

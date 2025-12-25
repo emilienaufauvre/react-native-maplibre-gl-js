@@ -18,10 +18,12 @@ export default class MapSourcesController {
     this.#sources.entries().forEach(([, source]) => {
       if (map.isStyleLoaded()) {
         this.#addSourceAndItsLayers(source, reactNativeBridge, map)
+        this.#setSourceListeners(source, reactNativeBridge, map)
       } else {
-        map.once('load', () =>
-          this.#addSourceAndItsLayers(source, reactNativeBridge, map),
-        )
+        map.once('load', () => {
+          this.#addSourceAndItsLayers(source, reactNativeBridge, map)
+          this.#setSourceListeners(source, reactNativeBridge, map)
+        })
       }
     })
   }
@@ -32,8 +34,25 @@ export default class MapSourcesController {
     map: maplibregl.Map,
   ) => {
     const run = (mapReady: maplibregl.Map) => {
-      // Add the source and its layers from the map.
       this.#addSourceAndItsLayers(message.payload, reactNativeBridge, mapReady)
+      this.#setSourceListeners(message.payload, reactNativeBridge, mapReady)
+      this.#sources.set(message.payload.id, message.payload)
+    }
+    // Need the map to be loaded before adding the source and its layers.
+    if (map.isStyleLoaded()) {
+      run(map)
+    } else {
+      map.once('load', () => run(map))
+    }
+  }
+
+  handleUpdateMessage = (
+    message: Extract<MessageFromRNToWeb, { type: 'mapSourceUpdate' }>,
+    reactNativeBridge: ReactNativeBridge,
+    map: maplibregl.Map,
+  ) => {
+    const run = (mapReady: maplibregl.Map) => {
+      this.#setSourceListeners(message.payload, reactNativeBridge, mapReady)
       this.#sources.set(message.payload.id, message.payload)
     }
     // Need the map to be loaded before adding the source and its layers.
@@ -53,7 +72,7 @@ export default class MapSourcesController {
     if (!source) {
       return
     }
-    // Remove the source and its layers from the map.
+
     this.#removeSourceAndItsLayers(
       map,
       reactNativeBridge,
@@ -87,8 +106,6 @@ export default class MapSourcesController {
         },
       })
     })
-    // Add listeners on the map.
-    this.#setSourceListeners(reactNativeBridge, map, source.id, source.layers)
   }
 
   #removeSourceAndItsLayers = (
@@ -129,12 +146,11 @@ export default class MapSourcesController {
   }
 
   #setSourceListeners = (
+    source: MapSourceProps<any>,
     reactNativeBridge: ReactNativeBridge,
     map: maplibregl.Map,
-    sourceId: MapSourceId,
-    layers?: MapSourceLayer[],
   ) => {
-    layers?.forEach(({ layer, listeners }: MapSourceLayer) => {
+    source.layers?.forEach(({ layer, listeners }: MapSourceLayer) => {
       Object.entries(listeners ?? {}).forEach(([eventName]) => {
         if (eventName === 'mount' || eventName === 'unmount') {
           return
@@ -147,7 +163,7 @@ export default class MapSourcesController {
           reactNativeBridge.postMessage({
             type: 'mapSourceListenerEvent',
             payload: {
-              sourceId,
+              sourceId: source.id,
               layerId: layer.id,
               eventName: eventName as keyof MapSourceLayerListeners,
               event,

@@ -62,6 +62,14 @@ export default class CoreController {
           )
           break
         }
+        case 'mapSourceUpdate': {
+          this.#mapSourcesController.handleUpdateMessage(
+            message,
+            reactNativeBridge,
+            this.#webObjectsController.map,
+          )
+          break
+        }
       }
 
       if (
