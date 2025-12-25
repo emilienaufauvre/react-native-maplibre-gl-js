@@ -2,7 +2,7 @@ import type { GeoJSONSourceProps } from './GeoJSONSource.types'
 import createMapSourceAsComponent from '../../../components-factories/map-sources/createMapSourceAsComponent'
 
 /**
- * MapLibre GeoJSONSource view.
+ * MapLibre GeoJSON map source and layers.
  * @props {@link GeoJSONSourceProps}
  * @see {@link https://maplibre.org/maplibre-gl-js/docs/API/classes/GeoJSONSource/ `MapLibre GL JS` docs}
  * @example
@@ -73,7 +73,7 @@ import createMapSourceAsComponent from '../../../components-factories/map-source
  *   ]}
  * />
  * ```
- * @group Components (map sources)
+ * @group Components – map sources
  */
 const GeoJSONSource = createMapSourceAsComponent<GeoJSONSourceProps>()
 

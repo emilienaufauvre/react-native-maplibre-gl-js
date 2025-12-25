@@ -32,7 +32,7 @@ import type { PopupProps, PopupRef } from './Popup.types'
  *   }}
  * />
  * ```
- * @group Components (web objects)
+ * @group Components – web objects
  */
 const Popup = createWebObjectAsComponent<PopupRef, PopupProps>('popup')
 

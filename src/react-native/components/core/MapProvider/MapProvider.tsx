@@ -16,7 +16,7 @@ import type { MapProviderProps } from './MapProvider.types'
  * Every child must be a direct component.
  * This is the bridge to the web world / the `MapLibre GL JS` library.
  * @param props -
- * @group Components (core)
+ * @group Components – core
  * @example
  * ```tsx
  * <MapProvider>

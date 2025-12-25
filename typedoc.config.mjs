@@ -13,9 +13,9 @@ export default {
   out: 'docs/api',
   // Order.
   groupOrder: [
-    'Components (core)',
-    'Components (web objects)',
-    'Components (map sources)',
+    'Components – core',
+    'Components – web objects',
+    'Components – map sources',
     'Types (web objects)',
     'Types (map sources)',
     'Map types',

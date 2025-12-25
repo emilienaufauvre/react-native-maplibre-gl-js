@@ -33,7 +33,7 @@ import createWebObjectAsComponent from '../../../components-factories/web-object
  *   }}
  * />
  * ```
- * @group Components (web objects)
+ * @group Components – web objects
  */
 const Map = createWebObjectAsComponent<MapRef, MapProps>('map')
 

@@ -50,7 +50,7 @@ import type { MarkerProps, MarkerRef } from './Marker.types'
  *   }}
  * />
  * ```
- * @group Components (web objects)
+ * @group Components – web objects
  */
 const Marker = createWebObjectAsComponent<MarkerRef, MarkerProps>('marker')
 

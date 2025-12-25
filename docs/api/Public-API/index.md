@@ -4,13 +4,13 @@
 
 Public API of `react-native-maplibre-gl-js`.
 
-## Components (core)
+## Components – core
 
 | Function | Description |
 | ------ | ------ |
 | [MapProvider](functions/MapProvider.md) | Must be used as a parent component to allow instantiation of map elements. Every child must be a direct component. This is the bridge to the web world / the `MapLibre GL JS` library. |
 
-## Components (web objects)
+## Components – web objects
 
 | Variable | Description |
 | ------ | ------ |
@@ -18,7 +18,7 @@ Public API of `react-native-maplibre-gl-js`.
 | [Marker](variables/Marker.md) | MapLibre Marker view. |
 | [Popup](variables/Popup.md) | MapLibre Popup view. |
 
-## Components (map sources)
+## Components – map sources
 
 | Variable | Description |
 | ------ | ------ |
