@@ -6,7 +6,7 @@
 
 Defined in: [src/react-native/components/map-sources/GeoJSONSource/GeoJSONSource.tsx:78](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/map-sources/GeoJSONSource/GeoJSONSource.tsx#L78)
 
-MapLibre GeoJSONSource view.
+MapLibre GeoJSON map source and layers.
 
 ## Parameters
 
