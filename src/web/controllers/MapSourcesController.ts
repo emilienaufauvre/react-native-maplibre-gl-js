@@ -119,7 +119,9 @@ export default class MapSourcesController {
     reactNativeBridge: ReactNativeBridge,
     map: maplibregl.Map,
   ) => {
-    const oldSourceAsString = stableStringify(this.#sources.get(source.id))
+    const oldSourceAsString = stableStringify(
+      this.#sources.get(source.id)?.source,
+    )
     const newSourceAsString = stableStringify(source.source)
 
     // Update everything it the source changed.
@@ -128,47 +130,34 @@ export default class MapSourcesController {
       this.#addSourceAndItsLayers(source, reactNativeBridge, map)
       return
     }
-    // Update only the layers if they changed.
-    source.layers.forEach(
-      ({ layer, beforeId }: MapSourceLayer, index: number) => {
-        const oldLayerAsString = stableStringify(
-          this.#sources.get(source.id)?.layers[index],
-        )
-        const newLayerAsString = stableStringify(layer)
 
-        if (oldLayerAsString !== newLayerAsString) {
-          map.removeLayer(layer.id)
-          map.addLayer(
-            {
-              source: source.id,
-              ...layer,
-            } as maplibregl.AddLayerObject,
-            beforeId,
-          )
-        }
-      },
+    const oldLayersAsString = stableStringify(
+      this.#sources.get(source.id)?.layers.map((item) => item.layer),
+    )
+    const newLayersAsString = stableStringify(
+      source.layers.map((item) => item.layer),
     )
 
-    map.addSource(source.id, source.source)
-    source.layers.forEach(({ layer, beforeId }: MapSourceLayer) => {
-      // Add the layer to the map.
-      map.addLayer(
-        {
-          source: source.id,
-          ...layer,
-        } as maplibregl.AddLayerObject,
-        beforeId,
-      )
-      // Send the "mount" event to the React Native listener.
-      reactNativeBridge.postMessage({
-        type: 'mapSourceListenerEvent',
-        payload: {
-          sourceId: source.id,
-          layerId: layer.id,
-          eventName: 'mount',
-        },
+    // Update the layers only if at least one changed (if one changed, the
+    // orders of the layers might have changed, so we need to update all of
+    // them).
+    if (oldLayersAsString !== newLayersAsString) {
+      this.#getAssociatedLayers(source.id, map).forEach((layerId) => {
+        if (map.getLayer(layerId)) {
+          map.removeLayer(layerId)
+        }
       })
-    })
+      source.layers.forEach(({ layer, beforeId }: MapSourceLayer) => {
+        map.addLayer(
+          {
+            source: source.id,
+            ...layer,
+          } as maplibregl.AddLayerObject,
+          beforeId,
+        )
+      })
+      return
+    }
   }
 
   #removeSourceAndItsLayers = (

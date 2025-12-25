@@ -23620,21 +23620,27 @@ uniform mat4 u_projection_matrix;
       });
     };
     #updateSourceAndItsLayers = (source, reactNativeBridge, map) => {
-      const oldSourceAsString = stableStringify(this.#sources.get(source.id));
+      const oldSourceAsString = stableStringify(
+        this.#sources.get(source.id)?.source
+      );
       const newSourceAsString = stableStringify(source.source);
       if (oldSourceAsString !== newSourceAsString) {
         this.#removeSourceAndItsLayers(source.id, reactNativeBridge, map);
         this.#addSourceAndItsLayers(source, reactNativeBridge, map);
-        return;
-      }
-      source.layers.forEach(
-        ({ layer, beforeId }, index) => {
-          const oldLayerAsString = stableStringify(
-            this.#sources.get(source.id)?.layers[index]
-          );
-          const newLayerAsString = stableStringify(layer);
-          if (oldLayerAsString !== newLayerAsString) {
-            map.removeLayer(layer.id);
+      } else {
+        const oldLayersAsString = stableStringify(
+          this.#sources.get(source.id)?.layers.map((item) => item.layer)
+        );
+        const newLayersAsString = stableStringify(
+          source.layers.map((item) => item.layer)
+        );
+        if (oldLayersAsString !== newLayersAsString) {
+          this.#getAssociatedLayers(source.id, map).forEach((layerId) => {
+            if (map.getLayer(layerId)) {
+              map.removeLayer(layerId);
+            }
+          });
+          source.layers.forEach(({ layer, beforeId }) => {
             map.addLayer(
               {
                 source: source.id,
@@ -23642,27 +23648,9 @@ uniform mat4 u_projection_matrix;
               },
               beforeId
             );
-          }
+          });
         }
-      );
-      map.addSource(source.id, source.source);
-      source.layers.forEach(({ layer, beforeId }) => {
-        map.addLayer(
-          {
-            source: source.id,
-            ...layer
-          },
-          beforeId
-        );
-        reactNativeBridge.postMessage({
-          type: "mapSourceListenerEvent",
-          payload: {
-            sourceId: source.id,
-            layerId: layer.id,
-            eventName: "mount"
-          }
-        });
-      });
+      }
     };
     #removeSourceAndItsLayers = (sourceId, reactNativeBridge, map) => {
       const style = map.getStyle();
