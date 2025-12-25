@@ -7,6 +7,7 @@ import type {
   MapSourceProps,
 } from '../../react-native/components-factories/map-sources/createMapSourceAsComponent.types'
 import maplibregl, { type LayerSpecification } from 'maplibre-gl'
+import { stableStringify } from '../../react-native/hooks/atoms/useMapAtoms.utils'
 
 export default class MapSourcesController {
   #sources = new Map<string, MapSourceProps<any>>()
@@ -52,6 +53,11 @@ export default class MapSourcesController {
     map: maplibregl.Map,
   ) => {
     const run = (mapReady: maplibregl.Map) => {
+      this.#updateSourceAndItsLayers(
+        message.payload,
+        reactNativeBridge,
+        mapReady,
+      )
       this.#setSourceListeners(message.payload, reactNativeBridge, mapReady)
       this.#sources.set(message.payload.id, message.payload)
     }
@@ -74,9 +80,9 @@ export default class MapSourcesController {
     }
 
     this.#removeSourceAndItsLayers(
-      map,
-      reactNativeBridge,
       message.payload.sourceId,
+      reactNativeBridge,
+      map,
     )
     this.#sources.delete(message.payload.sourceId)
   }
@@ -108,32 +114,82 @@ export default class MapSourcesController {
     })
   }
 
-  #removeSourceAndItsLayers = (
-    map: maplibregl.Map,
+  #updateSourceAndItsLayers = (
+    source: MapSourceProps<any>,
     reactNativeBridge: ReactNativeBridge,
+    map: maplibregl.Map,
+  ) => {
+    const oldSourceAsString = stableStringify(this.#sources.get(source.id))
+    const newSourceAsString = stableStringify(source.source)
+
+    // Update everything it the source changed.
+    if (oldSourceAsString !== newSourceAsString) {
+      this.#removeSourceAndItsLayers(source.id, reactNativeBridge, map)
+      this.#addSourceAndItsLayers(source, reactNativeBridge, map)
+      return
+    }
+    // Update only the layers if they changed.
+    source.layers.forEach(
+      ({ layer, beforeId }: MapSourceLayer, index: number) => {
+        const oldLayerAsString = stableStringify(
+          this.#sources.get(source.id)?.layers[index],
+        )
+        const newLayerAsString = stableStringify(layer)
+
+        if (oldLayerAsString !== newLayerAsString) {
+          map.removeLayer(layer.id)
+          map.addLayer(
+            {
+              source: source.id,
+              ...layer,
+            } as maplibregl.AddLayerObject,
+            beforeId,
+          )
+        }
+      },
+    )
+
+    map.addSource(source.id, source.source)
+    source.layers.forEach(({ layer, beforeId }: MapSourceLayer) => {
+      // Add the layer to the map.
+      map.addLayer(
+        {
+          source: source.id,
+          ...layer,
+        } as maplibregl.AddLayerObject,
+        beforeId,
+      )
+      // Send the "mount" event to the React Native listener.
+      reactNativeBridge.postMessage({
+        type: 'mapSourceListenerEvent',
+        payload: {
+          sourceId: source.id,
+          layerId: layer.id,
+          eventName: 'mount',
+        },
+      })
+    })
+  }
+
+  #removeSourceAndItsLayers = (
     sourceId: MapSourceId,
+    reactNativeBridge: ReactNativeBridge,
+    map: maplibregl.Map,
   ) => {
     const style = map.getStyle()
 
     if (style && style.layers) {
-      // Find the associated layers mounted on the map
-      const layerIds = style.layers
-        .filter(
-          (layer): layer is LayerSpecification & { source: string } =>
-            'source' in layer && layer.source === sourceId,
-        )
-        .map((layer) => layer.id)
-      layerIds.forEach((id) => {
+      this.#getAssociatedLayers(sourceId, map).forEach((layerId) => {
         // Remove the layer from the map.
-        if (map.getLayer(id)) {
-          map.removeLayer(id)
+        if (map.getLayer(layerId)) {
+          map.removeLayer(layerId)
         }
         // Send the "unmount" event to the React Native listener.
         reactNativeBridge.postMessage({
           type: 'mapSourceListenerEvent',
           payload: {
             sourceId,
-            layerId: id,
+            layerId,
             eventName: 'unmount',
           },
         })
@@ -178,5 +234,15 @@ export default class MapSourcesController {
         )
       })
     })
+  }
+
+  #getAssociatedLayers = (sourceId: MapSourceId, map: maplibregl.Map) => {
+    return map
+      .getStyle()
+      .layers.filter(
+        (layer): layer is LayerSpecification & { source: string } =>
+          'source' in layer && layer.source === sourceId,
+      )
+      .map((layer) => layer.id)
   }
 }

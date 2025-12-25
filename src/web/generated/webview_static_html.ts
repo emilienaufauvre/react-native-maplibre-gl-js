@@ -23519,6 +23519,31 @@ uniform mat4 u_projection_matrix;
 
   // src/web/controllers/MapSourcesController.ts
   var import_maplibre_gl2 = __toESM(require_maplibre_gl());
+
+  // src/react-native/hooks/atoms/useMapAtoms.utils.ts
+  var stableStringify = (message) => {
+    const replacer = (_, value) => {
+      if (typeof value === "function") {
+        return "...";
+      }
+      return value;
+    };
+    const sortKeys = (obj) => {
+      if (Array.isArray(obj)) {
+        return obj.map(sortKeys);
+      } else if (obj !== null && typeof obj === "object") {
+        const sortedObj = {};
+        Object.keys(obj).sort().forEach((key) => {
+          sortedObj[key] = sortKeys(obj[key]);
+        });
+        return sortedObj;
+      }
+      return obj;
+    };
+    return JSON.stringify(sortKeys(message), replacer);
+  };
+
+  // src/web/controllers/MapSourcesController.ts
   var MapSourcesController = class {
     #sources = /* @__PURE__ */ new Map();
     addExistingSourcesToMap = (reactNativeBridge, map) => {
@@ -23548,6 +23573,11 @@ uniform mat4 u_projection_matrix;
     };
     handleUpdateMessage = (message, reactNativeBridge, map) => {
       const run = (mapReady) => {
+        this.#updateSourceAndItsLayers(
+          message.payload,
+          reactNativeBridge,
+          mapReady
+        );
         this.#setSourceListeners(message.payload, reactNativeBridge, mapReady);
         this.#sources.set(message.payload.id, message.payload);
       };
@@ -23563,9 +23593,9 @@ uniform mat4 u_projection_matrix;
         return;
       }
       this.#removeSourceAndItsLayers(
-        map,
+        message.payload.sourceId,
         reactNativeBridge,
-        message.payload.sourceId
+        map
       );
       this.#sources.delete(message.payload.sourceId);
     };
@@ -23589,21 +23619,63 @@ uniform mat4 u_projection_matrix;
         });
       });
     };
-    #removeSourceAndItsLayers = (map, reactNativeBridge, sourceId) => {
+    #updateSourceAndItsLayers = (source, reactNativeBridge, map) => {
+      const oldSourceAsString = stableStringify(this.#sources.get(source.id));
+      const newSourceAsString = stableStringify(source.source);
+      if (oldSourceAsString !== newSourceAsString) {
+        this.#removeSourceAndItsLayers(source.id, reactNativeBridge, map);
+        this.#addSourceAndItsLayers(source, reactNativeBridge, map);
+        return;
+      }
+      source.layers.forEach(
+        ({ layer, beforeId }, index) => {
+          const oldLayerAsString = stableStringify(
+            this.#sources.get(source.id)?.layers[index]
+          );
+          const newLayerAsString = stableStringify(layer);
+          if (oldLayerAsString !== newLayerAsString) {
+            map.removeLayer(layer.id);
+            map.addLayer(
+              {
+                source: source.id,
+                ...layer
+              },
+              beforeId
+            );
+          }
+        }
+      );
+      map.addSource(source.id, source.source);
+      source.layers.forEach(({ layer, beforeId }) => {
+        map.addLayer(
+          {
+            source: source.id,
+            ...layer
+          },
+          beforeId
+        );
+        reactNativeBridge.postMessage({
+          type: "mapSourceListenerEvent",
+          payload: {
+            sourceId: source.id,
+            layerId: layer.id,
+            eventName: "mount"
+          }
+        });
+      });
+    };
+    #removeSourceAndItsLayers = (sourceId, reactNativeBridge, map) => {
       const style = map.getStyle();
       if (style && style.layers) {
-        const layerIds = style.layers.filter(
-          (layer) => "source" in layer && layer.source === sourceId
-        ).map((layer) => layer.id);
-        layerIds.forEach((id) => {
-          if (map.getLayer(id)) {
-            map.removeLayer(id);
+        this.#getAssociatedLayers(sourceId, map).forEach((layerId) => {
+          if (map.getLayer(layerId)) {
+            map.removeLayer(layerId);
           }
           reactNativeBridge.postMessage({
             type: "mapSourceListenerEvent",
             payload: {
               sourceId,
-              layerId: id,
+              layerId,
               eventName: "unmount"
             }
           });
@@ -23638,6 +23710,11 @@ uniform mat4 u_projection_matrix;
           );
         });
       });
+    };
+    #getAssociatedLayers = (sourceId, map) => {
+      return map.getStyle().layers.filter(
+        (layer) => "source" in layer && layer.source === sourceId
+      ).map((layer) => layer.id);
     };
   };
 
