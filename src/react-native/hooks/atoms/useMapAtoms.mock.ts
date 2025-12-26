@@ -9,6 +9,7 @@ export const setMapSourceListenersMock = jest.fn()
 export const deleteMapSourceListenersMock = jest.fn()
 export const dispatchMessageMock = jest.fn()
 export const resolveWebObjectPendingMethodResponseMock = jest.fn()
+export const setWebObjectPendingMethodResponseMock = jest.fn()
 export const setIsWebWorldReady = (value: boolean) => {
   isWebWorldReady = value
 }
@@ -25,6 +26,7 @@ const useMapAtomsMock = () => ({
   dispatchMessage: dispatchMessageMock,
   resolveWebObjectPendingMethodResponse:
     resolveWebObjectPendingMethodResponseMock,
+  setWebObjectPendingMethodResponse: setWebObjectPendingMethodResponseMock,
 })
 
 export default useMapAtomsMock
