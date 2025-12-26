@@ -41,8 +41,8 @@ describe('createWebObjectAsComponent', () => {
     describe('When nothing', () => {
       beforeEach(() => {})
 
-      test('Then only mount is called', () => {
-        waitFor(() => {
+      test('Then only mount is called', async () => {
+        await waitFor(() => {
           expect(mount).toHaveBeenCalledTimes(1)
           expect(update).toHaveBeenCalledTimes(0)
           expect(unmount).toHaveBeenCalledTimes(0)
@@ -55,8 +55,8 @@ describe('createWebObjectAsComponent', () => {
         screen.rerender(<Component />)
       })
 
-      test('Then mount and then update is called', () => {
-        waitFor(() => {
+      test('Then mount and then update is called', async () => {
+        await waitFor(() => {
           expect(mount).toHaveBeenCalledTimes(1)
           expect(update).toHaveBeenCalledTimes(1)
           expect(unmount).toHaveBeenCalledTimes(0)
@@ -69,8 +69,8 @@ describe('createWebObjectAsComponent', () => {
         screen.rerender(<Component listeners={{ new: () => {} }} />)
       })
 
-      test('Then mount and then update is called', () => {
-        waitFor(() => {
+      test('Then mount and then update is called', async () => {
+        await waitFor(() => {
           expect(mount).toHaveBeenCalledTimes(1)
           expect(update).toHaveBeenCalledTimes(1)
           expect(unmount).toHaveBeenCalledTimes(0)
@@ -83,8 +83,8 @@ describe('createWebObjectAsComponent', () => {
         screen.rerender(<Component options={{ new: true }} />)
       })
 
-      test('Then mount and then update is called', () => {
-        waitFor(() => {
+      test('Then mount and then update is called', async () => {
+        await waitFor(() => {
           expect(mount).toHaveBeenCalledTimes(1)
           expect(update).toHaveBeenCalledTimes(1)
           expect(unmount).toHaveBeenCalledTimes(0)

@@ -43,8 +43,8 @@ describe('createMapSourceAsComponent', () => {
     describe('When nothing', () => {
       beforeEach(() => {})
 
-      test('Then only mount is called', () => {
-        waitFor(() => {
+      test('Then only mount is called', async () => {
+        await waitFor(() => {
           expect(mount).toHaveBeenCalledTimes(1)
           expect(update).toHaveBeenCalledTimes(0)
           expect(unmount).toHaveBeenCalledTimes(0)
@@ -63,8 +63,8 @@ describe('createMapSourceAsComponent', () => {
         )
       })
 
-      test('Then mount and then update is called', () => {
-        waitFor(() => {
+      test('Then mount and then update is called', async () => {
+        await waitFor(() => {
           expect(mount).toHaveBeenCalledTimes(1)
           expect(update).toHaveBeenCalledTimes(1)
           expect(unmount).toHaveBeenCalledTimes(0)
@@ -83,8 +83,8 @@ describe('createMapSourceAsComponent', () => {
         )
       })
 
-      test('Then mount and then update is called', () => {
-        waitFor(() => {
+      test('Then mount and then update is called', async () => {
+        await waitFor(() => {
           expect(mount).toHaveBeenCalledTimes(1)
           expect(update).toHaveBeenCalledTimes(1)
           expect(unmount).toHaveBeenCalledTimes(0)
@@ -103,8 +103,8 @@ describe('createMapSourceAsComponent', () => {
         )
       })
 
-      test('Then mount and then update is called', () => {
-        waitFor(() => {
+      test('Then mount and then update is called', async () => {
+        await waitFor(() => {
           expect(mount).toHaveBeenCalledTimes(1)
           expect(update).toHaveBeenCalledTimes(1)
           expect(unmount).toHaveBeenCalledTimes(0)

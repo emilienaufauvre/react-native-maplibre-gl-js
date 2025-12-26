@@ -7,9 +7,11 @@ const useMountUnmountUpdateCallbacksMock = (): {
   update: () => void
   unmount: () => void
 } => ({
-  mount,
-  update,
-  unmount,
+  // New reference each time the hook is called (as the original ones are RN
+  // callbacks).
+  mount: () => mount(),
+  update: () => update(),
+  unmount: () => unmount(),
 })
 
 export default useMountUnmountUpdateCallbacksMock
