@@ -1,5 +1,6 @@
 import type {
   AddLayerObject,
+  ImageSourceSpecification,
   MapLayerMouseEvent,
   MapLayerTouchEvent,
 } from 'maplibre-gl'
@@ -22,7 +23,9 @@ import type {
  * A class version to be used on the web side.
  * @group Map source abstraction types
  */
-export type MapSourceClass = GeoJSONSourceSpecification
+export type MapSourceClass =
+  | GeoJSONSourceSpecification
+  | ImageSourceSpecification
 
 /**
  * React Native component that corresponds and perform actions with a map source
