@@ -1,17 +1,16 @@
 import { render, screen, waitFor } from '@testing-library/react-native'
-import createWebObjectAsComponent from './createWebObjectAsComponent'
 import { jest } from '@jest/globals'
-import type {
-  WebObjectComponent,
-  WebObjectRef,
-  WebObjectProps,
-} from './createWebObjectAsComponent.types'
 import { setIsWebWorldReady } from '../../hooks/atoms/useMapAtoms.mock'
 import {
   mount,
   unmount,
   update,
 } from '../hooks/useMountUnmountUpdateCallbacks.mock'
+import type {
+  MapSourceComponent,
+  MapSourceLayer,
+} from './createMapSourceAsComponent.types'
+import createMapSourceAsComponent from './createMapSourceAsComponent'
 
 jest.mock('./../../hooks/atoms/useMapAtoms', () =>
   require('./../../hooks/atoms/useMapAtoms.mock'),
@@ -21,21 +20,24 @@ jest.mock('./../hooks/useMountUnmountUpdateCallbacks', () =>
   require('./../hooks/useMountUnmountUpdateCallbacks.mock'),
 )
 
-describe('createWebObjectAsComponent', () => {
+describe('createMapSourceAsComponent', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
-  describe('Given the web object is rendered and the web world is ready', () => {
-    let Component: WebObjectComponent<
-      WebObjectRef<any>,
-      WebObjectProps<any, any>
-    >
+  describe('Given the map source is rendered and the web world is ready', () => {
+    let Component: MapSourceComponent<any>
 
     beforeEach(() => {
-      Component = createWebObjectAsComponent('map')
+      Component = createMapSourceAsComponent()
       setIsWebWorldReady(true)
-      render(<Component />)
+      render(
+        <Component
+          id={'src-1'}
+          source={{}}
+          layers={[]}
+        />,
+      )
     })
 
     describe('When nothing', () => {
@@ -52,7 +54,13 @@ describe('createWebObjectAsComponent', () => {
 
     describe('When rerendered with no change', () => {
       beforeEach(() => {
-        screen.rerender(<Component />)
+        screen.rerender(
+          <Component
+            id={'src-1'}
+            source={{}}
+            layers={[]}
+          />,
+        )
       })
 
       test('Then mount and then update is called', () => {
@@ -64,9 +72,15 @@ describe('createWebObjectAsComponent', () => {
       })
     })
 
-    describe('When rerendered with new listeners', () => {
+    describe('When rerendered with new source', () => {
       beforeEach(() => {
-        screen.rerender(<Component listeners={{ new: () => {} }} />)
+        screen.rerender(
+          <Component
+            id={'src-1'}
+            source={{ new: 'new' }}
+            layers={[]}
+          />,
+        )
       })
 
       test('Then mount and then update is called', () => {
@@ -78,9 +92,15 @@ describe('createWebObjectAsComponent', () => {
       })
     })
 
-    describe('When rerendered with new options', () => {
+    describe('When rerendered with new layer', () => {
       beforeEach(() => {
-        screen.rerender(<Component options={{ new: true }} />)
+        screen.rerender(
+          <Component
+            id={'src-1'}
+            source={{}}
+            layers={[{ layer: { id: 'layer' } } as MapSourceLayer]}
+          />,
+        )
       })
 
       test('Then mount and then update is called', () => {

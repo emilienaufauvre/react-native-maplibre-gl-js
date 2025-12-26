@@ -12,6 +12,12 @@ import { stableStringify } from '../../react-native/hooks/atoms/useMapAtoms.util
 export default class MapSourcesController {
   #sources = new Map<string, MapSourceProps<any>>()
 
+  /**
+   * If the map object changed, add the existing sources and their layers to the
+   * new map.
+   * Note that everything must be recreated, including the listeners.
+   * Send a mount event.
+   */
   addExistingSourcesToMap = (
     reactNativeBridge: ReactNativeBridge,
     map: maplibregl.Map,
@@ -74,11 +80,6 @@ export default class MapSourcesController {
     reactNativeBridge: ReactNativeBridge,
     map: maplibregl.Map,
   ) => {
-    const source = this.#sources.get(message.payload.sourceId)
-    if (!source) {
-      return
-    }
-
     this.#removeSourceAndItsLayers(
       message.payload.sourceId,
       reactNativeBridge,
@@ -88,16 +89,16 @@ export default class MapSourcesController {
   }
 
   #addSourceAndItsLayers = (
-    source: MapSourceProps<any>,
+    props: MapSourceProps<any>,
     reactNativeBridge: ReactNativeBridge,
     map: maplibregl.Map,
   ) => {
-    map.addSource(source.id, source.source)
-    source.layers.forEach(({ layer, beforeId }: MapSourceLayer) => {
+    map.addSource(props.id, props.source)
+    props.layers.forEach(({ layer, beforeId }: MapSourceLayer) => {
       // Add the layer to the map.
       map.addLayer(
         {
-          source: source.id,
+          source: props.id,
           ...layer,
         } as maplibregl.AddLayerObject,
         beforeId,
@@ -106,7 +107,7 @@ export default class MapSourcesController {
       reactNativeBridge.postMessage({
         type: 'mapSourceListenerEvent',
         payload: {
-          sourceId: source.id,
+          sourceId: props.id,
           layerId: layer.id,
           eventName: 'mount',
         },
@@ -115,42 +116,42 @@ export default class MapSourcesController {
   }
 
   #updateSourceAndItsLayers = (
-    source: MapSourceProps<any>,
+    props: MapSourceProps<any>,
     reactNativeBridge: ReactNativeBridge,
     map: maplibregl.Map,
   ) => {
     const oldSourceAsString = stableStringify(
-      this.#sources.get(source.id)?.source,
+      this.#sources.get(props.id)?.source,
     )
-    const newSourceAsString = stableStringify(source.source)
+    const newSourceAsString = stableStringify(props.source)
 
     // Update everything it the source changed.
     if (oldSourceAsString !== newSourceAsString) {
-      this.#removeSourceAndItsLayers(source.id, reactNativeBridge, map)
-      this.#addSourceAndItsLayers(source, reactNativeBridge, map)
+      this.#removeSourceAndItsLayers(props.id, reactNativeBridge, map)
+      this.#addSourceAndItsLayers(props, reactNativeBridge, map)
       return
     }
 
     const oldLayersAsString = stableStringify(
-      this.#sources.get(source.id)?.layers.map((item) => item.layer),
+      this.#sources.get(props.id)?.layers.map((item) => item.layer),
     )
     const newLayersAsString = stableStringify(
-      source.layers.map((item) => item.layer),
+      props.layers.map((item) => item.layer),
     )
 
     // Update the layers only if at least one changed (if one changed, the
     // orders of the layers might have changed, so we need to update all of
     // them).
     if (oldLayersAsString !== newLayersAsString) {
-      this.#getAssociatedLayers(source.id, map).forEach((layerId) => {
+      this.#getAssociatedLayers(props.id, map).forEach((layerId) => {
         if (map.getLayer(layerId)) {
           map.removeLayer(layerId)
         }
       })
-      source.layers.forEach(({ layer, beforeId }: MapSourceLayer) => {
+      props.layers.forEach(({ layer, beforeId }: MapSourceLayer) => {
         map.addLayer(
           {
-            source: source.id,
+            source: props.id,
             ...layer,
           } as maplibregl.AddLayerObject,
           beforeId,
@@ -191,12 +192,13 @@ export default class MapSourcesController {
   }
 
   #setSourceListeners = (
-    source: MapSourceProps<any>,
+    props: MapSourceProps<any>,
     reactNativeBridge: ReactNativeBridge,
     map: maplibregl.Map,
   ) => {
-    source.layers?.forEach(({ layer, listeners }: MapSourceLayer) => {
+    props.layers?.forEach(({ layer, listeners }: MapSourceLayer) => {
       Object.entries(listeners ?? {}).forEach(([eventName]) => {
+        // Skip RN listeners.
         if (eventName === 'mount' || eventName === 'unmount') {
           return
         }
@@ -208,7 +210,7 @@ export default class MapSourcesController {
           reactNativeBridge.postMessage({
             type: 'mapSourceListenerEvent',
             payload: {
-              sourceId: source.id,
+              sourceId: props.id,
               layerId: layer.id,
               eventName: eventName as keyof MapSourceLayerListeners,
               event,

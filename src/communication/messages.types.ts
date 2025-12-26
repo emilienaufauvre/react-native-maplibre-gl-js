@@ -2,7 +2,7 @@ import type {
   WebObjectId,
   WebObjectListeners,
   WebObjectMethodCallRequestId,
-  WebObjectOptionsInferred,
+  WebObjectProps,
   WebObjectType,
 } from '../react-native/components-factories/web-objects/createWebObjectAsComponent.types'
 import type {
@@ -12,17 +12,23 @@ import type {
   MapSourceProps,
 } from '../react-native/components-factories/map-sources/createMapSourceAsComponent.types'
 
+/**
+ * Messages about a MapLibre web object or a map source, sent from the RN world
+ * to the web one.
+ */
 export type MessageFromRNToWeb =
-  /**
-   * TODO Messages about a MapLibre object.
-   */
   | {
       type: 'webObjectMount'
-      payload: {
+      payload: WebObjectProps<any, any> & {
         objectId: WebObjectId
         objectType: WebObjectType
-        options: WebObjectOptionsInferred<any>
-        listeners: WebObjectListeners
+      }
+    }
+  | {
+      type: 'webObjectUpdate'
+      payload: WebObjectProps<any, any> & {
+        objectId: WebObjectId
+        objectType: WebObjectType
       }
     }
   | {
@@ -41,13 +47,6 @@ export type MessageFromRNToWeb =
       }
     }
   | {
-      type: 'webObjectOptionsUpdate'
-      payload: {
-        objectId: WebObjectId
-        options: WebObjectOptionsInferred<any>
-      }
-    }
-  | {
       type: 'mapSourceMount'
       payload: MapSourceProps<any>
     }
@@ -62,6 +61,9 @@ export type MessageFromRNToWeb =
       }
     }
 
+/**
+ * Messages about the web world, sent from the web one to the RN world.
+ */
 export type MessageFromWebToRN =
   /**
    * Anything that should be logged in the React Native world.

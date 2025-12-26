@@ -1,4 +1,4 @@
-import { forwardRef, useId } from 'react'
+import { forwardRef, useId, useMemo } from 'react'
 import type {
   WebObjectComponent,
   WebObjectId,
@@ -6,8 +6,9 @@ import type {
   WebObjectRef,
   WebObjectType,
 } from './createWebObjectAsComponent.types'
-import useWebObjectMethodsProxy from './hooks/useWebObjectMethodsProxy'
-import useWebObjectMountUnmountWithProps from './hooks/useWebObjectMountUnmountWithProps'
+import useWebObjectMethodsProxy from '../hooks/useWebObjectMethodsProxy'
+import type { MountUpdateUnmountInput } from '../hooks/useMountUnmountUpdateCallbacks.types'
+import useMountUpdateUnmountWhenNeeded from '../hooks/useMountUpdateUnmountWhenNeeded'
 
 const createWebObjectAsComponent = <
   Ref extends WebObjectRef<any>,
@@ -20,9 +21,23 @@ const createWebObjectAsComponent = <
     const id: WebObjectId = useId()
     // Forward a method call on the RN object ref to the web object.
     useWebObjectMethodsProxy<Ref>(ref, id)
-    // Mount the web object on launch and update the web object properties when
+    // Mount the web object on launch and update the map source properties when
     // they changed in the component body.
-    useWebObjectMountUnmountWithProps<Props>(props, id, objectType)
+    // TODO unmount to be added in comment.
+    const input: MountUpdateUnmountInput = useMemo(
+      () => ({
+        type: 'webObject',
+        props: {
+          options: props.options,
+          listeners: props.listeners,
+        },
+        objectId: id,
+        objectType,
+      }),
+      // Decompose props to avoid useless re-rendering of the component.
+      [id, props.options, props.listeners],
+    )
+    useMountUpdateUnmountWhenNeeded(input)
 
     return null
   })

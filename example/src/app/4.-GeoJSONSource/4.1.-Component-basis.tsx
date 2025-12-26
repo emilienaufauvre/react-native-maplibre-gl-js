@@ -65,7 +65,7 @@ const Screen = () => {
               type: 'line',
               // No need to specify the source here, it will be added
               // automatically.
-              //> i.e. this is not needed: source: 'route-source'.
+              //> i.e., this is not needed: source: 'route-source'.
               layout: {
                 'line-join': 'round',
                 'line-cap': 'round',

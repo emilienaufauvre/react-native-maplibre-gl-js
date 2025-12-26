@@ -1,3 +1,0 @@
-const useMapSourceMountUnmountUpdateCallbacksMock = jest.fn()
-
-export default useMapSourceMountUnmountUpdateCallbacksMock

@@ -10,13 +10,21 @@ import {
 } from '../../communication/messages.utils'
 import type {
   WebObjectClass,
+  WebObjectId,
   WebObjectListenerOnMapLayer,
   WebObjectListeners,
+  WebObjectOptionsInferred,
+  WebObjectType,
 } from '../../react-native/components-factories/web-objects/createWebObjectAsComponent.types'
 import type ReactNativeBridge from '../bridge/ReactNativeBridge'
+import { stableStringify } from '../../react-native/hooks/atoms/useMapAtoms.utils'
 
+/**
+ *
+ */
 export default class WebObjectsController {
   #objects = new Map<string, WebObjectClass>()
+  #objectsOptions = new Map<string, WebObjectOptionsInferred<any>>()
   #mapId: string | undefined
 
   get map(): maplibregl.Map {
@@ -27,6 +35,11 @@ export default class WebObjectsController {
     return map as maplibregl.Map
   }
 
+  /**
+   * If the map object changed, add the existing object to the new map.
+   * Note that listeners stay unchanged because attached to the object itself.
+   * Send a mount event.
+   */
   addExistingObjectsToMap = (
     reactNativeBridge: ReactNativeBridge,
     map: maplibregl.Map,
@@ -49,82 +62,49 @@ export default class WebObjectsController {
     message: Extract<MessageFromRNToWeb, { type: 'webObjectMount' }>,
     reactNativeBridge: ReactNativeBridge,
   ) => {
-    let element: WebObjectClass | undefined
-
-    switch (message.payload.objectType) {
-      case 'map': {
-        const htmlContainer = document.getElementById('app')!
-        element = new maplibregl.Map({
-          ...message.payload.options,
-          container: htmlContainer,
-        })
-        this.#mapId = message.payload.objectId
-        break
-      }
-      case 'marker': {
-        const htmlElement = this.#buildHTMLElement(
-          message.payload.options.element,
-        )
-        element = new maplibregl.Marker({
-          ...message.payload.options,
-          element: htmlElement,
-        })
-          // TODO setup default location (needed by default)
-          .setLngLat([0, 0])
-          .addTo(this.map)
-        break
-      }
-      case 'popup': {
-        element = new maplibregl.Popup({
-          ...message.payload.options,
-        })
-        //.addTo(this.map)
-        break
-      }
-    }
-
-    if (!element) {
-      return
-    }
-
-    // Save the object.
-    this.#objects.set(message.payload.objectId, element)
-    // Add listeners on the map and/or HTML element.
+    const element = this.#addObject(
+      message.payload.objectId,
+      message.payload.objectType,
+      message.payload.options,
+      reactNativeBridge,
+    )
     this.#setObjectListeners(
       reactNativeBridge,
       element,
       message.payload.objectId,
       message.payload.listeners,
     )
-    // Send the "mount" event to the React Native listener.
-    reactNativeBridge.postMessage({
-      type: 'webObjectListenerEvent',
-      payload: {
-        objectId: message.payload.objectId,
-        eventName: 'mount',
-      },
-    })
+    this.#objects.set(message.payload.objectId, element)
+    this.#objectsOptions.set(message.payload.objectId, message.payload.options)
+  }
+
+  handleUpdateMessage = (
+    message: Extract<MessageFromRNToWeb, { type: 'webObjectUpdate' }>,
+    reactNativeBridge: ReactNativeBridge,
+  ) => {
+    const element = this.#updateObject(
+      message.payload.objectId,
+      message.payload.objectType,
+      message.payload.options,
+      reactNativeBridge,
+    )
+    this.#setObjectListeners(
+      reactNativeBridge,
+      element,
+      message.payload.objectId,
+      message.payload.listeners,
+    )
+    this.#objects.set(message.payload.objectId, element)
+    this.#objectsOptions.set(message.payload.objectId, message.payload.options)
   }
 
   handleUnmountMessage = (
     message: Extract<MessageFromRNToWeb, { type: 'webObjectUnmount' }>,
     reactNativeBridge: ReactNativeBridge,
   ) => {
-    const object = this.#objects.get(message.payload.objectId)
-    if (!object) {
-      return
-    }
-    // Remove the object from the map.
-    object.remove()
+    this.#removeObject(message.payload.objectId, reactNativeBridge)
     this.#objects.delete(message.payload.objectId)
-    // Send the "unmount" event to the React Native listener.
-    reactNativeBridge.postMessage({
-      type: 'webObjectListenerEvent',
-      payload: {
-        objectId: message.payload.objectId,
-        eventName: 'unmount',
-      },
-    })
+    this.#objectsOptions.delete(message.payload.objectId)
   }
 
   handleMethodCall = async (
@@ -146,6 +126,164 @@ export default class WebObjectsController {
     reactNativeBridge.postMessage({
       type: 'webObjectMethodResponse',
       payload: { requestId: message.payload.requestId, result },
+    })
+  }
+
+  #addObject = (
+    objectId: WebObjectId,
+    objectType: WebObjectType,
+    options: WebObjectOptionsInferred<any>,
+    reactNativeBridge: ReactNativeBridge,
+  ): WebObjectClass => {
+    let element: WebObjectClass | undefined
+
+    switch (objectType) {
+      case 'map': {
+        const htmlContainer = document.getElementById('app')!
+        element = new maplibregl.Map({
+          ...options,
+          container: htmlContainer,
+        })
+        this.#mapId = objectId
+        break
+      }
+      case 'marker': {
+        const htmlElement = this.#buildHTMLElement(options.element)
+        element = new maplibregl.Marker({
+          ...options,
+          element: htmlElement,
+        })
+          // TODO setup default location (needed by default)
+          .setLngLat([0, 0])
+          .addTo(this.map)
+        break
+      }
+      case 'popup': {
+        element = new maplibregl.Popup({
+          ...options,
+        })
+        //.addTo(this.map)
+        break
+      }
+    }
+
+    if (!element) {
+      throw new Error(`Unsupported object type: ${objectType}`)
+    }
+
+    // Send the "mount" event to the React Native listener.
+    reactNativeBridge.postMessage({
+      type: 'webObjectListenerEvent',
+      payload: {
+        objectId,
+        eventName: 'mount',
+      },
+    })
+
+    return element
+  }
+
+  #updateObject = (
+    objectId: WebObjectId,
+    objectType: WebObjectType,
+    options: WebObjectOptionsInferred<any>,
+    reactNativeBridge: ReactNativeBridge,
+  ): WebObjectClass => {
+    let element: WebObjectClass | undefined
+
+    const oldOptionsAsString = stableStringify(
+      this.#objectsOptions.get(objectId),
+    )
+    const newOptionsAsString = stableStringify(options)
+
+    if (oldOptionsAsString !== newOptionsAsString) {
+      this.#removeObject(objectId, reactNativeBridge)
+      element = this.#addObject(
+        objectId,
+        objectType,
+        options,
+        reactNativeBridge,
+      )
+    } else {
+      element = this.#objects.get(objectId)
+    }
+
+    if (!element) {
+      throw new Error(`Object does not exist: ${objectId} - ${objectType}`)
+    }
+
+    return element
+  }
+
+  #removeObject = (
+    objectId: WebObjectId,
+    reactNativeBridge: ReactNativeBridge,
+  ) => {
+    const object = this.#objects.get(objectId)
+    if (!object) {
+      return
+    }
+    object.remove()
+    // Send the "unmount" event to the React Native listener.
+    reactNativeBridge.postMessage({
+      type: 'webObjectListenerEvent',
+      payload: {
+        objectId: objectId,
+        eventName: 'unmount',
+      },
+    })
+  }
+
+  #setObjectListeners = (
+    reactNativeBridge: ReactNativeBridge,
+    object: WebObjectClass,
+    objectId: string,
+    listeners?: WebObjectListeners,
+  ) => {
+    if (!listeners) {
+      return
+    }
+    Object.entries(listeners).forEach(([eventName, listener]) => {
+      const sendEventToReactNative = (event: any) => {
+        // Remove circular references that cannot be serialized.
+        delete event.target
+        // Send the event to the React Native listener.
+        reactNativeBridge.postMessage({
+          type: 'webObjectListenerEvent',
+          payload: {
+            objectId,
+            eventName,
+            event,
+          },
+        })
+      }
+
+      // Attach the listener to the object.
+      if (isWebObjectListenerOnObject(listener)) {
+        object.on(eventName, sendEventToReactNative)
+      }
+      // Attach the listener to a map layer.
+      if (isWebObjectListenerOnMapLayer(listener)) {
+        // Listening to only one layer of the map is only possible on map
+        // events.
+        if (object instanceof maplibregl.Map) {
+          object.on(
+            eventName as keyof MapLayerEventType,
+            (listener as WebObjectListenerOnMapLayer<any>).layerId,
+            sendEventToReactNative,
+          )
+        }
+      }
+      // Attach the listener to the HTML element of the object
+      if (isWebObjectListenerOnHTMLElement(listener)) {
+        // Listening to the HTML element events is not possible on the map
+        // object.
+        if (!(object instanceof maplibregl.Map)) {
+          object
+            .getElement()
+            .addEventListener(eventName, sendEventToReactNative)
+        }
+      }
     })
   }
 
@@ -238,58 +376,5 @@ export default class WebObjectsController {
     }
 
     return element
-  }
-
-  #setObjectListeners = (
-    reactNativeBridge: ReactNativeBridge,
-    object: WebObjectClass,
-    objectId: string,
-    listeners?: WebObjectListeners,
-  ) => {
-    if (!listeners) {
-      return
-    }
-    Object.entries(listeners).forEach(([eventName, listener]) => {
-      const sendEventToReactNative = (event: any) => {
-        // Remove circular references that cannot be serialized.
-        delete event.target
-        // Send the event to the React Native listener.
-        reactNativeBridge.postMessage({
-          type: 'webObjectListenerEvent',
-          payload: {
-            objectId,
-            eventName,
-            event,
-          },
-        })
-      }
-
-      // Attach the listener to the object.
-      if (isWebObjectListenerOnObject(listener)) {
-        object.on(eventName, sendEventToReactNative)
-      }
-      // Attach the listener to a map layer.
-      if (isWebObjectListenerOnMapLayer(listener)) {
-        // Listening to only one layer of the map is only possible on map
-        // events.
-        if (object instanceof maplibregl.Map) {
-          object.on(
-            eventName as keyof MapLayerEventType,
-            (listener as WebObjectListenerOnMapLayer<any>).layerId,
-            sendEventToReactNative,
-          )
-        }
-      }
-      // Attach the listener to the HTML element of the object
-      if (isWebObjectListenerOnHTMLElement(listener)) {
-        // Listening to the HTML element events is not possible on the map
-        // object.
-        if (!(object instanceof maplibregl.Map)) {
-          object
-            .getElement()
-            .addEventListener(eventName, sendEventToReactNative)
-        }
-      }
-    })
   }
 }

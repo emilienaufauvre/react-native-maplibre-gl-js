@@ -23306,9 +23306,33 @@ uniform mat4 u_projection_matrix;
     return "elementListener" in listener;
   };
 
+  // src/react-native/hooks/atoms/useMapAtoms.utils.ts
+  var stableStringify = (message) => {
+    const replacer = (_, value) => {
+      if (typeof value === "function") {
+        return "...";
+      }
+      return value;
+    };
+    const sortKeys = (obj) => {
+      if (Array.isArray(obj)) {
+        return obj.map(sortKeys);
+      } else if (obj !== null && typeof obj === "object") {
+        const sortedObj = {};
+        Object.keys(obj).sort().forEach((key) => {
+          sortedObj[key] = sortKeys(obj[key]);
+        });
+        return sortedObj;
+      }
+      return obj;
+    };
+    return JSON.stringify(sortKeys(message), replacer);
+  };
+
   // src/web/controllers/WebObjectsController.ts
   var WebObjectsController = class {
     #objects = /* @__PURE__ */ new Map();
+    #objectsOptions = /* @__PURE__ */ new Map();
     #mapId;
     get map() {
       const map = this.#objects.get(this.#mapId ?? "");
@@ -23317,6 +23341,11 @@ uniform mat4 u_projection_matrix;
       }
       return map;
     }
+    /**
+     * If the map object changed, add the existing object to the new map.
+     * Note that listeners stay unchanged because attached to the object itself.
+     * Send a mount event.
+     */
     addExistingObjectsToMap = (reactNativeBridge, map) => {
       this.#objects.entries().forEach(([id, object]) => {
         if (!(object instanceof import_maplibre_gl.default.Map)) {
@@ -23332,66 +23361,41 @@ uniform mat4 u_projection_matrix;
       });
     };
     handleMountMessage = (message, reactNativeBridge) => {
-      let element;
-      switch (message.payload.objectType) {
-        case "map": {
-          const htmlContainer = document.getElementById("app");
-          element = new import_maplibre_gl.default.Map({
-            ...message.payload.options,
-            container: htmlContainer
-          });
-          this.#mapId = message.payload.objectId;
-          break;
-        }
-        case "marker": {
-          const htmlElement = this.#buildHTMLElement(
-            message.payload.options.element
-          );
-          element = new import_maplibre_gl.default.Marker({
-            ...message.payload.options,
-            element: htmlElement
-          }).setLngLat([0, 0]).addTo(this.map);
-          break;
-        }
-        case "popup": {
-          element = new import_maplibre_gl.default.Popup({
-            ...message.payload.options
-          });
-          break;
-        }
-      }
-      if (!element) {
-        return;
-      }
-      this.#objects.set(message.payload.objectId, element);
+      const element = this.#addObject(
+        message.payload.objectId,
+        message.payload.objectType,
+        message.payload.options,
+        reactNativeBridge
+      );
       this.#setObjectListeners(
         reactNativeBridge,
         element,
         message.payload.objectId,
         message.payload.listeners
       );
-      reactNativeBridge.postMessage({
-        type: "webObjectListenerEvent",
-        payload: {
-          objectId: message.payload.objectId,
-          eventName: "mount"
-        }
-      });
+      this.#objects.set(message.payload.objectId, element);
+      this.#objectsOptions.set(message.payload.objectId, message.payload.options);
+    };
+    handleUpdateMessage = (message, reactNativeBridge) => {
+      const element = this.#updateObject(
+        message.payload.objectId,
+        message.payload.objectType,
+        message.payload.options,
+        reactNativeBridge
+      );
+      this.#setObjectListeners(
+        reactNativeBridge,
+        element,
+        message.payload.objectId,
+        message.payload.listeners
+      );
+      this.#objects.set(message.payload.objectId, element);
+      this.#objectsOptions.set(message.payload.objectId, message.payload.options);
     };
     handleUnmountMessage = (message, reactNativeBridge) => {
-      const object = this.#objects.get(message.payload.objectId);
-      if (!object) {
-        return;
-      }
-      object.remove();
+      this.#removeObject(message.payload.objectId, reactNativeBridge);
       this.#objects.delete(message.payload.objectId);
-      reactNativeBridge.postMessage({
-        type: "webObjectListenerEvent",
-        payload: {
-          objectId: message.payload.objectId,
-          eventName: "unmount"
-        }
-      });
+      this.#objectsOptions.delete(message.payload.objectId);
     };
     handleMethodCall = async (message, reactNativeBridge) => {
       const object = this.#objects.get(message.payload.objectId);
@@ -23405,6 +23409,116 @@ uniform mat4 u_projection_matrix;
       reactNativeBridge.postMessage({
         type: "webObjectMethodResponse",
         payload: { requestId: message.payload.requestId, result }
+      });
+    };
+    #addObject = (objectId, objectType, options, reactNativeBridge) => {
+      let element;
+      switch (objectType) {
+        case "map": {
+          const htmlContainer = document.getElementById("app");
+          element = new import_maplibre_gl.default.Map({
+            ...options,
+            container: htmlContainer
+          });
+          this.#mapId = objectId;
+          break;
+        }
+        case "marker": {
+          const htmlElement = this.#buildHTMLElement(options.element);
+          element = new import_maplibre_gl.default.Marker({
+            ...options,
+            element: htmlElement
+          }).setLngLat([0, 0]).addTo(this.map);
+          break;
+        }
+        case "popup": {
+          element = new import_maplibre_gl.default.Popup({
+            ...options
+          });
+          break;
+        }
+      }
+      if (!element) {
+        throw new Error(\`Unsupported object type: \${objectType}\`);
+      }
+      reactNativeBridge.postMessage({
+        type: "webObjectListenerEvent",
+        payload: {
+          objectId,
+          eventName: "mount"
+        }
+      });
+      return element;
+    };
+    #updateObject = (objectId, objectType, options, reactNativeBridge) => {
+      let element;
+      const oldOptionsAsString = stableStringify(
+        this.#objectsOptions.get(objectId)
+      );
+      const newOptionsAsString = stableStringify(options);
+      if (oldOptionsAsString !== newOptionsAsString) {
+        this.#removeObject(objectId, reactNativeBridge);
+        element = this.#addObject(
+          objectId,
+          objectType,
+          options,
+          reactNativeBridge
+        );
+      } else {
+        element = this.#objects.get(objectId);
+      }
+      if (!element) {
+        throw new Error(\`Object does not exist: \${objectId} - \${objectType}\`);
+      }
+      return element;
+    };
+    #removeObject = (objectId, reactNativeBridge) => {
+      const object = this.#objects.get(objectId);
+      if (!object) {
+        return;
+      }
+      object.remove();
+      reactNativeBridge.postMessage({
+        type: "webObjectListenerEvent",
+        payload: {
+          objectId,
+          eventName: "unmount"
+        }
+      });
+    };
+    #setObjectListeners = (reactNativeBridge, object, objectId, listeners) => {
+      if (!listeners) {
+        return;
+      }
+      Object.entries(listeners).forEach(([eventName, listener]) => {
+        const sendEventToReactNative = (event) => {
+          delete event.target;
+          reactNativeBridge.postMessage({
+            type: "webObjectListenerEvent",
+            payload: {
+              objectId,
+              eventName,
+              event
+            }
+          });
+        };
+        if (isWebObjectListenerOnObject(listener)) {
+          object.on(eventName, sendEventToReactNative);
+        }
+        if (isWebObjectListenerOnMapLayer(listener)) {
+          if (object instanceof import_maplibre_gl.default.Map) {
+            object.on(
+              eventName,
+              listener.layerId,
+              sendEventToReactNative
+            );
+          }
+        }
+        if (isWebObjectListenerOnHTMLElement(listener)) {
+          if (!(object instanceof import_maplibre_gl.default.Map)) {
+            object.getElement().addEventListener(eventName, sendEventToReactNative);
+          }
+        }
       });
     };
     #runIfSpecialMethod = (message, object) => {
@@ -23480,72 +23594,18 @@ uniform mat4 u_projection_matrix;
       }
       return element;
     };
-    #setObjectListeners = (reactNativeBridge, object, objectId, listeners) => {
-      if (!listeners) {
-        return;
-      }
-      Object.entries(listeners).forEach(([eventName, listener]) => {
-        const sendEventToReactNative = (event) => {
-          delete event.target;
-          reactNativeBridge.postMessage({
-            type: "webObjectListenerEvent",
-            payload: {
-              objectId,
-              eventName,
-              event
-            }
-          });
-        };
-        if (isWebObjectListenerOnObject(listener)) {
-          object.on(eventName, sendEventToReactNative);
-        }
-        if (isWebObjectListenerOnMapLayer(listener)) {
-          if (object instanceof import_maplibre_gl.default.Map) {
-            object.on(
-              eventName,
-              listener.layerId,
-              sendEventToReactNative
-            );
-          }
-        }
-        if (isWebObjectListenerOnHTMLElement(listener)) {
-          if (!(object instanceof import_maplibre_gl.default.Map)) {
-            object.getElement().addEventListener(eventName, sendEventToReactNative);
-          }
-        }
-      });
-    };
   };
 
   // src/web/controllers/MapSourcesController.ts
   var import_maplibre_gl2 = __toESM(require_maplibre_gl());
-
-  // src/react-native/hooks/atoms/useMapAtoms.utils.ts
-  var stableStringify = (message) => {
-    const replacer = (_, value) => {
-      if (typeof value === "function") {
-        return "...";
-      }
-      return value;
-    };
-    const sortKeys = (obj) => {
-      if (Array.isArray(obj)) {
-        return obj.map(sortKeys);
-      } else if (obj !== null && typeof obj === "object") {
-        const sortedObj = {};
-        Object.keys(obj).sort().forEach((key) => {
-          sortedObj[key] = sortKeys(obj[key]);
-        });
-        return sortedObj;
-      }
-      return obj;
-    };
-    return JSON.stringify(sortKeys(message), replacer);
-  };
-
-  // src/web/controllers/MapSourcesController.ts
   var MapSourcesController = class {
     #sources = /* @__PURE__ */ new Map();
+    /**
+     * If the map object changed, add the existing sources and their layers to the
+     * new map.
+     * Note that everything must be recreated, including the listeners.
+     * Send a mount event.
+     */
     addExistingSourcesToMap = (reactNativeBridge, map) => {
       this.#sources.entries().forEach(([, source]) => {
         if (map.isStyleLoaded()) {
@@ -23588,10 +23648,6 @@ uniform mat4 u_projection_matrix;
       }
     };
     handleUnmountMessage = (message, reactNativeBridge, map) => {
-      const source = this.#sources.get(message.payload.sourceId);
-      if (!source) {
-        return;
-      }
       this.#removeSourceAndItsLayers(
         message.payload.sourceId,
         reactNativeBridge,
@@ -23599,12 +23655,12 @@ uniform mat4 u_projection_matrix;
       );
       this.#sources.delete(message.payload.sourceId);
     };
-    #addSourceAndItsLayers = (source, reactNativeBridge, map) => {
-      map.addSource(source.id, source.source);
-      source.layers.forEach(({ layer, beforeId }) => {
+    #addSourceAndItsLayers = (props, reactNativeBridge, map) => {
+      map.addSource(props.id, props.source);
+      props.layers.forEach(({ layer, beforeId }) => {
         map.addLayer(
           {
-            source: source.id,
+            source: props.id,
             ...layer
           },
           beforeId
@@ -23612,44 +23668,45 @@ uniform mat4 u_projection_matrix;
         reactNativeBridge.postMessage({
           type: "mapSourceListenerEvent",
           payload: {
-            sourceId: source.id,
+            sourceId: props.id,
             layerId: layer.id,
             eventName: "mount"
           }
         });
       });
     };
-    #updateSourceAndItsLayers = (source, reactNativeBridge, map) => {
+    #updateSourceAndItsLayers = (props, reactNativeBridge, map) => {
       const oldSourceAsString = stableStringify(
-        this.#sources.get(source.id)?.source
+        this.#sources.get(props.id)?.source
       );
-      const newSourceAsString = stableStringify(source.source);
+      const newSourceAsString = stableStringify(props.source);
       if (oldSourceAsString !== newSourceAsString) {
-        this.#removeSourceAndItsLayers(source.id, reactNativeBridge, map);
-        this.#addSourceAndItsLayers(source, reactNativeBridge, map);
-      } else {
-        const oldLayersAsString = stableStringify(
-          this.#sources.get(source.id)?.layers.map((item) => item.layer)
-        );
-        const newLayersAsString = stableStringify(
-          source.layers.map((item) => item.layer)
-        );
-        if (oldLayersAsString !== newLayersAsString) {
-          this.#getAssociatedLayers(source.id, map).forEach((layerId) => {
-            if (map.getLayer(layerId)) {
-              map.removeLayer(layerId);
-            }
-          });
-          source.layers.forEach(({ layer, beforeId }) => {
-            map.addLayer(
-              {
-                source: source.id,
-                ...layer
-              },
-              beforeId
-            );
-          });
-        }
+        this.#removeSourceAndItsLayers(props.id, reactNativeBridge, map);
+        this.#addSourceAndItsLayers(props, reactNativeBridge, map);
+        return;
+      }
+      const oldLayersAsString = stableStringify(
+        this.#sources.get(props.id)?.layers.map((item) => item.layer)
+      );
+      const newLayersAsString = stableStringify(
+        props.layers.map((item) => item.layer)
+      );
+      if (oldLayersAsString !== newLayersAsString) {
+        this.#getAssociatedLayers(props.id, map).forEach((layerId) => {
+          if (map.getLayer(layerId)) {
+            map.removeLayer(layerId);
+          }
+        });
+        props.layers.forEach(({ layer, beforeId }) => {
+          map.addLayer(
+            {
+              source: props.id,
+              ...layer
+            },
+            beforeId
+          );
+        });
+        return;
       }
     };
     #removeSourceAndItsLayers = (sourceId, reactNativeBridge, map) => {
@@ -23673,8 +23730,8 @@ uniform mat4 u_projection_matrix;
         map.removeSource(sourceId);
       }
     };
-    #setSourceListeners = (source, reactNativeBridge, map) => {
-      source.layers?.forEach(({ layer, listeners }) => {
+    #setSourceListeners = (props, reactNativeBridge, map) => {
+      props.layers?.forEach(({ layer, listeners }) => {
         Object.entries(listeners ?? {}).forEach(([eventName]) => {
           if (eventName === "mount" || eventName === "unmount") {
             return;
@@ -23684,7 +23741,7 @@ uniform mat4 u_projection_matrix;
             reactNativeBridge.postMessage({
               type: "mapSourceListenerEvent",
               payload: {
-                sourceId: source.id,
+                sourceId: props.id,
                 layerId: layer.id,
                 eventName,
                 event
@@ -23720,6 +23777,13 @@ uniform mat4 u_projection_matrix;
         switch (message.type) {
           case "webObjectMount": {
             this.#webObjectsController.handleMountMessage(
+              message,
+              reactNativeBridge
+            );
+            break;
+          }
+          case "webObjectUpdate": {
+            this.#webObjectsController.handleUpdateMessage(
               message,
               reactNativeBridge
             );
@@ -23761,7 +23825,7 @@ uniform mat4 u_projection_matrix;
             break;
           }
         }
-        if (message.type === "webObjectMount" && message.payload.objectType === "map") {
+        if (message.type === "webObjectUpdate" && message.payload.objectType === "map") {
           this.#webObjectsController.addExistingObjectsToMap(
             reactNativeBridge,
             this.#webObjectsController.map

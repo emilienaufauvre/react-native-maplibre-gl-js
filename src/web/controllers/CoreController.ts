@@ -33,6 +33,13 @@ export default class CoreController {
           )
           break
         }
+        case 'webObjectUpdate': {
+          this.#webObjectsController.handleUpdateMessage(
+            message,
+            reactNativeBridge,
+          )
+          break
+        }
         case 'webObjectUnmount': {
           this.#webObjectsController.handleUnmountMessage(
             message,
@@ -73,7 +80,7 @@ export default class CoreController {
       }
 
       if (
-        message.type === 'webObjectMount' &&
+        message.type === 'webObjectUpdate' &&
         message.payload.objectType === 'map'
       ) {
         // If the map was unmounted and mounted back again (e.g., on map
