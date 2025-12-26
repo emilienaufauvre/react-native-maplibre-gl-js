@@ -56,14 +56,14 @@ The following terms are used throughout the documentation and codebase.
 
 ```mermaid
 graph TD
-B[communication]
+A[src] --> B[communication]
 
 B --> B1[Handle messages that are exchanged between the web world and the React Native one]
 ```
 
 ```mermaid
 graph TD
-C[web]
+A[src] --> C[web]
 
 C --> C1[The web world that runs the MapLibre GL JS library]
 C --> C2[bridge]
@@ -79,7 +79,7 @@ C5 --> C5a[Forward logs to React Native for display]
 
 ```mermaid
 graph TD
-D[react-native]
+A[src] --> D[react-native]
 
 D --> D1[The React Native world that is used by this library end user]
 D --> D2[components]
