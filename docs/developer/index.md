@@ -56,11 +56,14 @@ The following terms are used throughout the documentation and codebase.
 
 ```mermaid
 graph TD
-A[src] --> B[communication]
-A[src] --> C[web]
-A[src] --> D[react-native]
+B[communication]
 
 B --> B1[Handle messages that are exchanged between the web world and the React Native one]
+```
+
+```mermaid
+graph TD
+C[web]
 
 C --> C1[The web world that runs the MapLibre GL JS library]
 C --> C2[bridge]
@@ -72,6 +75,11 @@ C2 --> C2a[Communication layer to receive and send messages to the React Native 
 C3 --> C3a[Core logic that create, mount, update, unmount, MapLibre GL JS object]
 C4 --> C4a[Auto-generated code used in the React Native WebView]
 C5 --> C5a[Forward logs to React Native for display]
+```
+
+```mermaid
+graph TD
+D[react-native]
 
 D --> D1[The React Native world that is used by this library end user]
 D --> D2[components]
