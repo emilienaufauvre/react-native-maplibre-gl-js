@@ -144,10 +144,8 @@ classDef descriptionBlock fill:#CCC,stroke:#333,stroke-width:1px,rx:10,ry:10,col
 
 Here is a status of the MapLibre GL JS classes implemented in this library as
 React Native components.
-Source classes can be instantiated using the `Map` component listeners (see
-[the map examples](./../../example/src/app/1.-Map)).
-However, the library tries to implement most of them as React Native components
-to make it easier to use.
+
+### Definitions
 
 | Symbol | Definition      |
 |--------|-----------------|
@@ -158,12 +156,21 @@ to make it easier to use.
 | 👆     | Gesture handler |
 | 📦     | Data container  |
 
+### Implemented classes
+
 | Implemented class | Type |
 |-------------------|------|
 | Map               | 🖼️  |
 | Marker            | 🫟   |
 | Popup             | 🫟   |
 | GeoJSONSource     | 🧩   |
+
+### To be implemented classes
+
+Source classes can be instantiated using the `Map` component listeners (see
+[the map examples](./../../example/src/app/1.-Map)).
+However, the library tries to implement most of them as React Native components
+to make it easier to use.
 
 | To be implemented class          | Type |
 |----------------------------------|------|
@@ -180,6 +187,8 @@ to make it easier to use.
 | TerrainControl                   | 🕹️  |
 | VectorTileSource                 | 🧩   |
 | VideoSource                      | 🧩   |
+
+### Unsupported classes
 
 The following table lists the MapLibre GL JS classes that are not implemented
 because they are not relevant in the React Native context.
