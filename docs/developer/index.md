@@ -1,6 +1,6 @@
 # How it works
 
-** TODO rewrite this page **
+** TODO rewrite this page to include Map source vs Web object **
 
 ## The main library mechanism
 
@@ -41,6 +41,17 @@ MapLibre GL JS documentation, with some adjustments to make it work in React
 Native. The methods, properties and listeners that are modified are available in
 the `{ComponentName}.types.ts` file.
 
+## Developer jargon
+
+The following terms are used throughout the documentation and codebase.
+
+| Name       | Definition                                                                                                                                                                                                                                                                                  |
+|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| RN world   | The React Native environment.                                                                                                                                                                                                                                                               |
+| Web world  | The JS that runs within the React Native WebView (i.e. the code that runs the underlying MapLibre GL JS library). The corresponding code is stored in the [`web` folder](./../../src/web).                                                                                                  |
+| Web object | A MapLibre GL JS object running in the `web world`. Except for the map, this is a MapLibre GL JS object that uses `.addTo(map)` method to be mounted on map. Multiple React Native components in this library are implementing a bridge to a `web object`.                                  |
+| Map source | A MapLibre GL JS map source running in the `web world`. This is a MapLibre GL JS object that is mounted to the map using `map.addSource()` (and then `map.addLayer()` to add visible layers). Multiple React Native components in this library are implementing a bridge to a `map source`. |
+
 ## The code structure
 
 ```mermaid
@@ -49,53 +60,60 @@ A[src] --> B[communication]
 A[src] --> C[web]
 A[src] --> D[react-native]
 
-    B --> B1[Handles messages and shared types between web and React Native]
-    C --> C1[The web environment that runs MapLibreGL JS and exchanges with React Native]
-    D --> D1[The React Native environment used from the end user of this library]
+B --> B1[Handle messages that are exchanged between the web world and the React Native one]
+
+C --> C1[The web world that runs the MapLibre GL JS library]
+C --> C2[bridge]
+C --> C3[controllers]
+C --> C4[generated]
+C --> C5[logger]
+
+C2 --> C2a[Communication layer to receive and send messages to the React Native world]
+C3 --> C3a[Core logic that create, mount, update, unmount, MapLibre GL JS object]
+C4 --> C4a[Auto-generated code used in the React Native WebView]
+C5 --> C5a[Forward logs to React Native for display]
+
+D --> D1[The React Native world that is used by this library end user]
+D --> D2[components]
+D --> D3[components-factories]
+D --> D4[hooks]
+D --> D5[logger]
+
+D2 --> D2a[Components exposed by the public API]
+D3 --> D3a[Factories to create components that exchange with the web world]
+D4 --> D4a[Shared hooks across components]
+D5 --> D5a[Logs issued by the library]
 ```
-
-The JS code that runs within the WebView is bundled using the script in the
-[`scripts` folder (build.js)](./scripts/build.js). The generated code is in the
-[`generated` folder](./src/web/generated). The main class being used by the code
-is [`MapController`](./src/web/maplibre-gl-js/MapController.ts).
-
-The types and messages that are sent to and by the WebView are stored within the
-[`communication` folder](./src/communication).
-
-## Developer jargon
-
-The following terms are used throughout the documentation and codebase.
-
-| Name       | Definition                                                                                                                                                                           |
-|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| RN world   | The React Native environment.                                                                                                                                                        |
-| Web world  | The JS that runs within the React Native WebView (i.e. the code that runs the underlying MapLibre GL JS library). The corresponding code is stored in the [`web` folder](./src/web). |
-| Web object | A MapLibre GL JS object running in the web world. The corresponding code is stored in the [`react-native` folder](./src/react-native).                                               |
 
 ## Current status
 
-Here is a status of the MapLibre GL JS classes implemented in this library.
+Here is a status of the MapLibre GL JS classes implemented in this library as
+React Native components.
+Source classes can be instantiated using the `Map` component listeners (see
+[the map examples](./../../example/src/app/1.-Map)).
+However, the library tries to implement most of them as React Native components
+to make it easier to use.
 
-| Symbol | Definition             |
-|--------|------------------------|
-| 🖼️    | Frame                  |
-| 🫟     | .addTo(map) view       |
-| 🧩     | map.addSource(..) view |
-| 🕹     | Control view           |
-| 👆     | Gesture handler        |
-| 📦     | Data container         |
+| Symbol | Definition      |
+|--------|-----------------|
+| 🖼️    | Core            |
+| 🫟     | Web Object view |
+| 🧩     | Map Source view |
+| 🕹     | Control view    |
+| 👆     | Gesture handler |
+| 📦     | Data container  |
 
 | Implemented class | Type |
 |-------------------|------|
 | Map               | 🖼️  |
 | Marker            | 🫟   |
 | Popup             | 🫟   |
+| GeoJSONSource     | 🧩   |
 
 | To be implemented class          | Type |
 |----------------------------------|------|
 | AttributionControl               | 🕹️  |
 | CanvasSource                     | 🧩   |
-| GeoJSONSource                    | 🧩   |
 | GlobeControl                     | 🕹️  |
 | GlobeControl                     | 🕹️  |
 | ImageSource                      | 🧩   |
