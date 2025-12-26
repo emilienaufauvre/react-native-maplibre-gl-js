@@ -6,6 +6,7 @@ import {
   dispatchMessageMock,
   setWebObjectPendingMethodResponseMock,
 } from '../../hooks/atoms/useMapAtoms.mock'
+import type { WebObjectId } from '../web-objects/createWebObjectAsComponent.types'
 
 jest.mock('./../../hooks/atoms/useMapAtoms', () =>
   require('./../../hooks/atoms/useMapAtoms.mock'),
@@ -18,15 +19,17 @@ describe('useWebObjectMethodsProxy', () => {
   })
 
   describe('Given a Probe using useWebObjectMethodsProxy is rendered', () => {
-    const objectId = 'obj-1'
+    const initialObjectId = 'obj-1'
 
     /**
      * Probe that uses useWebObjectMethodsProxy.
      */
-    const Probe = forwardRef<any, { objectId: string }>(({ objectId }, ref) => {
-      useWebObjectMethodsProxy(ref, objectId)
-      return null
-    })
+    const Probe = forwardRef<any, { objectId: WebObjectId }>(
+      ({ objectId }, ref) => {
+        useWebObjectMethodsProxy(ref, objectId)
+        return null
+      },
+    )
 
     const ref = createRef<any>()
 
@@ -34,7 +37,7 @@ describe('useWebObjectMethodsProxy', () => {
       render(
         <Probe
           ref={ref}
-          objectId={objectId}
+          objectId={initialObjectId}
         />,
       )
     })
@@ -47,7 +50,7 @@ describe('useWebObjectMethodsProxy', () => {
       })
 
       test('Then it returns the objectId and no message is sent', () => {
-        expect(result).toBe(objectId)
+        expect(result).toBe(initialObjectId)
         expect(setWebObjectPendingMethodResponseMock).toHaveBeenCalledTimes(0)
         expect(dispatchMessageMock).toHaveBeenCalledTimes(0)
       })
@@ -94,14 +97,14 @@ describe('useWebObjectMethodsProxy', () => {
         screen.rerender(
           <Probe
             ref={ref}
-            objectId={objectId}
+            objectId={initialObjectId}
           />,
         )
       })
 
       test('Then the ref still points to the same proxy instance', () => {
         expect(ref.current).toBe(firstProxyRef)
-        expect(ref.current.getId()).toBe(objectId)
+        expect(ref.current.getId()).toBe(initialObjectId)
       })
     })
 
