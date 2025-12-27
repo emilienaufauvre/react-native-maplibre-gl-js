@@ -17,7 +17,7 @@ const Index = () => {
   }, [])
 
   //TODO remove
-  //return <Redirect href={'/5.-ImageSource/5.3.-Animate-a-serie-of-images'} />
+  //return <Redirect href={'/6.-VideoSource/6.1.-Component-basis'} />
   /////////////
   return (
     <ScrollView
