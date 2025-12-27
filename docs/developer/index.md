@@ -164,6 +164,10 @@ React Native components.
 | Marker            | 🫟   |
 | Popup             | 🫟   |
 | GeoJSONSource     | 🧩   |
+| ImageSource       | 🧩   |
+| VideoSource       | 🧩   |
+| VectorTileSource  | 🧩   |
+| RasterTileSource  | 🧩   |
 
 ### To be implemented classes
 
@@ -178,15 +182,11 @@ to make it easier to use.
 | CanvasSource                     | 🧩   |
 | GlobeControl                     | 🕹️  |
 | GlobeControl                     | 🕹️  |
-| ImageSource                      | 🧩   |
 | LogoControl                      | 🕹️  |
 | NavigationControl                | 🕹️  |
 | RasterDEMTileSource              | 🧩   |
-| RasterTileSource                 | 🧩   |
 | ScaleControl                     | 🕹️  |
 | TerrainControl                   | 🕹️  |
-| VectorTileSource                 | 🧩   |
-| VideoSource                      | 🧩   |
 
 ### Unsupported classes
 
