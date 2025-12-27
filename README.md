@@ -123,6 +123,7 @@ Several real-world usage scenarios are available, you can explore them in two wa
 - [`2.4. Use an detached popup`](./example/src/app/2.-Marker/2.4.-Use-an-detached-popup.tsx)
 - [`2.5. Use an attached popup`](./example/src/app/2.-Marker/2.5.-Use-an-attached-popup.tsx)
 - [`2.6. Propagates the events to a parent component`](./example/src/app/2.-Marker/2.6.-Propagates-the-events-to-a-parent-component.tsx)
+- [`2.7. Use a local image`](./example/src/app/2.-Marker/2.7.-Use-a-local-image.tsx)
 
 ### 3. Popup
 

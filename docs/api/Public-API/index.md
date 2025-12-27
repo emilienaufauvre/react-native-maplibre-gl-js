@@ -49,3 +49,9 @@ Public API of `react-native-maplibre-gl-js`.
 | [VideoSourceProps](interfaces/VideoSourceProps.md) | VideoSource component props. |
 | [VectorTileSourceProps](interfaces/VectorTileSourceProps.md) | VectorTileSource component props. |
 | [RasterTileSourceProps](interfaces/RasterTileSourceProps.md) | RasterTileSource component props. |
+
+## Hooks
+
+| Function | Description |
+| ------ | ------ |
+| [useLocalImage](functions/useLocalImage.md) | Load a local image as base64 data URI, and return it. |
