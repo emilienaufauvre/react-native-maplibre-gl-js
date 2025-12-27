@@ -4,6 +4,6 @@
 
 > **MapSourceLayerId** = `string`
 
-Defined in: [src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts:115](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts#L115)
+Defined in: [src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts:111](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts#L111)
 
 UID of a map source layer in the web world.
