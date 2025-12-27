@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react'
-import { View, Text, Pressable, ScrollView, StyleSheet } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { router } from 'expo-router'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -17,7 +17,7 @@ const Index = () => {
   }, [])
 
   //TODO remove
-  //return <Redirect href={'/6.-VideoSource/6.1.-Component-basis'} />
+  //return <Redirect href={'/7.-VectorTileSource/7.1.-Component-basis'} />
   /////////////
   return (
     <ScrollView
