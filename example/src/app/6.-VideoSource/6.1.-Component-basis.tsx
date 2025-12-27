@@ -1,4 +1,4 @@
-import { MapProvider, Map, VideoSource } from 'react-native-maplibre-gl-js'
+import { Map, MapProvider, VideoSource } from 'react-native-maplibre-gl-js'
 
 /**
  * @returns - Example of the VideoSource component usage.
@@ -31,7 +31,7 @@ const Screen = () => {
         // Then, one or multiple layers that use this source are declared.
         // /!\ it is a list.
         layers={[
-          // Add a layer that will be the image itself.
+          // Add a layer that will be the video itself.
           {
             layer: {
               id: 'video-layer',

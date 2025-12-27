@@ -2,7 +2,7 @@ import type { MapSourceProps } from '../../../components-factories/map-sources/c
 import type { ImageSourceSpecification } from 'maplibre-gl'
 
 /**
- * Image source component props.
+ * ImageSource component props.
  * @interface
  * @group Types (map sources)
  */
