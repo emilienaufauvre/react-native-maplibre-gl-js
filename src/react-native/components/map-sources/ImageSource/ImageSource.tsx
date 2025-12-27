@@ -32,7 +32,8 @@ import type { ImageSourceProps } from './ImageSource.types'
  *         // automatically.
  *         //> i.e., this is not needed: source: 'image-source'.
  *       },
- *       // Define listeners for this layer.
+ *       // Define listeners for this layer. This layer does not expose
+ *       // features. Therefore, interactive listeners are never triggered.
  *       listeners: {
  *         mount: () => console.log('Image layer mounted'),
  *       },
