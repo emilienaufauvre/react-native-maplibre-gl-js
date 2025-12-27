@@ -62,6 +62,7 @@
   - [5. ImageSource](#5-imagesource)
   - [6. VideoSource](#6-videosource)
   - [7. VectorTileSource](#7-vectortilesource)
+  - [8. RasterTileSource](#8-rastertilesource)
 - [🏁 Getting started](#-getting-started)
 - [📝 Design rationale](#-design-rationale)
   - [Existing React Native map solutions](#existing-react-native-map-solutions)
