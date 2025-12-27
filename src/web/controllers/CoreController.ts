@@ -3,6 +3,7 @@ import type { MessageFromRNToWeb } from '../../communication/messages.types'
 import WebLogger from '../logger/web-logger'
 import WebObjectsController from './WebObjectsController'
 import MapSourcesController from './MapSourcesController'
+import maplibregl from 'maplibre-gl'
 
 /**
  * Manage the `MapLibre GL JS` map and objects, sources and layers. Receive
@@ -23,6 +24,12 @@ export default class CoreController {
     reactNativeBridge: ReactNativeBridge,
   ) => {
     WebLogger.info(this.handleMessage.name, message)
+
+    let map: maplibregl.Map | undefined
+
+    try {
+      map = this.#webObjectsController.map
+    } catch (error: any) {}
 
     try {
       switch (message.type) {
@@ -81,11 +88,12 @@ export default class CoreController {
 
       if (
         message.type === 'webObjectUpdate' &&
-        message.payload.objectType === 'map'
+        message.payload.objectType === 'map' &&
+        map !== this.#webObjectsController.map
       ) {
         // If the map was unmounted and mounted back again (e.g., on map
-        // "options" props changed), add back the existing objects and
-        // sources to it.
+        // "options" props changed), the map object has changed: add back the
+        // existing objects and sources to it.
         this.#webObjectsController.addExistingObjectsToMap(
           reactNativeBridge,
           this.#webObjectsController.map,
