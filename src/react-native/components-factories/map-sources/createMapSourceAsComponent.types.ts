@@ -1,7 +1,7 @@
 import type {
   AddLayerObject,
-  MapLayerMouseEvent,
-  MapLayerTouchEvent,
+  ImageSourceSpecification,
+  MapLayerEventType,
 } from 'maplibre-gl'
 import type { FC } from 'react'
 import type { GeoJSONSourceSpecification } from '@maplibre/maplibre-gl-style-spec'
@@ -22,7 +22,9 @@ import type {
  * A class version to be used on the web side.
  * @group Map source abstraction types
  */
-export type MapSourceClass = GeoJSONSourceSpecification
+export type MapSourceClass =
+  | GeoJSONSourceSpecification
+  | ImageSourceSpecification
 
 /**
  * React Native component that corresponds and perform actions with a map source
@@ -77,27 +79,16 @@ export type MapSourceLayer = {
  * Note: sadly, listeners cannot be inferred from the MapLibre GL JS library.
  * Therefore, if a new listener is added within the library, it must also be
  * added here.
+ * @interface
  * @group Map source abstraction types
  */
 export type MapSourceLayerListeners = {
   // React native events.
   mount?: Listener<void>
   unmount?: Listener<void>
-  // `MapLibre GL JS` events.
-  mousedown?: Listener<MapLayerMouseEvent>
-  mouseup?: Listener<MapLayerMouseEvent>
-  mouseover?: Listener<MapLayerMouseEvent>
-  mouseout?: Listener<MapLayerMouseEvent>
-  mousemove?: Listener<MapLayerMouseEvent>
-  mouseenter?: Listener<MapLayerMouseEvent>
-  mouseleave?: Listener<MapLayerMouseEvent>
-  click?: Listener<MapLayerMouseEvent>
-  dblclick?: Listener<MapLayerMouseEvent>
-  contextmenu?: Listener<MapLayerMouseEvent>
-  touchstart?: Listener<MapLayerTouchEvent>
-  touchend?: Listener<MapLayerTouchEvent>
-  touchcancel?: Listener<MapLayerTouchEvent>
-}
+} & Partial<{
+  [K in keyof MapLayerEventType]: (ev: MapLayerEventType[K]) => void
+}>
 
 /**
  * A layer specification that does not contain the source property (added

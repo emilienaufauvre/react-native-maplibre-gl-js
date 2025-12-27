@@ -17,7 +17,7 @@ const Index = () => {
   }, [])
 
   //TODO remove
-  //return <Redirect href={'/4.-GeoJSONSource/4.1.-Component-basis'} />
+  //return <Redirect href={'/5.-ImageSource/5.3.-Animate-a-serie-of-images'} />
   /////////////
   return (
     <ScrollView

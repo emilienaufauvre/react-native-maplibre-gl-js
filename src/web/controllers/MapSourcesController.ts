@@ -93,26 +93,11 @@ export default class MapSourcesController {
     reactNativeBridge: ReactNativeBridge,
     map: maplibregl.Map,
   ) => {
-    map.addSource(props.id, props.source)
-    props.layers.forEach(({ layer, beforeId }: MapSourceLayer) => {
-      // Add the layer to the map.
-      map.addLayer(
-        {
-          source: props.id,
-          ...layer,
-        } as maplibregl.AddLayerObject,
-        beforeId,
-      )
-      // Send the "mount" event to the React Native listener.
-      reactNativeBridge.postMessage({
-        type: 'mapSourceListenerEvent',
-        payload: {
-          sourceId: props.id,
-          layerId: layer.id,
-          eventName: 'mount',
-        },
-      })
-    })
+    if (!map.getSource(props.id)) {
+      map.addSource(props.id, props.source)
+    }
+
+    this.#addLayers(props, reactNativeBridge, map)
   }
 
   #updateSourceAndItsLayers = (
@@ -124,7 +109,6 @@ export default class MapSourcesController {
       this.#sources.get(props.id)?.source,
     )
     const newSourceAsString = stableStringify(props.source)
-
     // Update everything it the source changed.
     if (oldSourceAsString !== newSourceAsString) {
       this.#removeSourceAndItsLayers(props.id, reactNativeBridge, map)
@@ -138,25 +122,11 @@ export default class MapSourcesController {
     const newLayersAsString = stableStringify(
       props.layers.map((item) => item.layer),
     )
-
-    // Update the layers only if at least one changed (if one changed, the
+    // Update only the layers if at least one changed (if one changed, the
     // orders of the layers might have changed, so we need to update all of
     // them).
     if (oldLayersAsString !== newLayersAsString) {
-      this.#getAssociatedLayers(props.id, map).forEach((layerId) => {
-        if (map.getLayer(layerId)) {
-          map.removeLayer(layerId)
-        }
-      })
-      props.layers.forEach(({ layer, beforeId }: MapSourceLayer) => {
-        map.addLayer(
-          {
-            source: props.id,
-            ...layer,
-          } as maplibregl.AddLayerObject,
-          beforeId,
-        )
-      })
+      this.#updateLayers(props, reactNativeBridge, map)
       return
     }
   }
@@ -166,29 +136,77 @@ export default class MapSourcesController {
     reactNativeBridge: ReactNativeBridge,
     map: maplibregl.Map,
   ) => {
-    const style = map.getStyle()
-
-    if (style && style.layers) {
-      this.#getAssociatedLayers(sourceId, map).forEach((layerId) => {
-        // Remove the layer from the map.
-        if (map.getLayer(layerId)) {
-          map.removeLayer(layerId)
-        }
-        // Send the "unmount" event to the React Native listener.
-        reactNativeBridge.postMessage({
-          type: 'mapSourceListenerEvent',
-          payload: {
-            sourceId,
-            layerId,
-            eventName: 'unmount',
-          },
-        })
-      })
-    }
+    this.#removeLayers(sourceId, reactNativeBridge, map)
 
     if (map.getSource(sourceId)) {
       map.removeSource(sourceId)
     }
+  }
+
+  #addLayers = (
+    props: MapSourceProps<any>,
+    reactNativeBridge: ReactNativeBridge,
+    map: maplibregl.Map,
+  ) => {
+    props.layers.forEach(({ layer, beforeId }: MapSourceLayer) => {
+      // Add the layer to the map.
+      if (!map.getLayer(layer.id)) {
+        map.addLayer(
+          {
+            source: props.id,
+            ...layer,
+          } as maplibregl.AddLayerObject,
+          beforeId,
+        )
+        // Send the "mount" event to the React Native listener.
+        reactNativeBridge.postMessage({
+          type: 'mapSourceListenerEvent',
+          payload: {
+            sourceId: props.id,
+            layerId: layer.id,
+            eventName: 'mount',
+          },
+        })
+      }
+    })
+  }
+
+  #updateLayers = (
+    props: MapSourceProps<any>,
+    reactNativeBridge: ReactNativeBridge,
+    map: maplibregl.Map,
+  ) => {
+    this.#removeLayers(props.id, reactNativeBridge, map)
+    this.#addLayers(props, reactNativeBridge, map)
+  }
+
+  #removeLayers = (
+    sourceId: MapSourceId,
+    reactNativeBridge: ReactNativeBridge,
+    map: maplibregl.Map,
+  ) => {
+    const layers = map
+      .getStyle()
+      ?.layers?.filter(
+        (layer): layer is LayerSpecification & { source: string } =>
+          'source' in layer && layer.source === sourceId,
+      )
+      .map((layer) => layer.id)
+    layers.forEach((layerId) => {
+      // Remove the layer from the map.
+      if (map.getLayer(layerId)) {
+        map.removeLayer(layerId)
+      }
+      // Send the "unmount" event to the React Native listener.
+      reactNativeBridge.postMessage({
+        type: 'mapSourceListenerEvent',
+        payload: {
+          sourceId,
+          layerId,
+          eventName: 'unmount',
+        },
+      })
+    })
   }
 
   #setSourceListeners = (
@@ -225,15 +243,5 @@ export default class MapSourcesController {
         )
       })
     })
-  }
-
-  #getAssociatedLayers = (sourceId: MapSourceId, map: maplibregl.Map) => {
-    return map
-      .getStyle()
-      .layers.filter(
-        (layer): layer is LayerSpecification & { source: string } =>
-          'source' in layer && layer.source === sourceId,
-      )
-      .map((layer) => layer.id)
   }
 }

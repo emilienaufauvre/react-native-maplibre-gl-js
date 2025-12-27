@@ -15,7 +15,6 @@ jest.mock('./../../hooks/atoms/useMapAtoms', () =>
 describe('useWebObjectMethodsProxy', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    jest.restoreAllMocks()
   })
 
   describe('Given a Probe using useWebObjectMethodsProxy is rendered', () => {
