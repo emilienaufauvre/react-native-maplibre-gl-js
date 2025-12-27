@@ -41,3 +41,6 @@ export { default as ImageSource } from './react-native/components/map-sources/Im
 export { default as VideoSource } from './react-native/components/map-sources/VideoSource/VideoSource'
 export { default as VectorTileSource } from './react-native/components/map-sources/VectorTileSource/VectorTileSource'
 export { default as RasterTileSource } from './react-native/components/map-sources/RasterTileSource/RasterTileSource'
+
+// @group Hooks
+export { default as useLocalImage } from './react-native/hooks/end-user/useLocalImage'

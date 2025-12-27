@@ -1,6 +1,6 @@
 import {
-  MapProvider,
   Map,
+  MapProvider,
   Marker,
   type MarkerRef,
 } from 'react-native-maplibre-gl-js'

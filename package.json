@@ -107,6 +107,7 @@
     ]
   },
   "dependencies": {
+    "expo-asset": "^12.0.12",
     "jotai": "^2.15.2",
     "maplibre-gl": "^5.14.0",
     "react-native-logs": "^5.5.0",
