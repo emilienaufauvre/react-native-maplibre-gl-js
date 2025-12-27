@@ -2,7 +2,7 @@ import type { MapSourceProps } from '../../../components-factories/map-sources/c
 import type { VectorSourceSpecification } from 'maplibre-gl'
 
 /**
- * VectorTile component props.
+ * VectorTileSource component props.
  * @interface
  * @group Types (map sources)
  */

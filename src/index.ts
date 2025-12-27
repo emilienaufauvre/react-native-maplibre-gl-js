@@ -25,6 +25,7 @@ export type { GeoJSONSourceProps } from './react-native/components/map-sources/G
 export type { ImageSourceProps } from './react-native/components/map-sources/ImageSource/ImageSource.types'
 export type { VideoSourceProps } from './react-native/components/map-sources/VideoSource/VideoSource.types'
 export type { VectorTileSourceProps } from './react-native/components/map-sources/VectorTileSource/VectorTileSource.types'
+export type { RasterTileSourceProps } from './react-native/components/map-sources/RasterTileSource/RasterTileSource.types'
 
 // @group Components – core
 export { default as MapProvider } from './react-native/components/core/MapProvider/MapProvider'
@@ -39,3 +40,4 @@ export { default as GeoJSONSource } from './react-native/components/map-sources/
 export { default as ImageSource } from './react-native/components/map-sources/ImageSource/ImageSource'
 export { default as VideoSource } from './react-native/components/map-sources/VideoSource/VideoSource'
 export { default as VectorTileSource } from './react-native/components/map-sources/VectorTileSource/VectorTileSource'
+export { default as RasterTileSource } from './react-native/components/map-sources/RasterTileSource/RasterTileSource'
