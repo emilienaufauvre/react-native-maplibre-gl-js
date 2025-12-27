@@ -212,6 +212,8 @@ carry. This library implements the second approach.
 
 ## Credits
 
+- [MapLibre](https://github.com/maplibre/maplibre-gl-js) for providing a free
+  and open source alternative to MapBox.
 - [OpenFreeMap](https://openfreemap.org/) for providing free tile data in the
   examples ❤️.
 
