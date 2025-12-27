@@ -2,6 +2,7 @@ import type {
   AddLayerObject,
   ImageSourceSpecification,
   MapLayerEventType,
+  VideoSourceSpecification,
 } from 'maplibre-gl'
 import type { FC } from 'react'
 import type { GeoJSONSourceSpecification } from '@maplibre/maplibre-gl-style-spec'
@@ -12,7 +13,6 @@ import type {
   RasterDEMSourceSpecification,
   RasterSourceSpecification,
   VectorSourceSpecification,
-  VideoSourceSpecification,
   CanvasSourceSpecification,
 } from '@maplibre/maplibre-gl-style-spec'
  */
@@ -25,6 +25,7 @@ import type {
 export type MapSourceClass =
   | GeoJSONSourceSpecification
   | ImageSourceSpecification
+  | VideoSourceSpecification
 
 /**
  * React Native component that corresponds and perform actions with a map source

@@ -22,6 +22,8 @@ export type {
 
 // @group Types (map sources)
 export type { GeoJSONSourceProps } from './react-native/components/map-sources/GeoJSONSource/GeoJSONSource.types'
+export type { ImageSourceProps } from './react-native/components/map-sources/ImageSource/ImageSource.types'
+export type { VideoSourceProps } from './react-native/components/map-sources/VideoSource/VideoSource.types'
 
 // @group Components – core
 export { default as MapProvider } from './react-native/components/core/MapProvider/MapProvider'
@@ -34,3 +36,4 @@ export { default as Popup } from './react-native/components/web-objects/Popup/Po
 // @group Components – map sources
 export { default as GeoJSONSource } from './react-native/components/map-sources/GeoJSONSource/GeoJSONSource'
 export { default as ImageSource } from './react-native/components/map-sources/ImageSource/ImageSource'
+export { default as VideoSource } from './react-native/components/map-sources/VideoSource/VideoSource'
