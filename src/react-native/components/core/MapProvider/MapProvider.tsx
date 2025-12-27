@@ -5,7 +5,7 @@ import useMapAtoms from '../../../hooks/atoms/useMapAtoms'
 import {
   useFlushMessagesOnMapMounted,
   useCssInjectionScript,
-  useInjectJavaScriptIfInjectedCssChanged,
+  useInjectJavaScriptIfCssStylesChanged,
   useStyles,
   useWebMessageHandler,
 } from './MapProvider.hooks'
@@ -30,7 +30,7 @@ const MapProvider = ({
   style,
   webViewStyle,
   children,
-  injectedCss,
+  cssStyles,
 }: MapProviderProps) => {
   // States.
   // - Global.
@@ -40,8 +40,8 @@ const MapProvider = ({
   // Behaviors.
   useFlushMessagesOnMapMounted()
   const { handler } = useWebMessageHandler()
-  const { cssInjectionScript } = useCssInjectionScript(injectedCss)
-  useInjectJavaScriptIfInjectedCssChanged(cssInjectionScript)
+  const { cssInjectionScript } = useCssInjectionScript(cssStyles)
+  useInjectJavaScriptIfCssStylesChanged(cssInjectionScript)
 
   return (
     <View style={[styles.container, style]}>

@@ -148,14 +148,14 @@ export const useWebMessageHandler = () => {
 }
 
 /**
- * @param injectedCss - The CSS to be injected.
+ * @param cssStyles - The CSS to be injected.
  * @returns - The given CSS in a format that can be injected into the WebView.
  */
-export const useCssInjectionScript = (injectedCss?: string | string[]) => {
+export const useCssInjectionScript = (cssStyles?: string | string[]) => {
   const cssInjectionScript = useMemo(() => {
-    const normalizedCss = normalizeCss(injectedCss)
+    const normalizedCss = normalizeCss(cssStyles)
     return normalizedCss ? buildCssInjectionScript(normalizedCss) : undefined
-  }, [injectedCss])
+  }, [cssStyles])
   return { cssInjectionScript }
 }
 
@@ -164,7 +164,7 @@ export const useCssInjectionScript = (injectedCss?: string | string[]) => {
  * @param cssInjectionScript - A script that injects CSS once executed within
  *  the WebView.
  */
-export const useInjectJavaScriptIfInjectedCssChanged = (
+export const useInjectJavaScriptIfCssStylesChanged = (
   cssInjectionScript?: string,
 ) => {
   // Refs.

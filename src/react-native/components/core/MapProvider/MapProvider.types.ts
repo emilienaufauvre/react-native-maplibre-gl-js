@@ -21,7 +21,7 @@ export type MapProviderProps = {
    * Useful to share classes/animations across Marker components and/or other
    * elements that use HTMLElement (descriptors).
    */
-  injectedCss?: string | string[]
+  cssStyles?: string | string[]
   /**
    * The map elements (e.g., Map) as direct children.
    */

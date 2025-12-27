@@ -49,7 +49,7 @@ const Screen = () => {
   return (
     // The CSS styles are passed to the MapProvider component. They will be
     // available to all components rendered inside the MapProvider.
-    <MapProvider injectedCss={css}>
+    <MapProvider cssStyles={css}>
       <Map
         options={{
           style: 'https://tiles.openfreemap.org/styles/liberty',
