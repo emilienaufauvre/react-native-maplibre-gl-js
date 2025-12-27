@@ -2,7 +2,7 @@
 
 # MapSourceClass
 
-> **MapSourceClass** = `GeoJSONSourceSpecification` \| `ImageSourceSpecification` \| `VectorSourceSpecification` \| `VideoSourceSpecification`
+> **MapSourceClass** = `GeoJSONSourceSpecification` \| `ImageSourceSpecification` \| `VideoSourceSpecification` \| `VectorSourceSpecification` \| `RasterSourceSpecification`
 
 Defined in: [src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts:24](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts#L24)
 

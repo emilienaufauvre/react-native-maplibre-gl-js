@@ -2,7 +2,7 @@
 
 # MapSourceLayerListeners
 
-Defined in: [src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts:82](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts#L82)
+Defined in: [src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts:83](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts#L83)
 
 Listeners that can be set by a component on the corresponding map layer
 events.
@@ -26,5 +26,5 @@ on top of the `MapLibre GL JS` events).
 | <a id="touchstart"></a> `touchstart?` | (`ev`: `MapLayerTouchEvent`) => `void` | Fired when a [`touchstart`](https://developer.mozilla.org/en-US/docs/Web/Events/touchstart) event occurs within the visible portion of the specified layer. **See** [Create a draggable point](https://maplibre.org/maplibre-gl-js/docs/examples/create-a-draggable-point/) | node\_modules/maplibre-gl/dist/maplibre-gl.d.ts:9311 |
 | <a id="touchend"></a> `touchend?` | (`ev`: `MapLayerTouchEvent`) => `void` | Fired when a [`touchend`](https://developer.mozilla.org/en-US/docs/Web/Events/touchend) event occurs within the visible portion of the specified layer. **See** [Create a draggable point](https://maplibre.org/maplibre-gl-js/docs/examples/create-a-draggable-point/) | node\_modules/maplibre-gl/dist/maplibre-gl.d.ts:9316 |
 | <a id="touchcancel"></a> `touchcancel?` | (`ev`: `MapLayerTouchEvent`) => `void` | Fired when a [`touchstart`](https://developer.mozilla.org/en-US/docs/Web/Events/touchstart) event occurs within the visible portion of the specified layer. **See** [Create a draggable point](https://maplibre.org/maplibre-gl-js/docs/examples/create-a-draggable-point/) | node\_modules/maplibre-gl/dist/maplibre-gl.d.ts:9321 |
-| <a id="mount"></a> `mount?` | `Listener`\<`void`\> | - | [src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts:84](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts#L84) |
-| <a id="unmount"></a> `unmount?` | `Listener`\<`void`\> | - | [src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts:85](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts#L85) |
+| <a id="mount"></a> `mount?` | `Listener`\<`void`\> | - | [src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts:85](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts#L85) |
+| <a id="unmount"></a> `unmount?` | `Listener`\<`void`\> | - | [src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts:86](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts#L86) |

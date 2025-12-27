@@ -61,6 +61,7 @@
   - [4. GeoJSONSource](#4-geojsonsource)
   - [5. ImageSource](#5-imagesource)
   - [6. VideoSource](#6-videosource)
+  - [7. VectorTileSource](#7-vectortilesource)
 - [🏁 Getting started](#-getting-started)
 - [📝 Design rationale](#-design-rationale)
   - [Existing React Native map solutions](#existing-react-native-map-solutions)
@@ -144,6 +145,10 @@ Several real-world usage scenarios are available, you can explore them in two wa
 ### 7. VectorTileSource
 
 - [`7.1. Component basis`](./example/src/app/7.-VectorTileSource/7.1.-Component-basis.tsx)
+
+### 8. RasterTileSource
+
+- [`8.1. Component basis`](./example/src/app/8.-RasterTileSource/8.1.-Component-basis.tsx)
 
 <!-- EXAMPLES-LIST:END -->
 
