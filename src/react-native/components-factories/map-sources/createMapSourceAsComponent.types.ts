@@ -75,10 +75,6 @@ export type MapSourceLayer = {
  * events.
  * By default, the mount/unmount events are available (they are custom, added
  * on top of the `MapLibre GL JS` events).
- *
- * Note: sadly, listeners cannot be inferred from the MapLibre GL JS library.
- * Therefore, if a new listener is added within the library, it must also be
- * added here.
  * @interface
  * @group Map source abstraction types
  */
