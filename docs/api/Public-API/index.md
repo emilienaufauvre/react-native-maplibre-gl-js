@@ -23,6 +23,7 @@ Public API of `react-native-maplibre-gl-js`.
 | Variable | Description |
 | ------ | ------ |
 | [GeoJSONSource](variables/GeoJSONSource.md) | MapLibre GeoJSON map source and layers. |
+| [ImageSource](variables/ImageSource.md) | MapLibre Image map source and layers. |
 
 ## Types (web objects)
 

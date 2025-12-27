@@ -128,6 +128,13 @@ Several real-world usage scenarios are available, you can explore them in two wa
 
 - [`4.1. Component basis`](./example/src/app/4.-GeoJSONSource/4.1.-Component-basis.tsx)
 
+### 5. ImageSource
+
+- [`5.1. Component basis`](./example/src/app/5.-ImageSource/5.1.-Component-basis.tsx)
+- [`5.2. Use an interactive listener`](./example/src/app/5.-ImageSource/5.2.-Use-an-interactive-listener.tsx)
+- [`5.3. Animate a serie of images 1`](./example/src/app/5.-ImageSource/5.3.-Animate-a-serie-of-images-1.tsx)
+- [`5.4. Animate a serie of images 2`](./example/src/app/5.-ImageSource/5.4.-Animate-a-serie-of-images-2.tsx)
+
 <!-- EXAMPLES-LIST:END -->
 
 

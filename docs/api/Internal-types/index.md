@@ -57,7 +57,7 @@ Internal types exposed for the documentation, but not by the public API.
 | [MapSourceComponent](type-aliases/MapSourceComponent.md) | React Native component that corresponds and perform actions with a map source and its layers in the web world. |
 | [MapSourceProps](interfaces/MapSourceProps.md) | React Native props of a component (used to instantiate the map source and layer(s) in the web world). |
 | [MapSourceLayer](interfaces/MapSourceLayer.md) | A layer specification that can be added to a map source. |
-| [MapSourceLayerListeners](type-aliases/MapSourceLayerListeners.md) | Listeners that can be set by a component on the corresponding map layer events. By default, the mount/unmount events are available (they are custom, added on top of the `MapLibre GL JS` events). |
+| [MapSourceLayerListeners](interfaces/MapSourceLayerListeners.md) | Listeners that can be set by a component on the corresponding map layer events. By default, the mount/unmount events are available (they are custom, added on top of the `MapLibre GL JS` events). |
 | [MapSourceLayerWithSourceId](type-aliases/MapSourceLayerWithSourceId.md) | A layer specification that does not contain the source property (added automatically to match the current source id). |
 | [MapSourceId](type-aliases/MapSourceId.md) | UID of a map source in the web world. |
 | [MapSourceLayerId](type-aliases/MapSourceLayerId.md) | UID of a map source layer in the web world. |
