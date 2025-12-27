@@ -2,9 +2,9 @@
 
 # MapSourceClass
 
-> **MapSourceClass** = `GeoJSONSourceSpecification` \| `ImageSourceSpecification` \| `VideoSourceSpecification`
+> **MapSourceClass** = `GeoJSONSourceSpecification` \| `ImageSourceSpecification` \| `VectorSourceSpecification` \| `VideoSourceSpecification`
 
-Defined in: [src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts:25](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts#L25)
+Defined in: [src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts:24](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/map-sources/createMapSourceAsComponent.types.ts#L24)
 
 The map sources that are supported by this library.
 A class version to be used on the web side.

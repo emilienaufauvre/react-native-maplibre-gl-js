@@ -25,6 +25,7 @@ Public API of `react-native-maplibre-gl-js`.
 | [GeoJSONSource](variables/GeoJSONSource.md) | MapLibre GeoJSON map source and layers. |
 | [ImageSource](variables/ImageSource.md) | MapLibre Image map source and layers. |
 | [VideoSource](variables/VideoSource.md) | MapLibre Video map source and layers. |
+| [VectorTileSource](variables/VectorTileSource.md) | MapLibre Vector Tile map source and layers. |
 
 ## Types (web objects)
 
@@ -43,5 +44,6 @@ Public API of `react-native-maplibre-gl-js`.
 | Interface | Description |
 | ------ | ------ |
 | [GeoJSONSourceProps](interfaces/GeoJSONSourceProps.md) | GeoJSONSource component props. |
-| [ImageSourceProps](interfaces/ImageSourceProps.md) | Image source component props. |
-| [VideoSourceProps](interfaces/VideoSourceProps.md) | Video source component props. |
+| [ImageSourceProps](interfaces/ImageSourceProps.md) | ImageSource component props. |
+| [VideoSourceProps](interfaces/VideoSourceProps.md) | VideoSource component props. |
+| [VectorTileSourceProps](interfaces/VectorTileSourceProps.md) | VectorTile component props. |

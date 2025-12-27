@@ -4,7 +4,7 @@
 
 Defined in: [src/react-native/components/map-sources/ImageSource/ImageSource.types.ts:9](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/map-sources/ImageSource/ImageSource.types.ts#L9)
 
-Image source component props.
+ImageSource component props.
 
 ## Properties
 

@@ -141,6 +141,10 @@ Several real-world usage scenarios are available, you can explore them in two wa
 
 - [`6.1. Component basis`](./example/src/app/6.-VideoSource/6.1.-Component-basis.tsx)
 
+### 7. VectorTileSource
+
+- [`7.1. Component basis`](./example/src/app/7.-VectorTileSource/7.1.-Component-basis.tsx)
+
 <!-- EXAMPLES-LIST:END -->
 
 
