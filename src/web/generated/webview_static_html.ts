@@ -49,7 +49,7 @@ export const WEBVIEW_STATIC_HTML = `<!doctype html>
         typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, global.maplibregl = factory());
       })(exports, (function() {
         "use strict";
-        var maplibregl3 = {};
+        var maplibregl4 = {};
         var modules = {};
         function define2(moduleName, _dependencies, moduleFactory) {
           modules[moduleName] = moduleFactory;
@@ -59,11 +59,11 @@ export const WEBVIEW_STATIC_HTML = `<!doctype html>
           var workerBundleString = "var sharedModule = {}; (" + modules.shared + ")(sharedModule); (" + modules.worker + ")(sharedModule);";
           var sharedModule = {};
           modules.shared(sharedModule);
-          modules.index(maplibregl3, sharedModule);
+          modules.index(maplibregl4, sharedModule);
           if (typeof window !== "undefined") {
-            maplibregl3.setWorkerUrl(window.URL.createObjectURL(new Blob([workerBundleString], { type: "text/javascript" })));
+            maplibregl4.setWorkerUrl(window.URL.createObjectURL(new Blob([workerBundleString], { type: "text/javascript" })));
           }
-          return maplibregl3;
+          return maplibregl4;
         }
         ;
         define2("shared", ["exports"], (function(t) {
@@ -23249,7 +23249,7 @@ uniform mat4 u_projection_matrix;
             t.c.WORKER_URL = e2;
           };
         }));
-        var maplibregl$1 = maplibregl3;
+        var maplibregl$1 = maplibregl4;
         return maplibregl$1;
       }));
     }
@@ -23656,24 +23656,10 @@ uniform mat4 u_projection_matrix;
       this.#sources.delete(message.payload.sourceId);
     };
     #addSourceAndItsLayers = (props, reactNativeBridge, map) => {
-      map.addSource(props.id, props.source);
-      props.layers.forEach(({ layer, beforeId }) => {
-        map.addLayer(
-          {
-            source: props.id,
-            ...layer
-          },
-          beforeId
-        );
-        reactNativeBridge.postMessage({
-          type: "mapSourceListenerEvent",
-          payload: {
-            sourceId: props.id,
-            layerId: layer.id,
-            eventName: "mount"
-          }
-        });
-      });
+      if (!map.getSource(props.id)) {
+        map.addSource(props.id, props.source);
+      }
+      this.#addLayers(props, reactNativeBridge, map);
     };
     #updateSourceAndItsLayers = (props, reactNativeBridge, map) => {
       const oldSourceAsString = stableStringify(
@@ -23692,12 +23678,19 @@ uniform mat4 u_projection_matrix;
         props.layers.map((item) => item.layer)
       );
       if (oldLayersAsString !== newLayersAsString) {
-        this.#getAssociatedLayers(props.id, map).forEach((layerId) => {
-          if (map.getLayer(layerId)) {
-            map.removeLayer(layerId);
-          }
-        });
-        props.layers.forEach(({ layer, beforeId }) => {
+        this.#updateLayers(props, reactNativeBridge, map);
+        return;
+      }
+    };
+    #removeSourceAndItsLayers = (sourceId, reactNativeBridge, map) => {
+      this.#removeLayers(sourceId, reactNativeBridge, map);
+      if (map.getSource(sourceId)) {
+        map.removeSource(sourceId);
+      }
+    };
+    #addLayers = (props, reactNativeBridge, map) => {
+      props.layers.forEach(({ layer, beforeId }) => {
+        if (!map.getLayer(layer.id)) {
           map.addLayer(
             {
               source: props.id,
@@ -23705,30 +23698,38 @@ uniform mat4 u_projection_matrix;
             },
             beforeId
           );
-        });
-        return;
-      }
-    };
-    #removeSourceAndItsLayers = (sourceId, reactNativeBridge, map) => {
-      const style = map.getStyle();
-      if (style && style.layers) {
-        this.#getAssociatedLayers(sourceId, map).forEach((layerId) => {
-          if (map.getLayer(layerId)) {
-            map.removeLayer(layerId);
-          }
           reactNativeBridge.postMessage({
             type: "mapSourceListenerEvent",
             payload: {
-              sourceId,
-              layerId,
-              eventName: "unmount"
+              sourceId: props.id,
+              layerId: layer.id,
+              eventName: "mount"
             }
           });
+        }
+      });
+    };
+    #updateLayers = (props, reactNativeBridge, map) => {
+      this.#removeLayers(props.id, reactNativeBridge, map);
+      this.#addLayers(props, reactNativeBridge, map);
+    };
+    #removeLayers = (sourceId, reactNativeBridge, map) => {
+      const layers = map.getStyle()?.layers?.filter(
+        (layer) => "source" in layer && layer.source === sourceId
+      ).map((layer) => layer.id);
+      layers.forEach((layerId) => {
+        if (map.getLayer(layerId)) {
+          map.removeLayer(layerId);
+        }
+        reactNativeBridge.postMessage({
+          type: "mapSourceListenerEvent",
+          payload: {
+            sourceId,
+            layerId,
+            eventName: "unmount"
+          }
         });
-      }
-      if (map.getSource(sourceId)) {
-        map.removeSource(sourceId);
-      }
+      });
     };
     #setSourceListeners = (props, reactNativeBridge, map) => {
       props.layers?.forEach(({ layer, listeners }) => {
@@ -23756,14 +23757,10 @@ uniform mat4 u_projection_matrix;
         });
       });
     };
-    #getAssociatedLayers = (sourceId, map) => {
-      return map.getStyle().layers.filter(
-        (layer) => "source" in layer && layer.source === sourceId
-      ).map((layer) => layer.id);
-    };
   };
 
   // src/web/controllers/CoreController.ts
+  var import_maplibre_gl3 = __toESM(require_maplibre_gl());
   var CoreController = class {
     #webObjectsController;
     #mapSourcesController;
@@ -23773,6 +23770,11 @@ uniform mat4 u_projection_matrix;
     }
     handleMessage = (message, reactNativeBridge) => {
       web_logger_default.info(this.handleMessage.name, message);
+      let map;
+      try {
+        map = this.#webObjectsController.map;
+      } catch (error) {
+      }
       try {
         switch (message.type) {
           case "webObjectMount": {
@@ -23825,7 +23827,7 @@ uniform mat4 u_projection_matrix;
             break;
           }
         }
-        if (message.type === "webObjectUpdate" && message.payload.objectType === "map") {
+        if (message.type === "webObjectUpdate" && message.payload.objectType === "map" && map !== this.#webObjectsController.map) {
           this.#webObjectsController.addExistingObjectsToMap(
             reactNativeBridge,
             this.#webObjectsController.map

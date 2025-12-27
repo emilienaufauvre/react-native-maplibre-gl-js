@@ -14,8 +14,8 @@ import {
 import { scheduleOnRN } from 'react-native-worklets'
 
 /**
- * @returns - Example of the marker component usage, with an animation
- *  implemented using the reanimated library.
+ * @returns - Example of the marker component usage, with an animation of its
+ *  coordinate, implemented using the reanimated library.
  */
 const Screen = () => {
   // Refs.
