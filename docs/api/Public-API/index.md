@@ -54,4 +54,4 @@ Public API of `react-native-maplibre-gl-js`.
 
 | Function | Description |
 | ------ | ------ |
-| [useLocalImage](functions/useLocalImage.md) | Load a local image as base64 data URI, and return it. |
+| [useLocalImage](functions/useLocalImage.md) | Load a local image as base64 data URI, and return it. It can then be used in HTML elements. |

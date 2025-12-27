@@ -4,9 +4,10 @@
 
 > **useLocalImage**(`moduleId`: `number`): `string` \| `null`
 
-Defined in: [src/react-native/hooks/end-user/useLocalImage.ts:15](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/hooks/end-user/useLocalImage.ts#L15)
+Defined in: [src/react-native/hooks/end-user/useLocalImage.ts:26](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/hooks/end-user/useLocalImage.ts#L26)
 
-Load a local image as base64 data URI, and return it.
+Load a local image as base64 data URI, and return it. It can then be used
+in HTML elements.
 
 ## Parameters
 
@@ -24,4 +25,14 @@ Load a local image as base64 data URI, and return it.
 
 ```tsx
 const image = useLocalImage(require('./image.png'))
+
+...
+
+<Marker
+  options={{
+    element: {
+      innerHTML: `<img alt="pin" src="${image}" />`
+    },
+  }}
+/>
 ```
