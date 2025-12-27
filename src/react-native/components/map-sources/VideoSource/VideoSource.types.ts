@@ -2,7 +2,7 @@ import type { MapSourceProps } from '../../../components-factories/map-sources/c
 import type { VideoSourceSpecification } from 'maplibre-gl'
 
 /**
- * Video source component props.
+ * VideoSource component props.
  * @interface
  * @group Types (map sources)
  */

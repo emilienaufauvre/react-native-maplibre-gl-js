@@ -2,6 +2,7 @@ import type {
   AddLayerObject,
   ImageSourceSpecification,
   MapLayerEventType,
+  VectorSourceSpecification,
   VideoSourceSpecification,
 } from 'maplibre-gl'
 import type { FC } from 'react'
@@ -9,10 +10,8 @@ import type { GeoJSONSourceSpecification } from '@maplibre/maplibre-gl-style-spe
 /*
 TODO to be implemented
 import type {
-  ImageSourceSpecification,
   RasterDEMSourceSpecification,
   RasterSourceSpecification,
-  VectorSourceSpecification,
   CanvasSourceSpecification,
 } from '@maplibre/maplibre-gl-style-spec'
  */
@@ -25,6 +24,7 @@ import type {
 export type MapSourceClass =
   | GeoJSONSourceSpecification
   | ImageSourceSpecification
+  | VectorSourceSpecification
   | VideoSourceSpecification
 
 /**
