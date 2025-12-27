@@ -2,7 +2,7 @@
 
 # ImageSource()
 
-> `const` **ImageSource**: (`props`: `ImageSourceProps`) => `null`
+> `const` **ImageSource**: (`props`: [`ImageSourceProps`](../interfaces/ImageSourceProps.md)) => `null`
 
 Defined in: [src/react-native/components/map-sources/ImageSource/ImageSource.tsx:46](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/map-sources/ImageSource/ImageSource.tsx#L46)
 
@@ -12,7 +12,7 @@ MapLibre Image map source and layers.
 
 | Parameter | Type |
 | ------ | ------ |
-| `props` | `ImageSourceProps` |
+| `props` | [`ImageSourceProps`](../interfaces/ImageSourceProps.md) |
 
 ## Returns
 
@@ -20,7 +20,7 @@ MapLibre Image map source and layers.
 
 ## Props
 
-ImageSourceProps
+[ImageSourceProps](../interfaces/ImageSourceProps.md)
 
 ## See
 

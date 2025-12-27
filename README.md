@@ -136,6 +136,10 @@ Several real-world usage scenarios are available, you can explore them in two wa
 - [`5.3. Animate a serie of images 1`](./example/src/app/5.-ImageSource/5.3.-Animate-a-serie-of-images-1.tsx)
 - [`5.4. Animate a serie of images 2`](./example/src/app/5.-ImageSource/5.4.-Animate-a-serie-of-images-2.tsx)
 
+### 6. VideoSource
+
+- [`6.1. Component basis`](./example/src/app/6.-VideoSource/6.1.-Component-basis.tsx)
+
 <!-- EXAMPLES-LIST:END -->
 
 
