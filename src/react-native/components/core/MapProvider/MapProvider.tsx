@@ -1,10 +1,11 @@
 import { View } from 'react-native'
 import { WebView } from 'react-native-webview'
+import { createStore, Provider } from 'jotai'
 import { WEBVIEW_STATIC_HTML } from '../../../../web/generated/webview_static_html'
 import useMapAtoms from '../../../hooks/atoms/useMapAtoms'
 import {
-  useFlushMessagesOnMapMounted,
   useCssInjectionScript,
+  useFlushMessagesOnMapMounted,
   useInjectJavaScriptIfCssStylesChanged,
   useStyles,
   useWebMessageHandler,
@@ -26,7 +27,22 @@ import type { MapProviderProps } from './MapProvider.types'
  * </MapProvider>
  * ```
  */
-const MapProvider = ({
+const MapProvider = (props: MapProviderProps) => {
+  // Create an isolated Jotai store per MapProvider instance so that all atoms
+  // used by children (via useMapAtoms) are scoped to this provider.
+  const store = createStore()
+
+  return (
+    <Provider store={store}>
+      <MapProviderInner {...props} />
+    </Provider>
+  )
+}
+
+/**
+ * ...
+ */
+const MapProviderInner = ({
   style,
   webViewStyle,
   children,
