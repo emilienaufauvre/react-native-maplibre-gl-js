@@ -11,6 +11,7 @@ import {
   useWebMessageHandler,
 } from './MapProvider.hooks'
 import type { MapProviderProps } from './MapProvider.types'
+import { useRef } from 'react'
 
 /**
  * Must be used as a parent component to allow instantiation of map elements.
@@ -30,10 +31,10 @@ import type { MapProviderProps } from './MapProvider.types'
 const MapProvider = (props: MapProviderProps) => {
   // Create an isolated Jotai store per MapProvider instance so that all atoms
   // used by children (via useMapAtoms) are scoped to this provider.
-  const store = createStore()
+  const storeRef = useRef(createStore())
 
   return (
-    <Provider store={store}>
+    <Provider store={storeRef.current}>
       <MapProviderInner {...props} />
     </Provider>
   )
