@@ -2,7 +2,7 @@
 
 # MarkerMethods
 
-Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:35](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L35)
+Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:36](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L36)
 
 ## Properties
 

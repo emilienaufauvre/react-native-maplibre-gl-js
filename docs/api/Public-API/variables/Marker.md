@@ -4,7 +4,7 @@
 
 > `const` **Marker**: [`WebObjectComponent`](../../Internal-types/type-aliases/WebObjectComponent.md)\<[`MarkerRef`](../interfaces/MarkerRef.md), [`MarkerProps`](../interfaces/MarkerProps.md)\>
 
-Defined in: [src/react-native/components/web-objects/Marker/Marker.tsx:55](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.tsx#L55)
+Defined in: [src/react-native/components/web-objects/Marker/Marker.tsx:50](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.tsx#L50)
 
 MapLibre Marker view.
 
@@ -26,6 +26,7 @@ MapLibre Marker view.
 <Marker
   ref={markerRef}
   options={{
+    coordinate: [2.32, 48.86],
     draggable: true,
     // The element to be used as the marker (a descriptor of an HTMLElement).
     element: {
@@ -50,12 +51,6 @@ MapLibre Marker view.
     },
   }}
   listeners={{
-    mount: {
-      rnListener: () => {
-        // The marker coordinate must be set on mount.
-        markerRef.current?.setLngLat([2.32, 48.86])
-      },
-    },
     click: {
       elementListener: async (_: MouseEvent) => {
         const lngLat = await markerRef.current?.getLngLat()
