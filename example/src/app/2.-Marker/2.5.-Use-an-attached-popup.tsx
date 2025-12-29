@@ -1,9 +1,9 @@
 import {
-  MapProvider,
   Map,
+  MapProvider,
   Marker,
-  Popup,
   type MarkerRef,
+  Popup,
   type PopupRef,
 } from 'react-native-maplibre-gl-js'
 import { useRef } from 'react'
@@ -28,6 +28,7 @@ const Screen = () => {
       <Marker
         ref={markerRef}
         options={{
+          coordinate: [2.32, 48.86],
           draggable: true,
           element: {
             innerHTML: `
@@ -57,7 +58,6 @@ const Screen = () => {
                 return
               }
               popupRef.current.setText(`A popup attached to the marker`).then()
-              markerRef.current?.setLngLat([2.32, 48.86])
               markerRef.current?.setPopup(popupRef.current.getId())
               // Now, when you click on the marker, the popup will open.
               // Then you can drag the marker and the popup will follow.

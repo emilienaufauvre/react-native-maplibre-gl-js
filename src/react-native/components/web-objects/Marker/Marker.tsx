@@ -11,6 +11,7 @@ import type { MarkerProps, MarkerRef } from './Marker.types'
  * <Marker
  *   ref={markerRef}
  *   options={{
+ *     coordinate: [2.32, 48.86],
  *     draggable: true,
  *     // The element to be used as the marker (a descriptor of an HTMLElement).
  *     element: {
@@ -35,12 +36,6 @@ import type { MarkerProps, MarkerRef } from './Marker.types'
  *     },
  *   }}
  *   listeners={{
- *     mount: {
- *       rnListener: () => {
- *         // The marker coordinate must be set on mount.
- *         markerRef.current?.setLngLat([2.32, 48.86])
- *       },
- *     },
  *     click: {
  *       elementListener: async (_: MouseEvent) => {
  *         const lngLat = await markerRef.current?.getLngLat()

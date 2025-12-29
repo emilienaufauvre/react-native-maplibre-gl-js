@@ -23428,7 +23428,7 @@ uniform mat4 u_projection_matrix;
           element = new import_maplibre_gl.default.Marker({
             ...options,
             element: htmlElement
-          }).setLngLat([0, 0]).addTo(this.map);
+          }).setLngLat(options.coordinate ?? [0, 0]).addTo(this.map);
           break;
         }
         case "popup": {

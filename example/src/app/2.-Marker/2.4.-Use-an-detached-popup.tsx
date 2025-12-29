@@ -1,9 +1,9 @@
 import {
-  MapProvider,
   Map,
+  MapProvider,
   Marker,
-  Popup,
   type MarkerRef,
+  Popup,
   type PopupRef,
 } from 'react-native-maplibre-gl-js'
 import { useRef } from 'react'
@@ -55,6 +55,7 @@ const Screen = () => {
       <Marker
         ref={markerRef}
         options={{
+          coordinate: [2.32, 48.86],
           draggable: true,
           element: {
             innerHTML: `
@@ -78,9 +79,6 @@ const Screen = () => {
           },
         }}
         listeners={{
-          mount: {
-            rnListener: () => markerRef.current?.setLngLat([2.32, 48.86]),
-          },
           click: {
             elementListener: async (_: MouseEvent) => {
               // Open the popup when on the marker coordinate when it is

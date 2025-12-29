@@ -1,5 +1,6 @@
 import {
   type Event,
+  type LngLatLike,
   type Marker as MapLibreMarker,
   type MarkerOptions as MapLibreMarkerOptions,
 } from 'maplibre-gl'
@@ -45,7 +46,7 @@ export type MarkerMethods = WebObjectMethodsInferred<
  * @group Marker types
  */
 export type MarkerOptions = WebObjectOptionsInferred<
-  MapLibreMarkerOptions,
+  MapLibreMarkerOptions & { coordinate?: LngLatLike },
   {
     element?: HTMLElementDescriptor
   }

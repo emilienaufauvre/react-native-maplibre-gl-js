@@ -153,8 +153,7 @@ export default class WebObjectsController {
           ...options,
           element: htmlElement,
         })
-          // TODO setup default location (needed by default)
-          .setLngLat([0, 0])
+          .setLngLat(options.coordinate ?? [0, 0])
           .addTo(this.map)
         break
       }

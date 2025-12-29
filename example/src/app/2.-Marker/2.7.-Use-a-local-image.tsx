@@ -29,6 +29,7 @@ const Screen = () => {
       <Marker
         ref={markerRef}
         options={{
+          coordinate: [2.32, 48.86],
           draggable: true,
           element: {
             // The image is then used with the <img/> tag.
@@ -53,11 +54,6 @@ const Screen = () => {
                 <img alt="pin" src="${image}" />
               </div>
             `,
-          },
-        }}
-        listeners={{
-          mount: {
-            rnListener: () => markerRef.current?.setLngLat([2.32, 48.86]),
           },
         }}
       />

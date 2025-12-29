@@ -1,6 +1,6 @@
 import {
-  MapProvider,
   Map,
+  MapProvider,
   Marker,
   type MarkerRef,
 } from 'react-native-maplibre-gl-js'
@@ -26,6 +26,7 @@ const Screen = () => {
       <Marker
         ref={markerRef}
         options={{
+          coordinate: [2.32, 48.86],
           draggable: true,
           element: {
             innerHTML: `
@@ -63,9 +64,6 @@ const Screen = () => {
           },
         }}
         listeners={{
-          mount: {
-            rnListener: () => markerRef.current?.setLngLat([2.32, 48.86]),
-          },
           click: {
             elementListener: () => {
               // The animation is triggered once the marker is added to the map;

@@ -1,15 +1,15 @@
 import {
-  MapProvider,
   Map,
+  MapProvider,
   Marker,
   type MarkerRef,
 } from 'react-native-maplibre-gl-js'
 import { useRef } from 'react'
 import { type LngLatLike } from 'maplibre-gl'
 import {
+  useAnimatedReaction,
   useSharedValue,
   withTiming,
-  useAnimatedReaction,
 } from 'react-native-reanimated'
 import { scheduleOnRN } from 'react-native-worklets'
 
@@ -47,6 +47,7 @@ const Screen = () => {
       <Marker
         ref={markerRef}
         options={{
+          coordinate: [2.32, 48.86],
           draggable: true,
           element: {
             innerHTML: `
@@ -70,9 +71,6 @@ const Screen = () => {
           },
         }}
         listeners={{
-          mount: {
-            rnListener: () => markerRef.current?.setLngLat([2.32, 48.86]),
-          },
           // If marker clicked, animate it to a new random position.
           click: {
             elementListener: async (_: MouseEvent) => {

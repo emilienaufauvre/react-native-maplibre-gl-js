@@ -26,6 +26,7 @@ const Screen = () => {
       <Marker
         ref={markerRef}
         options={{
+          coordinate: [2.32, 48.86],
           draggable: true,
           // The element to be used as the marker (a descriptor of an
           // HTMLElement).
@@ -53,8 +54,7 @@ const Screen = () => {
         listeners={{
           mount: {
             rnListener: () => {
-              // The marker coordinate must be set on mount.
-              markerRef.current?.setLngLat([2.32, 48.86])
+              console.log('Marker mounted')
               // That's it! The marker is visible at the indicated coordinate.
               // No need to call "addTo()", the marker is automatically added to
               // the map when mounted.
