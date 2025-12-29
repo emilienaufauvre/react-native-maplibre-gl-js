@@ -23516,7 +23516,10 @@ uniform mat4 u_projection_matrix;
         }
         if (isWebObjectListenerOnHTMLElement(listener)) {
           if (!(object instanceof import_maplibre_gl.default.Map)) {
-            object.getElement().addEventListener(eventName, sendEventToReactNative);
+            object.getElement().addEventListener(eventName, (event) => {
+              sendEventToReactNative(event);
+              event.stopPropagation();
+            });
           }
         }
       });
