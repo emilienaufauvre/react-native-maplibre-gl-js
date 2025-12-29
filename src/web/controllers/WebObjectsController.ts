@@ -278,9 +278,10 @@ export default class WebObjectsController {
         // Listening to the HTML element events is not possible on the map
         // object.
         if (!(object instanceof maplibregl.Map)) {
-          object
-            .getElement()
-            .addEventListener(eventName, sendEventToReactNative)
+          object.getElement().addEventListener(eventName, (event: Event) => {
+            sendEventToReactNative(event)
+            event.stopPropagation()
+          })
         }
       }
     })
