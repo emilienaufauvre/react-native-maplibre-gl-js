@@ -23777,6 +23777,11 @@ uniform mat4 u_projection_matrix;
       }
       try {
         switch (message.type) {
+          case "batch": {
+            const { messages } = message.payload;
+            messages?.forEach((m) => this.handleMessage(m, reactNativeBridge));
+            return;
+          }
           case "webObjectMount": {
             this.#webObjectsController.handleMountMessage(
               message,

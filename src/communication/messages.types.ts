@@ -18,6 +18,10 @@ import type {
  */
 export type MessageFromRNToWeb =
   | {
+      type: 'batch'
+      payload: { messages: MessageFromRNToWeb[] }
+    }
+  | {
       type: 'webObjectMount'
       payload: WebObjectProps<any, any> & {
         objectId: WebObjectId

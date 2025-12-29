@@ -33,6 +33,13 @@ export default class CoreController {
 
     try {
       switch (message.type) {
+        case 'batch': {
+          // Handle batched messages by unpacking them and processing
+          // sequentially.
+          const { messages } = message.payload
+          messages?.forEach((m) => this.handleMessage(m, reactNativeBridge))
+          return
+        }
         case 'webObjectMount': {
           this.#webObjectsController.handleMountMessage(
             message,

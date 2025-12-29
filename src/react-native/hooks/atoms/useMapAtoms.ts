@@ -1,6 +1,5 @@
-import { atom, useSetAtom } from 'jotai'
+import { atom, useAtom, useSetAtom } from 'jotai'
 import type { WebView } from 'react-native-webview'
-import { useAtom } from 'jotai'
 import type { MessageFromRNToWeb } from '../../../communication/messages.types'
 import type {
   WebObjectId,
@@ -39,6 +38,11 @@ const isMapMountMessageDispatchedAtom = atom(false)
  * The queue of messages to be sent to the web world.
  */
 const messageQueueAtom = atom<MessageFromRNToWeb[]>([])
+
+/**
+ * True if a flush of the message queue is already scheduled.
+ */
+const isFlushScheduledAtom = atom(false)
 
 /**
  * When a method is invoked on a RN object, the call is forwarded to the native
@@ -86,32 +90,36 @@ const dispatchMessageAtom = atom(
   (get, set, message: MessageFromRNToWeb) => {
     const isWebWorldReady = get(isWebWorldReadyAtom)
     const isMapMountMessageReady = get(isMapMountMessageReadyAtom)
-    const isMapMountMessageDispatched = get(isMapMountMessageDispatchedAtom)
     const webView = get(webViewAtom)
 
     const isMapMountMessage =
       message.type === 'webObjectMount' && message.payload.objectType === 'map'
 
-    if (
-      !isWebWorldReady ||
-      !isMapMountMessageReady ||
-      !isMapMountMessageDispatched ||
-      !webView
-    ) {
-      const q = get(messageQueueAtom)
-      if (isMapMountMessage) {
-        // Map mount message must be sent before any other message.
-        set(messageQueueAtom, [message, ...q])
-        // If the map mount message was queued in priority, then others messages
-        // are allowed to be sent.
-        set(isMapMountMessageReadyAtom, true)
-      } else {
-        set(messageQueueAtom, [...q, message])
-      }
-      return
+    // Always enqueue. If it's the map mount message, put it at the front and
+    // mark that the map mount message can now be dispatched.
+    const q = get(messageQueueAtom)
+    if (isMapMountMessage) {
+      set(messageQueueAtom, [message, ...q])
+      set(isMapMountMessageReadyAtom, true)
+    } else {
+      set(messageQueueAtom, [...q, message])
     }
 
-    webView.postMessage(stableStringify(message))
+    // If conditions are met, schedule a single flush on the next tick.
+    if (isWebWorldReady && isMapMountMessageReady && webView) {
+      const isScheduled = get(isFlushScheduledAtom)
+      if (!isScheduled) {
+        set(isFlushScheduledAtom, true)
+        setTimeout(() => {
+          // Reset the scheduled flag and flush.
+          // Note: set is safe to use here as jotai queues updates.
+          // @ts-ignore
+          set(isFlushScheduledAtom, false)
+          // @ts-ignore
+          set(flushMessagesAtom)
+        }, 0)
+      }
+    }
   },
 )
 
@@ -134,9 +142,14 @@ const flushMessagesAtom = atom(null, (get, set) => {
     return
   }
 
-  messageQueue.forEach((message) => {
-    webView.postMessage(stableStringify(message))
-  })
+  // Post a single batched message containing the whole queue to minimize
+  // bridge overhead.
+  webView.postMessage(
+    stableStringify({
+      type: 'batch',
+      payload: { messages: messageQueue },
+    }),
+  )
 
   set(messageQueueAtom, [])
 

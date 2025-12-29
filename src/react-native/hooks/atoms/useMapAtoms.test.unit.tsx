@@ -1,4 +1,4 @@
-import { render, act } from '@testing-library/react-native'
+import { act, render } from '@testing-library/react-native'
 import { jest } from '@jest/globals'
 import useMapAtoms from './useMapAtoms'
 
@@ -56,11 +56,13 @@ describe('useMapAtoms', () => {
         })
       })
 
-      test('Then all messages are flushed, with the map mount message sent first', () => {
-        expect(webView.postMessage).toHaveBeenCalledTimes(messages.length)
-        const [first] = (webView.postMessage as jest.Mock).mock.calls
-        expect(first?.[0]).toContain('"type":"webObjectMount"')
-        expect(first?.[0]).toContain('"objectType":"map"')
+      test('Then all messages are flushed in a single batch, with the map mount message first', () => {
+        expect(webView.postMessage).toHaveBeenCalledTimes(1)
+        const [[payload]] = (webView.postMessage as jest.Mock).mock.calls as any
+        expect(payload).toContain('"type":"batch"')
+        const parsed = JSON.parse(payload)
+        expect(parsed?.payload?.messages?.[0]?.type).toBe('webObjectMount')
+        expect(parsed?.payload?.messages?.[0]?.payload?.objectType).toBe('map')
       })
     })
 
