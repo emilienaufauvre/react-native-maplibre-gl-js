@@ -6,7 +6,8 @@ import useMapAtoms from '../../../hooks/atoms/useMapAtoms'
 import {
   useCssInjectionScript,
   useFlushMessagesOnMapMounted,
-  useInjectJavaScriptIfCssStylesChanged,
+  useInjectJavaScriptIfScriptChanged,
+  useLoggerInjectionScript,
   useStyles,
   useWebMessageHandler,
 } from './MapProvider.hooks'
@@ -48,6 +49,7 @@ const MapProviderInner = ({
   webViewStyle,
   children,
   cssStyles,
+  webLoggerEnabled,
 }: MapProviderProps) => {
   // States.
   // - Global.
@@ -58,7 +60,9 @@ const MapProviderInner = ({
   useFlushMessagesOnMapMounted()
   const { handler } = useWebMessageHandler()
   const { cssInjectionScript } = useCssInjectionScript(cssStyles)
-  useInjectJavaScriptIfCssStylesChanged(cssInjectionScript)
+  const { loggerInjectionScript } = useLoggerInjectionScript(webLoggerEnabled)
+  useInjectJavaScriptIfScriptChanged(cssInjectionScript)
+  useInjectJavaScriptIfScriptChanged(loggerInjectionScript)
 
   return (
     <View style={[styles.container, style]}>
@@ -71,7 +75,10 @@ const MapProviderInner = ({
         domStorageEnabled={true}
         onMessage={handler}
         source={{ html: WEBVIEW_STATIC_HTML }}
-        injectedJavaScriptBeforeContentLoaded={cssInjectionScript}
+        injectedJavaScriptBeforeContentLoaded={[
+          cssInjectionScript,
+          loggerInjectionScript,
+        ].join(';')}
       />
       {children}
     </View>

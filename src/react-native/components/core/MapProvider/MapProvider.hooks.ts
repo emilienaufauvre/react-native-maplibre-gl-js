@@ -160,13 +160,29 @@ export const useCssInjectionScript = (cssStyles?: string | string[]) => {
 }
 
 /**
- * Inject the given script into the WebView if it changed.
- * @param cssInjectionScript - A script that injects CSS once executed within
- *  the WebView.
+ * @param isEnabled - True if the web logger is enabled.
+ * @returns - A script that enabled/disabled the logger in a format that can be
+ *  injected into the WebView.
  */
-export const useInjectJavaScriptIfCssStylesChanged = (
-  cssInjectionScript?: string,
-) => {
+export const useLoggerInjectionScript = (isEnabled?: boolean) => {
+  const loggerInjectionScript = useMemo(
+    () =>
+      `(function(){
+          try{
+            window.__RNML_WEBLOGGER_ENABLED=${isEnabled};
+          } catch(_){ }
+          return true;
+        })()`,
+    [isEnabled],
+  )
+  return { loggerInjectionScript }
+}
+
+/**
+ * Inject the given script into the WebView if it changed.
+ * @param script - A script to be injected into the WebView.
+ */
+export const useInjectJavaScriptIfScriptChanged = (script?: string) => {
   // Refs.
   const lastInjectedScriptRef = useRef<string | null>(null)
   // States.
@@ -175,14 +191,14 @@ export const useInjectJavaScriptIfCssStylesChanged = (
 
   useEffect(() => {
     if (
-      !cssInjectionScript ||
+      !script ||
       !isWebWorldReady ||
       !webView ||
-      lastInjectedScriptRef.current === cssInjectionScript
+      lastInjectedScriptRef.current === script
     ) {
       return
     }
-    webView?.injectJavaScript(cssInjectionScript)
-    lastInjectedScriptRef.current = cssInjectionScript
-  }, [cssInjectionScript, isWebWorldReady, webView])
+    webView?.injectJavaScript(script)
+    lastInjectedScriptRef.current = script
+  }, [script, isWebWorldReady, webView])
 }

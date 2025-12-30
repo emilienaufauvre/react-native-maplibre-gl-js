@@ -23,6 +23,14 @@ export type MapProviderProps = {
    */
   cssStyles?: string | string[]
   /**
+   * Enable logs originating from the Web (WebLogger).
+   * Default to false.
+   * When disabled, messages of the type "console" coming from the ebView are
+   * ignored.
+   * If enabled, performances may be impacted.
+   */
+  webLoggerEnabled?: boolean
+  /**
    * The map elements (e.g., Map) as direct children.
    */
   children?: ReactNode

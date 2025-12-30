@@ -1,13 +1,20 @@
-// TODO how to disable in prod?
 import type { MessageFromWebToRN } from '../../communication/messages.types'
 
-const __DEV__ = true
+const isWebLoggerEnabled = (): boolean => {
+  try {
+    // Read a runtime flag exposed by MapProvider in the WebView environment.
+    // If not set, default to false (disabled).
+    return Boolean((window as any)?.__RNML_WEBLOGGER_ENABLED)
+  } catch (_) {
+    return false
+  }
+}
 
 const createLoggerMethod = (level: 'debug' | 'info' | 'error') => {
-  if (!__DEV__) {
-    return () => {}
-  }
   return (func: string, ...args: any[]) => {
+    if (!isWebLoggerEnabled()) {
+      return
+    }
     // Send to React Native WebView if available.
     try {
       const message: MessageFromWebToRN = {
@@ -25,7 +32,8 @@ const createLoggerMethod = (level: 'debug' | 'info' | 'error') => {
 
 /**
  * Logger to be used from the Web world. Will post the log to the React Native
- * world. Works only in __DEV__.
+ * world. Controlled by MapProvider prop `webLoggerEnabled` (disabled by
+ * default).
  */
 const WebLogger = {
   debug: createLoggerMethod('debug'),

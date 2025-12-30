@@ -23256,13 +23256,18 @@ uniform mat4 u_projection_matrix;
   });
 
   // src/web/logger/web-logger.ts
-  var __DEV__ = true;
-  var createLoggerMethod = (level) => {
-    if (!__DEV__) {
-      return () => {
-      };
+  var isWebLoggerEnabled = () => {
+    try {
+      return Boolean(window?.__RNML_WEBLOGGER_ENABLED);
+    } catch (_) {
+      return false;
     }
+  };
+  var createLoggerMethod = (level) => {
     return (func, ...args) => {
+      if (!isWebLoggerEnabled()) {
+        return;
+      }
       try {
         const message = {
           type: "console",
