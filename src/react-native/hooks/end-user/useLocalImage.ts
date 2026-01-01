@@ -23,7 +23,7 @@ import { assetToDataUri } from './useLocalImage.utils'
  * ```
  * @group Hooks
  */
-const useLocalImage = (moduleId: number) => {
+const useLocalImage = (moduleId: number | undefined | null) => {
   const [image, setImage] = useState<string | null>(null)
 
   useEffect(() => {
