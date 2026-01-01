@@ -69,6 +69,19 @@ export const useWebMessageHandler = () => {
           const message = JSON.parse(
             event.nativeEvent.data,
           ) as MessageFromWebToRN
+          // If the message is a batch, unpack and dispatch sequentially.
+          if ((message as any)?.type === 'batch') {
+            const messages = (message as any)?.payload?.messages as
+              | MessageFromWebToRN[]
+              | undefined
+            messages?.forEach((m) => {
+              const innerHandler = handlers[m.type] as
+                | ((mm: MessageFromWebToRN) => void)
+                | undefined
+              innerHandler?.(m)
+            })
+            return
+          }
           const handler = handlers[message.type] as
             | ((m: MessageFromWebToRN) => void)
             | undefined

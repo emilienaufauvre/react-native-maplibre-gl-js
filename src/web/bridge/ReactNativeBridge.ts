@@ -11,6 +11,8 @@ import type {
  */
 export default class ReactNativeBridge {
   #controller?: CoreController
+  #outgoingQueue: MessageFromWebToRN[] = []
+  #flushScheduled = false
 
   constructor() {
     const messageHandler = (raw: any) => {
@@ -38,11 +40,38 @@ export default class ReactNativeBridge {
 
   /**
    * Post a message to the React Native world.
+   * Messages are queued and flushed in a single batched message to optimize
+   * performance.
    * @param message - The message to be sent.
    */
   postMessage(message: MessageFromWebToRN) {
     WebLogger.debug(this.postMessage.name, message)
+    this.#outgoingQueue.push(message)
+    this.#scheduleFlush()
+  }
+
+  #scheduleFlush = () => {
+    if (this.#flushScheduled) {
+      return
+    }
+    this.#flushScheduled = true
+    // Use microtask to batch messages generated in the same tick.
+    Promise.resolve().then(() => this.#flush())
+  }
+
+  #flush = () => {
+    this.#flushScheduled = false
+    const queue = this.#outgoingQueue
+    this.#outgoingQueue = []
+    if (queue.length === 0) {
+      return
+    }
+    // Send it as a single batched message.
+    const batched: MessageFromWebToRN = {
+      type: 'batch',
+      payload: { messages: queue },
+    } as any
     // @ts-ignore
-    window.ReactNativeWebView?.postMessage(JSON.stringify(message))
+    window.ReactNativeWebView?.postMessage(JSON.stringify(batched))
   }
 }

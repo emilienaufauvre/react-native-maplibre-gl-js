@@ -69,6 +69,10 @@ export type MessageFromRNToWeb =
  * Messages about the web world, sent from the web one to the RN world.
  */
 export type MessageFromWebToRN =
+  | {
+      type: 'batch'
+      payload: { messages: MessageFromWebToRN[] }
+    }
   /**
    * Anything that should be logged in the React Native world.
    */

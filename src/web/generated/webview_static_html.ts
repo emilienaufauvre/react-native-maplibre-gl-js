@@ -23859,6 +23859,9 @@ uniform mat4 u_projection_matrix;
   // src/web/bridge/ReactNativeBridge.ts
   var ReactNativeBridge = class {
     #controller;
+    // Queue outgoing messages to reduce WebView bridge overhead by batching
+    #outgoingQueue = [];
+    #flushScheduled = false;
     constructor() {
       const messageHandler = (raw) => {
         try {
@@ -23881,11 +23884,31 @@ uniform mat4 u_projection_matrix;
     }
     /**
      * Post a message to the React Native world.
+     * Messages are queued and flushed in a single batched message to optimize performance.
      * @param message - The message to be sent.
      */
     postMessage(message) {
       web_logger_default.debug(this.postMessage.name, message);
-      window.ReactNativeWebView?.postMessage(JSON.stringify(message));
+      this.#outgoingQueue.push(message);
+      this.#scheduleFlush();
+    }
+    #scheduleFlush() {
+      if (this.#flushScheduled) return;
+      this.#flushScheduled = true;
+      Promise.resolve().then(() => this.#flush());
+    }
+    #flush() {
+      this.#flushScheduled = false;
+      const queue = this.#outgoingQueue;
+      this.#outgoingQueue = [];
+      if (queue.length === 0) return;
+      const batched = {
+        // @ts-ignore allow extended union case at runtime
+        type: "batch",
+        // @ts-ignore: payload shape for batch
+        payload: { messages: queue }
+      };
+      window.ReactNativeWebView?.postMessage(JSON.stringify(batched));
     }
   };
 
