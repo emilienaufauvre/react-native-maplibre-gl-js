@@ -2,7 +2,7 @@
 
 # useLocalImage()
 
-> **useLocalImage**(`moduleId`: `number`): `string` \| `null`
+> **useLocalImage**(`moduleId`: `number` \| `null` \| `undefined`): `string` \| `null`
 
 Defined in: [src/react-native/hooks/end-user/useLocalImage.ts:26](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/hooks/end-user/useLocalImage.ts#L26)
 
@@ -13,7 +13,7 @@ in HTML elements.
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `moduleId` | `number` | The module ID of the image to load (e.g. `require('./image.png')`). |
+| `moduleId` | `number` \| `null` \| `undefined` | The module ID of the image to load (e.g. `require('./image.png')`). |
 
 ## Returns
 
