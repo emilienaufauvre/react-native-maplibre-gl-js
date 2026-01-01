@@ -27,6 +27,9 @@ const useLocalImage = (moduleId: number) => {
   const [image, setImage] = useState<string | null>(null)
 
   useEffect(() => {
+    if (moduleId === null || moduleId === undefined) {
+      return
+    }
     assetToDataUri(moduleId).then((uri) => {
       setImage(uri)
     })
