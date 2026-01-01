@@ -66,26 +66,24 @@ export const useWebMessageHandler = () => {
       return function handleMessage(event: WebViewMessageEvent) {
         try {
           RNLogger.debug('RN', handleMessage.name, event?.nativeEvent?.data)
+
           const message = JSON.parse(
             event.nativeEvent.data,
           ) as MessageFromWebToRN
-          // If the message is a batch, unpack and dispatch sequentially.
-          if ((message as any)?.type === 'batch') {
-            const messages = (message as any)?.payload?.messages as
-              | MessageFromWebToRN[]
-              | undefined
-            messages?.forEach((m) => {
-              const innerHandler = handlers[m.type] as
-                | ((mm: MessageFromWebToRN) => void)
-                | undefined
-              innerHandler?.(m)
-            })
-            return
+          let messages
+
+          if (message?.type === 'batch') {
+            messages = message.payload.messages
+          } else {
+            messages = [message]
           }
-          const handler = handlers[message.type] as
-            | ((m: MessageFromWebToRN) => void)
-            | undefined
-          return handler?.(message)
+
+          messages?.forEach((item) => {
+            const handler = handlers[message.type] as
+              | ((m: MessageFromWebToRN) => void)
+              | undefined
+            handler?.(item)
+          })
         } catch (error: any) {
           RNLogger.error('RN', handleMessage.name, error.message)
         }
