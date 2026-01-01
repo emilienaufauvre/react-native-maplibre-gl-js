@@ -70,6 +70,7 @@ export const useWebMessageHandler = () => {
           const message = JSON.parse(
             event.nativeEvent.data,
           ) as MessageFromWebToRN
+
           let messages
 
           if (message?.type === 'batch') {
@@ -79,7 +80,7 @@ export const useWebMessageHandler = () => {
           }
 
           messages?.forEach((item) => {
-            const handler = handlers[message.type] as
+            const handler = handlers[item.type] as
               | ((m: MessageFromWebToRN) => void)
               | undefined
             handler?.(item)
