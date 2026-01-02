@@ -11510,6 +11510,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jotai-scope@npm:^0.10.0":
+  version: 0.10.0
+  resolution: "jotai-scope@npm:0.10.0"
+  peerDependencies:
+    jotai: ">=2.16.0"
+    react: ">=16.0.0"
+  checksum: 10c0/3f920059920d294dcaf7fe86c3919e909584f9fba8d5740161a11662bc0306b824346a0de1b62875a43dcd739cce19a314444c90c31e3368a505783b3046fe42
+  languageName: node
+  linkType: hard
+
 "jotai@npm:^2.15.2":
   version: 2.16.1
   resolution: "jotai@npm:2.16.1"
@@ -15300,6 +15310,7 @@ __metadata:
     expo-asset: "npm:^12.0.12"
     jest: "npm:^29.7.0"
     jotai: "npm:^2.15.2"
+    jotai-scope: "npm:^0.10.0"
     lefthook: "npm:^2.0.11"
     maplibre-gl: "npm:^5.14.0"
     prettier: "npm:^3.7.4"

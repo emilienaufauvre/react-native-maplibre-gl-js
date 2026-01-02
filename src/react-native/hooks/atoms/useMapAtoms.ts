@@ -361,4 +361,33 @@ const useMapAtoms = () => {
   }
 }
 
+/**
+ * All the available atoms.
+ */
+export const MAP_ATOMS = [
+  // Primitives
+  webViewAtom,
+  isWebWorldReadyAtom,
+  isMapMountMessageReadyAtom,
+  isMapMountMessageDispatchedAtom,
+  messageQueueAtom,
+  isFlushScheduledAtom,
+  webObjectPendingMethodResponses,
+  webObjectsListenersAtom,
+  mapSourcesListenersAtom,
+  // Write/derived
+  enqueueMessageAtom,
+  dispatchMessageAtom,
+  flushMessagesAtom,
+  setWebObjectPendingMethodResponseAtom,
+  resolveWebObjectPendingMethodResponseAtom,
+  deleteWebObjectPendingMethodResponseAtom,
+  setWebObjectListenersAtom,
+  getWebObjectListenersAtom,
+  deleteWebObjectListenersAtom,
+  setMapSourceListenersAtom,
+  getMapSourceListenersAtom,
+  deleteMapSourceListenersAtom,
+]
+
 export default useMapAtoms

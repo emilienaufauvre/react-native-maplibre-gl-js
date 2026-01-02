@@ -1,8 +1,7 @@
 import { View } from 'react-native'
 import { WebView } from 'react-native-webview'
-import { createStore, Provider } from 'jotai'
 import { WEBVIEW_STATIC_HTML } from '../../../../web/generated/webview_static_html'
-import useMapAtoms from '../../../hooks/atoms/useMapAtoms'
+import useMapAtoms, { MAP_ATOMS } from '../../../hooks/atoms/useMapAtoms'
 import {
   useCssInjectionScript,
   useFlushMessagesOnMapMounted,
@@ -12,7 +11,7 @@ import {
   useWebMessageHandler,
 } from './MapProvider.hooks'
 import type { MapProviderProps } from './MapProvider.types'
-import { useRef } from 'react'
+import { ScopeProvider } from 'jotai-scope'
 
 /**
  * Must be used as a parent component to allow instantiation of map elements.
@@ -29,22 +28,7 @@ import { useRef } from 'react'
  * </MapProvider>
  * ```
  */
-const MapProvider = (props: MapProviderProps) => {
-  // Create an isolated Jotai store per MapProvider instance so that all atoms
-  // used by children (via useMapAtoms) are scoped to this provider.
-  const storeRef = useRef(createStore())
-
-  return (
-    <Provider store={storeRef.current}>
-      <MapProviderInner {...props} />
-    </Provider>
-  )
-}
-
-/**
- * ...
- */
-const MapProviderInner = ({
+const MapProvider = ({
   style,
   webViewStyle,
   children,
@@ -65,23 +49,28 @@ const MapProviderInner = ({
   useInjectJavaScriptIfScriptChanged(loggerInjectionScript)
 
   return (
-    <View style={[styles.container, style]}>
-      <WebView
-        testID={'map-provider-webview'}
-        ref={setWebView}
-        style={[styles.webView, webViewStyle]}
-        scrollEnabled={false}
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
-        onMessage={handler}
-        source={{ html: WEBVIEW_STATIC_HTML }}
-        injectedJavaScriptBeforeContentLoaded={[
-          cssInjectionScript,
-          loggerInjectionScript,
-        ].join(';')}
-      />
-      {children}
-    </View>
+    // Specify the Jotai atoms that the provider relies on, so library users can
+    // safely use their own Jotai atoms in custom components rendered inside a
+    // MapProvider.
+    <ScopeProvider atoms={MAP_ATOMS}>
+      <View style={[styles.container, style]}>
+        <WebView
+          testID={'map-provider-webview'}
+          ref={setWebView}
+          style={[styles.webView, webViewStyle]}
+          scrollEnabled={false}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+          onMessage={handler}
+          source={{ html: WEBVIEW_STATIC_HTML }}
+          injectedJavaScriptBeforeContentLoaded={[
+            cssInjectionScript,
+            loggerInjectionScript,
+          ].join(';')}
+        />
+        {children}
+      </View>
+    </ScopeProvider>
   )
 }
 
