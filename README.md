@@ -132,6 +132,8 @@ Several real-world usage scenarios are available, you can explore them in two wa
 ### 4. GeoJSONSource
 
 - [`4.1. Component basis`](./example/src/app/4.-GeoJSONSource/4.1.-Component-basis.tsx)
+- [`4.2. Use a line gradient`](./example/src/app/4.-GeoJSONSource/4.2.-Use-a-line-gradient.tsx)
+- [`4.3. Use a local image`](./example/src/app/4.-GeoJSONSource/4.3.-Use-a-local-image.tsx)
 
 ### 5. ImageSource
 

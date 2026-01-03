@@ -2,7 +2,7 @@
 
 # MapMethods
 
-Defined in: [src/react-native/components/web-objects/Map/Map.types.ts:44](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Map/Map.types.ts#L44)
+Defined in: [src/react-native/components/web-objects/Map/Map.types.ts:45](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Map/Map.types.ts#L45)
 
 ## Properties
 
@@ -71,7 +71,7 @@ Defined in: [src/react-native/components/web-objects/Map/Map.types.ts:44](https:
 | <a id="getsource"></a> `getSource` | (...`args`: \[`string`\]) => `Promise`\<`Source` \| `undefined`\> |  |
 | <a id="setsourcetilelodparams"></a> `setSourceTileLodParams` | (...`args`: \[`number`, `number`, `string`\]) => `Promise`\<`Map$1`\> |  |
 | <a id="refreshtiles"></a> `refreshTiles` | (...`args`: \[`string`, \{ `x`: `number`; `y`: `number`; `z`: `number`; \}[]\]) => `Promise`\<`void`\> |  |
-| <a id="addimage"></a> `addImage` | (...`args`: \[`string`, `HTMLImageElement` \| `ImageBitmap` \| `ImageData` \| \{ `width`: `number`; `height`: `number`; `data`: `Uint8Array`\<`ArrayBufferLike`\> \| `Uint8ClampedArray`\<`ArrayBufferLike`\>; \} \| `StyleImageInterface`, `Partial`\<`StyleImageMetadata`\>\]) => `Promise`\<`Map$1`\> |  |
+| <a id="addimage"></a> `addImage` | (...`args`: \[`string`, `string`, `Partial`\<`StyleImageMetadata`\>\]) => `Promise`\<`Promise`\<`void`\>\> |  |
 | <a id="updateimage"></a> `updateImage` | (...`args`: \[`string`, `HTMLImageElement` \| `ImageBitmap` \| `ImageData` \| `StyleImageInterface` \| \{ `width`: `number`; `height`: `number`; `data`: `Uint8Array`\<`ArrayBufferLike`\> \| `Uint8ClampedArray`\<`ArrayBufferLike`\>; \}\]) => `Promise`\<`Map$1`\> |  |
 | <a id="getimage"></a> `getImage` | (...`args`: \[`string`\]) => `Promise`\<`StyleImage`\> |  |
 | <a id="hasimage"></a> `hasImage` | (...`args`: \[`string`\]) => `Promise`\<`boolean`\> |  |

@@ -2,7 +2,7 @@
 
 # MarkerOptions
 
-Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:48](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L48)
+Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:51](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L51)
 
 ## Properties
 
@@ -21,5 +21,5 @@ Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:48](
 | <a id="opacity"></a> `opacity?` | `string` | `1` | Marker's opacity when it's in clear view (not behind 3d terrain) | node\_modules/maplibre-gl/dist/maplibre-gl.d.ts:13361 |
 | <a id="opacitywhencovered"></a> `opacityWhenCovered?` | `string` | `0.2` | Marker's opacity when it's behind 3d terrain | node\_modules/maplibre-gl/dist/maplibre-gl.d.ts:13366 |
 | <a id="subpixelpositioning"></a> `subpixelPositioning?` | `boolean` | `false` | If `true`, rounding is disabled for placement of the marker, allowing for subpixel positioning and smoother movement when the marker is translated. | node\_modules/maplibre-gl/dist/maplibre-gl.d.ts:13372 |
-| <a id="coordinate"></a> `coordinate?` | `LngLatLike` | `undefined` | - | [src/react-native/components/web-objects/Marker/Marker.types.ts:49](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L49) |
-| <a id="element"></a> `element?` | `HTMLElementDescriptor` | `undefined` | - | [src/react-native/components/web-objects/Marker/Marker.types.ts:51](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L51) |
+| <a id="coordinate"></a> `coordinate?` | `LngLatLike` | `undefined` | - | [src/react-native/components/web-objects/Marker/Marker.types.ts:52](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L52) |
+| <a id="element"></a> `element?` | `HTMLElementDescriptor` | `undefined` | - | [src/react-native/components/web-objects/Marker/Marker.types.ts:54](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L54) |
