@@ -36,8 +36,11 @@ export type MarkerProps = WebObjectProps<MarkerOptions, MarkerListeners>
 export type MarkerMethods = WebObjectMethodsInferred<
   MapLibreMarker,
   {
+    // No need to pass the map.
     addTo: () => Promise<void>
+    // Work with ID instead of object reference.
     setEventedParent: (parentId: string) => Promise<void>
+    // Work with ID instead of object reference.
     setPopup: (popupId: string) => Promise<void>
   }
 >

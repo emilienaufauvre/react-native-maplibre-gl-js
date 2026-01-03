@@ -119,7 +119,7 @@ export default class WebObjectsController {
 
     let result
 
-    if (!this.#runIfSpecialMethod(message, object)) {
+    if (!(await this.#runIfSpecialMethod(message, object))) {
       result = await this.#runNormalMethod(message, object)
     }
 
@@ -287,7 +287,7 @@ export default class WebObjectsController {
     })
   }
 
-  #runIfSpecialMethod = (
+  #runIfSpecialMethod = async (
     message: Extract<MessageFromRNToWeb, { type: 'webObjectMethodCall' }>,
     object: WebObjectClass,
   ) => {
@@ -295,6 +295,19 @@ export default class WebObjectsController {
     // with RN (see RN component types definitions). These methods always return
     // something. Return undefined if the method is not special.
 
+    if (object instanceof maplibregl.Map) {
+      switch (message.payload.method) {
+        case 'addImage': {
+          const image = await object.loadImage(message.payload.args[1])
+          object.addImage(
+            message.payload.args[0],
+            image.data,
+            message.payload.args.at(2),
+          )
+          return true
+        }
+      }
+    }
     if (object instanceof maplibregl.Marker) {
       switch (message.payload.method) {
         case 'addTo': {

@@ -23408,7 +23408,7 @@ uniform mat4 u_projection_matrix;
         return;
       }
       let result;
-      if (!this.#runIfSpecialMethod(message, object)) {
+      if (!await this.#runIfSpecialMethod(message, object)) {
         result = await this.#runNormalMethod(message, object);
       }
       reactNativeBridge.postMessage({
@@ -23529,7 +23529,20 @@ uniform mat4 u_projection_matrix;
         }
       });
     };
-    #runIfSpecialMethod = (message, object) => {
+    #runIfSpecialMethod = async (message, object) => {
+      if (object instanceof import_maplibre_gl.default.Map) {
+        switch (message.payload.method) {
+          case "addImage": {
+            const image = await object.loadImage(message.payload.args[1]);
+            object.addImage(
+              message.payload.args[0],
+              image.data,
+              message.payload.args.at(2)
+            );
+            return true;
+          }
+        }
+      }
       if (object instanceof import_maplibre_gl.default.Marker) {
         switch (message.payload.method) {
           case "addTo": {
@@ -23859,7 +23872,6 @@ uniform mat4 u_projection_matrix;
   // src/web/bridge/ReactNativeBridge.ts
   var ReactNativeBridge = class {
     #controller;
-    // Queue outgoing messages to reduce WebView bridge overhead by batching
     #outgoingQueue = [];
     #flushScheduled = false;
     constructor() {
@@ -23884,7 +23896,8 @@ uniform mat4 u_projection_matrix;
     }
     /**
      * Post a message to the React Native world.
-     * Messages are queued and flushed in a single batched message to optimize performance.
+     * Messages are queued and flushed in a single batched message to optimize
+     * performance.
      * @param message - The message to be sent.
      */
     postMessage(message) {
@@ -23892,24 +23905,26 @@ uniform mat4 u_projection_matrix;
       this.#outgoingQueue.push(message);
       this.#scheduleFlush();
     }
-    #scheduleFlush() {
-      if (this.#flushScheduled) return;
+    #scheduleFlush = () => {
+      if (this.#flushScheduled) {
+        return;
+      }
       this.#flushScheduled = true;
       Promise.resolve().then(() => this.#flush());
-    }
-    #flush() {
+    };
+    #flush = () => {
       this.#flushScheduled = false;
       const queue = this.#outgoingQueue;
       this.#outgoingQueue = [];
-      if (queue.length === 0) return;
+      if (queue.length === 0) {
+        return;
+      }
       const batched = {
-        // @ts-ignore allow extended union case at runtime
         type: "batch",
-        // @ts-ignore: payload shape for batch
         payload: { messages: queue }
       };
       window.ReactNativeWebView?.postMessage(JSON.stringify(batched));
-    }
+    };
   };
 
   // src/web/generated/index.ts

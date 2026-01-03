@@ -33,7 +33,9 @@ export type PopupProps = WebObjectProps<PopupOptions, PopupListeners>
 export type PopupMethods = WebObjectMethodsInferred<
   MapLibrePopup,
   {
+    // No need to pass the map.
     addTo: () => Promise<void>
+    // Work with ID instead of object reference.
     setEventedParent: (parentId: string) => Promise<void>
   }
 >

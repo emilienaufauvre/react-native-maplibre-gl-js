@@ -1,25 +1,26 @@
 import {
+  ErrorEvent,
   type Map as MapLibreMap,
   type MapContextEvent,
+  type MapDataEvent,
   type MapLayerMouseEvent,
   type MapLayerTouchEvent,
   type MapLibreEvent,
   type MapLibreZoomEvent,
   type MapOptions as MapLibreMapOptions,
+  type MapSourceDataEvent,
+  type MapStyleDataEvent,
+  type MapStyleImageMissingEvent,
   MapTouchEvent,
   MapWheelEvent,
-  ErrorEvent,
-  type MapDataEvent,
-  type MapStyleDataEvent,
-  type MapSourceDataEvent,
-  type MapStyleImageMissingEvent,
+  type StyleImageMetadata,
 } from 'maplibre-gl'
 import type {
-  WebObjectMethodsInferred,
-  WebObjectOptionsInferred,
   WebObjectListenerOnMapLayer,
   WebObjectListenerOnObject,
   WebObjectListenerOnRN,
+  WebObjectMethodsInferred,
+  WebObjectOptionsInferred,
   WebObjectProps,
   WebObjectRef,
 } from '../../../components-factories/web-objects/createWebObjectAsComponent.types'
@@ -41,7 +42,18 @@ export type MapProps = WebObjectProps<MapOptions, MapListeners>
  * @interface
  * @group Map types
  */
-export type MapMethods = WebObjectMethodsInferred<MapLibreMap>
+export type MapMethods = WebObjectMethodsInferred<
+  MapLibreMap,
+  {
+    // Replace image data objects with a local image string.
+    addImage: (
+      id: string,
+      localImage: string,
+      options?: Partial<StyleImageMetadata>,
+    ) => Promise<void>
+  }
+>
+
 /**
  * @interface
  * @group Map types
