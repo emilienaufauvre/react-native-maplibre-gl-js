@@ -6,7 +6,7 @@ import useMapAtoms from '../../hooks/atoms/useMapAtoms'
 /**
  * Mount, update, unmount the component as a web object / map source within the
  * web world on component mount, component props update, or component unmount.
- * @param input - The RN object props, etc..
+ * @param input - The RN object props, etc.
  */
 export const useMountUpdateUnmountWhenNeeded = (
   input: MountUpdateUnmountInput,
