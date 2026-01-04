@@ -30,6 +30,16 @@ export const useStyles = () => {
   )
 }
 
+export const useEnableDisableRNLogger = (isEnabled: boolean) => {
+  useEffect(() => {
+    if (isEnabled) {
+      RNLogger.enable()
+    } else {
+      RNLogger.disable()
+    }
+  }, [isEnabled])
+}
+
 /**
  * On start, the map must be mounted before any other map element. When the
  * mount message of the map is ready, we flush all the pending messages to

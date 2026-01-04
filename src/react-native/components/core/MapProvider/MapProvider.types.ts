@@ -23,6 +23,11 @@ export type MapProviderProps = {
    */
   cssStyles?: string | string[]
   /**
+   * Enable logs originating from RN (RNLogger).
+   * Default to false.
+   */
+  rnLoggerEnabled?: boolean
+  /**
    * Enable logs originating from the Web (WebLogger).
    * Default to false.
    * When disabled, messages of the type "console" coming from the ebView are

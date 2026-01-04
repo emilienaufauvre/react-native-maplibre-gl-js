@@ -4,6 +4,7 @@ import { WEBVIEW_STATIC_HTML } from '../../../../web/generated/webview_static_ht
 import useMapAtoms from '../../../hooks/atoms/useMapAtoms'
 import {
   useCssInjectionScript,
+  useEnableDisableRNLogger,
   useFlushMessagesOnMapMounted,
   useInjectJavaScriptIfScriptChanged,
   useLoggerInjectionScript,
@@ -47,7 +48,8 @@ const MapProviderInner = ({
   webViewStyle,
   children,
   cssStyles,
-  webLoggerEnabled,
+  rnLoggerEnabled = false,
+  webLoggerEnabled = false,
 }: MapProviderProps) => {
   // States.
   // - Global.
@@ -55,6 +57,7 @@ const MapProviderInner = ({
   // Theme.
   const styles = useStyles()
   // Behaviors.
+  useEnableDisableRNLogger(rnLoggerEnabled)
   useFlushMessagesOnMapMounted()
   const { handler } = useWebMessageHandler()
   const { cssInjectionScript } = useCssInjectionScript(cssStyles)

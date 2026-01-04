@@ -46,6 +46,12 @@ const RNLogger = {
   debug: createLoggerMethod('debug'),
   info: createLoggerMethod('info'),
   error: createLoggerMethod('error'),
+  enable() {
+    BASE_LOGGER.enable()
+  },
+  disable() {
+    BASE_LOGGER.disable()
+  },
 }
 
 export default RNLogger
