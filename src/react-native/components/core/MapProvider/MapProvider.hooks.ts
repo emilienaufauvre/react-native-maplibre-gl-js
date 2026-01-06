@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
-import type { MessageFromWebToRNHandlers } from './MapProvider.types'
+import type {
+  MessageFromWebToRNHandlers,
+  WebMessageOptions,
+} from './MapProvider.types'
 import type { WebViewMessageEvent } from 'react-native-webview'
 import RNLogger from '../../../logger/rn-logger'
 import type { MessageFromWebToRN } from '../../../../communication/messages.types'
@@ -28,33 +31,6 @@ export const useStyles = () => {
       }),
     [],
   )
-}
-
-export const useEnableDisableRNLogger = (isEnabled: boolean) => {
-  useEffect(() => {
-    if (isEnabled) {
-      RNLogger.enable()
-    } else {
-      RNLogger.disable()
-    }
-  }, [isEnabled])
-}
-
-/**
- * On start, the map must be mounted before any other map element. When the
- * mount message of the map is ready, we flush all the pending messages to
- * the web world.
- */
-export const useFlushMessagesOnMapMounted = () => {
-  // States.
-  // - Global.
-  const { isMapMountMessageReady, flushMessages } = useMapAtoms()
-
-  useEffect(() => {
-    if (isMapMountMessageReady) {
-      flushMessages()
-    }
-  }, [flushMessages, isMapMountMessageReady])
 }
 
 /**
@@ -169,25 +145,53 @@ export const useWebMessageHandler = () => {
   return { handler }
 }
 
-/**
- * @param cssStyles - The CSS to be injected.
- * @returns - The given CSS in a format that can be injected into the WebView.
- */
-export const useCssInjectionScript = (cssStyles?: string | string[]) => {
-  const cssInjectionScript = useMemo(() => {
-    const normalizedCss = normalizeCss(cssStyles)
-    return normalizedCss ? buildCssInjectionScript(normalizedCss) : undefined
-  }, [cssStyles])
-  return { cssInjectionScript }
+export const useEnableDisableRNLogger = (isEnabled: boolean) => {
+  useEffect(() => {
+    if (isEnabled) {
+      RNLogger.enable()
+    } else {
+      RNLogger.disable()
+    }
+  }, [isEnabled])
 }
 
 /**
- * @param isEnabled - True if the web logger is enabled.
- * @returns - A script that enabled/disabled the logger in a format that can be
- *  injected into the WebView.
+ * On start, the map must be mounted before any other map element. When the
+ * mount message of the map is ready, we flush all the pending messages to
+ * the web world.
  */
-export const useLoggerInjectionScript = (isEnabled?: boolean) => {
-  const loggerInjectionScript = useMemo(
+export const useFlushMessagesOnMapMounted = () => {
+  // States.
+  // - Global.
+  const { isMapMountMessageReady, flushMessages } = useMapAtoms()
+
+  useEffect(() => {
+    if (isMapMountMessageReady) {
+      flushMessages()
+    }
+  }, [flushMessages, isMapMountMessageReady])
+}
+
+/**
+ * @param cssStyles - The CSS to be made available within the webview.
+ * @returns - A script to provide the given parameters to the Web world, using
+ *  a format that can be injected into the WebView.
+ */
+export const useCssStylesInjectionScript = (cssStyles?: string | string[]) => {
+  const cssStylesInjectionScript = useMemo(() => {
+    const normalizedCss = normalizeCss(cssStyles)
+    return normalizedCss ? buildCssInjectionScript(normalizedCss) : undefined
+  }, [cssStyles])
+  return { cssStylesInjectionScript }
+}
+
+/**
+ * @param isEnabled - True if the web logger should be enabled.
+ * @returns - A script to provide the given parameters to the Web world, using
+ *  a format that can be injected into the WebView.
+ */
+export const useWebLoggerEnabledInjectionScript = (isEnabled?: boolean) => {
+  const webLoggerEnabledInjectionScript = useMemo(
     () =>
       `(function(){
           try{
@@ -197,7 +201,29 @@ export const useLoggerInjectionScript = (isEnabled?: boolean) => {
         })()`,
     [isEnabled],
   )
-  return { loggerInjectionScript }
+  return { webLoggerEnabledInjectionScript }
+}
+
+/**
+ * @param messageOptions - The message options to be used by the webview.
+ * @returns - A script to provide the given parameters to the Web world, using
+ *  a format that can be injected into the WebView.
+ */
+export const useMessageOptionsInjectionScript = (
+  messageOptions: WebMessageOptions,
+) => {
+  const messageOptionsInjectionScript = useMemo(
+    () =>
+      `(function(){
+          try{
+            window.__RNML_MESSAGEOPTIONS_FLUSHINTERVALMS=${messageOptions.flushIntervalMs};
+            window.__RNML_MESSAGEOPTIONS_KEEPONLYLASTMESSAGEPERTYPE=${messageOptions.keepOnlyLastMessagePerType};
+          } catch(_){ }
+          return true;
+        })()`,
+    [messageOptions],
+  )
+  return { messageOptionsInjectionScript }
 }
 
 /**

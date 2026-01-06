@@ -5,14 +5,34 @@ import type {
   MessageFromWebToRN,
 } from '../../communication/messages.types'
 
+const keepOnlyLastMessagePerType = (): boolean => {
+  try {
+    // Read a runtime flag exposed by MapProvider in the WebView environment.
+    return Boolean(
+      (window as any)?.__RNML_MESSAGEOPTIONS_KEEPONLYLASTMESSAGEPERTYPE,
+    )
+  } catch (_) {
+    return false
+  }
+}
+
+const getFlushIntervalMs = (): number => {
+  try {
+    // Read a runtime flag exposed by MapProvider in the WebView environment.
+    return Number((window as any)?.__RNML_MESSAGEOPTIONS_FLUSHINTERVALMS)
+  } catch (_) {
+    return 0
+  }
+}
+
 /**
- * From the web world, manage bidirectional communication with the React Native
- * one by receiving and sending messages.
+ * From the web world, manages bidirectional communication with the React Native
+ * side by receiving and sending messages.
  */
 export default class ReactNativeBridge {
   #controller?: CoreController
   #outgoingQueue: MessageFromWebToRN[] = []
-  #flushScheduled = false
+  #flushTimer: number | undefined
 
   constructor() {
     const messageHandler = (raw: any) => {
@@ -39,10 +59,10 @@ export default class ReactNativeBridge {
   }
 
   /**
-   * Post a message to the React Native world.
-   * Messages are queued and flushed in a single batched message to optimize
+   * Posts a message to the React Native world.
+   * Messages are queued and flushed as a single batched message to optimize
    * performance.
-   * @param message - The message to be sent.
+   * @param message - The message to send.
    */
   postMessage(message: MessageFromWebToRN) {
     WebLogger.debug(this.postMessage.name, message)
@@ -51,25 +71,59 @@ export default class ReactNativeBridge {
   }
 
   #scheduleFlush = () => {
-    if (this.#flushScheduled) {
+    if (this.#flushTimer !== undefined) {
       return
     }
-    this.#flushScheduled = true
-    // Use microtask to batch messages generated in the same tick.
-    Promise.resolve().then(() => this.#flush())
+    this.#flushTimer = window.setTimeout(this.#flush, getFlushIntervalMs())
   }
 
   #flush = () => {
-    this.#flushScheduled = false
+    if (this.#flushTimer !== undefined) {
+      clearTimeout(this.#flushTimer)
+      this.#flushTimer = undefined
+    }
+
     const queue = this.#outgoingQueue
     this.#outgoingQueue = []
     if (queue.length === 0) {
       return
     }
-    // Send it as a single batched message.
+
+    let messages = queue
+    if (keepOnlyLastMessagePerType()) {
+      // For listener events, keep only the last occurrence for the same
+      // identity.
+      // - webObjectListenerEvent: objectId + eventName
+      // - mapSourceListenerEvent: sourceId + layerId + eventName
+      const lastIndexByKey = new Map<string, number>()
+      const keyFor = (m: MessageFromWebToRN): string | null => {
+        if (m.type === 'webObjectListenerEvent') {
+          const { objectId, eventName } = m.payload
+          return `webObjectListenerEvent|${objectId}|${String(eventName)}`
+        }
+        if (m.type === 'mapSourceListenerEvent') {
+          const { sourceId, layerId, eventName } = m.payload
+          return `mapSourceListenerEvent|${sourceId}|${layerId}|${String(eventName)}`
+        }
+        return null
+      }
+
+      queue.forEach((m, i) => {
+        const k = keyFor(m)
+        if (k) lastIndexByKey.set(k, i)
+      })
+
+      messages = queue.filter((m, i) => {
+        const k = keyFor(m)
+        if (!k) return true
+        return lastIndexByKey.get(k) === i
+      })
+    }
+
+    // Send the message as a single batched message.
     const batched: MessageFromWebToRN = {
       type: 'batch',
-      payload: { messages: queue },
+      payload: { messages },
     } as any
     // @ts-ignore
     window.ReactNativeWebView?.postMessage(JSON.stringify(batched))

@@ -3,12 +3,13 @@ import { WebView } from 'react-native-webview'
 import { WEBVIEW_STATIC_HTML } from '../../../../web/generated/webview_static_html'
 import useMapAtoms from '../../../hooks/atoms/useMapAtoms'
 import {
-  useCssInjectionScript,
+  useCssStylesInjectionScript,
   useEnableDisableRNLogger,
   useFlushMessagesOnMapMounted,
   useInjectJavaScriptIfScriptChanged,
-  useLoggerInjectionScript,
+  useMessageOptionsInjectionScript,
   useStyles,
+  useWebLoggerEnabledInjectionScript,
   useWebMessageHandler,
 } from './MapProvider.hooks'
 import type { MapProviderProps } from './MapProvider.types'
@@ -49,7 +50,11 @@ const MapProviderInner = ({
   children,
   cssStyles,
   rnLoggerEnabled = false,
-  webLoggerEnabled = false,
+  webLoggerEnabled = true,
+  webMessageOptions = {
+    flushIntervalMs: 100,
+    keepOnlyLastMessagePerType: true,
+  },
 }: MapProviderProps) => {
   // States.
   // - Global.
@@ -57,13 +62,17 @@ const MapProviderInner = ({
   // Theme.
   const styles = useStyles()
   // Behaviors.
+  const { handler } = useWebMessageHandler()
   useEnableDisableRNLogger(rnLoggerEnabled)
   useFlushMessagesOnMapMounted()
-  const { handler } = useWebMessageHandler()
-  const { cssInjectionScript } = useCssInjectionScript(cssStyles)
-  const { loggerInjectionScript } = useLoggerInjectionScript(webLoggerEnabled)
-  useInjectJavaScriptIfScriptChanged(cssInjectionScript)
-  useInjectJavaScriptIfScriptChanged(loggerInjectionScript)
+  const { cssStylesInjectionScript } = useCssStylesInjectionScript(cssStyles)
+  const { webLoggerEnabledInjectionScript } =
+    useWebLoggerEnabledInjectionScript(webLoggerEnabled)
+  const { messageOptionsInjectionScript } =
+    useMessageOptionsInjectionScript(webMessageOptions)
+  useInjectJavaScriptIfScriptChanged(cssStylesInjectionScript)
+  useInjectJavaScriptIfScriptChanged(webLoggerEnabledInjectionScript)
+  useInjectJavaScriptIfScriptChanged(messageOptionsInjectionScript)
 
   return (
     <View style={[styles.container, style]}>
@@ -77,8 +86,9 @@ const MapProviderInner = ({
         onMessage={handler}
         source={{ html: WEBVIEW_STATIC_HTML }}
         injectedJavaScriptBeforeContentLoaded={[
-          cssInjectionScript,
-          loggerInjectionScript,
+          cssStylesInjectionScript,
+          webLoggerEnabledInjectionScript,
+          messageOptionsInjectionScript,
         ].join(';')}
       />
       {children}

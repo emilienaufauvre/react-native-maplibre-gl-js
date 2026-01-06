@@ -23870,10 +23870,26 @@ uniform mat4 u_projection_matrix;
   };
 
   // src/web/bridge/ReactNativeBridge.ts
+  var keepOnlyLastMessagePerType = () => {
+    try {
+      return Boolean(
+        window?.__RNML_MESSAGEOPTIONS_KEEPONLYLASTMESSAGEPERTYPE
+      );
+    } catch (_) {
+      return false;
+    }
+  };
+  var getFlushIntervalMs = () => {
+    try {
+      return Number(window?.__RNML_MESSAGEOPTIONS_FLUSHINTERVALMS);
+    } catch (_) {
+      return 0;
+    }
+  };
   var ReactNativeBridge = class {
     #controller;
     #outgoingQueue = [];
-    #flushScheduled = false;
+    #flushTimer;
     constructor() {
       const messageHandler = (raw) => {
         try {
@@ -23895,10 +23911,10 @@ uniform mat4 u_projection_matrix;
       return this.#controller;
     }
     /**
-     * Post a message to the React Native world.
-     * Messages are queued and flushed in a single batched message to optimize
+     * Posts a message to the React Native world.
+     * Messages are queued and flushed as a single batched message to optimize
      * performance.
-     * @param message - The message to be sent.
+     * @param message - The message to send.
      */
     postMessage(message) {
       web_logger_default.debug(this.postMessage.name, message);
@@ -23906,22 +23922,48 @@ uniform mat4 u_projection_matrix;
       this.#scheduleFlush();
     }
     #scheduleFlush = () => {
-      if (this.#flushScheduled) {
+      if (this.#flushTimer !== void 0) {
         return;
       }
-      this.#flushScheduled = true;
-      Promise.resolve().then(() => this.#flush());
+      this.#flushTimer = window.setTimeout(this.#flush, getFlushIntervalMs());
     };
     #flush = () => {
-      this.#flushScheduled = false;
+      if (this.#flushTimer !== void 0) {
+        clearTimeout(this.#flushTimer);
+        this.#flushTimer = void 0;
+      }
       const queue = this.#outgoingQueue;
       this.#outgoingQueue = [];
       if (queue.length === 0) {
         return;
       }
+      let messages = queue;
+      if (keepOnlyLastMessagePerType()) {
+        const lastIndexByKey = /* @__PURE__ */ new Map();
+        const keyFor = (m) => {
+          if (m.type === "webObjectListenerEvent") {
+            const { objectId, eventName } = m.payload;
+            return \`webObjectListenerEvent|\${objectId}|\${String(eventName)}\`;
+          }
+          if (m.type === "mapSourceListenerEvent") {
+            const { sourceId, layerId, eventName } = m.payload;
+            return \`mapSourceListenerEvent|\${sourceId}|\${layerId}|\${String(eventName)}\`;
+          }
+          return null;
+        };
+        queue.forEach((m, i) => {
+          const k = keyFor(m);
+          if (k) lastIndexByKey.set(k, i);
+        });
+        messages = queue.filter((m, i) => {
+          const k = keyFor(m);
+          if (!k) return true;
+          return lastIndexByKey.get(k) === i;
+        });
+      }
       const batched = {
         type: "batch",
-        payload: { messages: queue }
+        payload: { messages }
       };
       window.ReactNativeWebView?.postMessage(JSON.stringify(batched));
     };

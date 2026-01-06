@@ -6,7 +6,10 @@
  */
 
 // @group Types (web objects)
-export type { MapProviderProps } from './react-native/components/core/MapProvider/MapProvider.types'
+export type {
+  MapProviderProps,
+  WebMessageOptions,
+} from './react-native/components/core/MapProvider/MapProvider.types'
 export type {
   MapRef,
   MapProps,

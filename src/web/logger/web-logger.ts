@@ -3,7 +3,6 @@ import type { MessageFromWebToRN } from '../../communication/messages.types'
 const isWebLoggerEnabled = (): boolean => {
   try {
     // Read a runtime flag exposed by MapProvider in the WebView environment.
-    // If not set, default to false (disabled).
     return Boolean((window as any)?.__RNML_WEBLOGGER_ENABLED)
   } catch (_) {
     return false
