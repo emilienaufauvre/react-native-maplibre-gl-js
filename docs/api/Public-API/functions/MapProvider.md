@@ -2,7 +2,7 @@
 
 # MapProvider()
 
-> **MapProvider**(`props`: [`MapProviderProps`](../interfaces/MapProviderProps.md)): `Element`
+> **MapProvider**(`props`: [`MapProviderProps`](../type-aliases/MapProviderProps.md)): `Element`
 
 Defined in: [src/react-native/components/core/MapProvider/MapProvider.tsx:34](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/core/MapProvider/MapProvider.tsx#L34)
 
@@ -14,7 +14,7 @@ This is the bridge to the web world / the `MapLibre GL JS` library.
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `props` | [`MapProviderProps`](../interfaces/MapProviderProps.md) |  |
+| `props` | [`MapProviderProps`](../type-aliases/MapProviderProps.md) |  |
 
 ## Returns
 

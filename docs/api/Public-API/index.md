@@ -32,8 +32,6 @@ Public API of `react-native-maplibre-gl-js`.
 
 | Name | Description |
 | ------ | ------ |
-| [MapProviderProps](interfaces/MapProviderProps.md) | MapProvider component props. |
-| [WebMessageOptions](interfaces/WebMessageOptions.md) | Options on how messages from the Web are buffered and dispatched to RN. |
 | [MapRef](interfaces/MapRef.md) | Map component ref. |
 | [MapProps](type-aliases/MapProps.md) | Map component props. |
 | [MarkerRef](interfaces/MarkerRef.md) | Marker component ref. |
@@ -56,3 +54,10 @@ Public API of `react-native-maplibre-gl-js`.
 | Function | Description |
 | ------ | ------ |
 | [useLocalImage](functions/useLocalImage.md) | Load a local image as base64 data URI, and return it. It can then be used in HTML elements. |
+
+## Types (map provider)
+
+| Type Alias | Description |
+| ------ | ------ |
+| [MapProviderProps](type-aliases/MapProviderProps.md) | MapProvider component props. |
+| [WebMessageOptions](type-aliases/WebMessageOptions.md) | Options on how messages from the Web are buffered and dispatched to RN. |

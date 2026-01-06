@@ -16,6 +16,7 @@ export default {
     'Components – core',
     'Components – web objects',
     'Components – map sources',
+    'Types (map provider)',
     'Types (web objects)',
     'Types (map sources)',
     'Map types',

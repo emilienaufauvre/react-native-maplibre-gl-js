@@ -4,8 +4,7 @@ import type { MessageFromWebToRN } from '../../../../communication/messages.type
 
 /**
  * MapProvider component props.
- * @interface
- * @group Types (web objects)
+ * @group Types (map provider)
  */
 export type MapProviderProps = {
   /**
@@ -49,8 +48,7 @@ export type MapProviderProps = {
 
 /**
  * Options on how messages from the Web are buffered and dispatched to RN.
- * @interface
- * @group Types (web objects)
+ * @group Types (map provider)
  */
 export type WebMessageOptions = {
   /**

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { assetToDataUri } from './useLocalImage.utils'
 
 /**
- * Load a local image as base64 data URI, and return it. It can then be used
+ * Load a local image as base64 data URI and return it. It can then be used
  * in HTML elements.
  * @param moduleId - The module ID of the image to load (e.g.
  *  `require('./image.png')`).

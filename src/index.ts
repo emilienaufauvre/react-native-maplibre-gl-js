@@ -5,11 +5,13 @@
  * @sortStrategy sort-order
  */
 
-// @group Types (web objects)
+// @group Types (map provider)
 export type {
   MapProviderProps,
   WebMessageOptions,
 } from './react-native/components/core/MapProvider/MapProvider.types'
+
+// @group Types (web objects)
 export type {
   MapRef,
   MapProps,
