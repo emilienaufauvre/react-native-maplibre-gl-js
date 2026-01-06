@@ -4,7 +4,7 @@
 
 > **MapProvider**(`props`: [`MapProviderProps`](../interfaces/MapProviderProps.md)): `Element`
 
-Defined in: [src/react-native/components/core/MapProvider/MapProvider.tsx:33](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/core/MapProvider/MapProvider.tsx#L33)
+Defined in: [src/react-native/components/core/MapProvider/MapProvider.tsx:34](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/core/MapProvider/MapProvider.tsx#L34)
 
 Must be used as a parent component to allow instantiation of map elements.
 Every child must be a direct component.
