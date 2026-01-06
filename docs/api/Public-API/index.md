@@ -28,6 +28,13 @@ Public API of `react-native-maplibre-gl-js`.
 | [VectorTileSource](variables/VectorTileSource.md) | MapLibre Vector Tile map source and layers. |
 | [RasterTileSource](variables/RasterTileSource.md) | MapLibre Raster Tile map source and layers. |
 
+## Types (map provider)
+
+| Type Alias | Description |
+| ------ | ------ |
+| [MapProviderProps](type-aliases/MapProviderProps.md) | MapProvider component props. |
+| [WebMessageOptions](type-aliases/WebMessageOptions.md) | Options on how messages from the Web are buffered and dispatched to RN. |
+
 ## Types (web objects)
 
 | Name | Description |
@@ -53,11 +60,4 @@ Public API of `react-native-maplibre-gl-js`.
 
 | Function | Description |
 | ------ | ------ |
-| [useLocalImage](functions/useLocalImage.md) | Load a local image as base64 data URI, and return it. It can then be used in HTML elements. |
-
-## Types (map provider)
-
-| Type Alias | Description |
-| ------ | ------ |
-| [MapProviderProps](type-aliases/MapProviderProps.md) | MapProvider component props. |
-| [WebMessageOptions](type-aliases/WebMessageOptions.md) | Options on how messages from the Web are buffered and dispatched to RN. |
+| [useLocalImage](functions/useLocalImage.md) | Load a local image as base64 data URI and return it. It can then be used in HTML elements. |
