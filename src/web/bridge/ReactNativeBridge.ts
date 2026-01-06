@@ -110,12 +110,16 @@ export default class ReactNativeBridge {
 
       queue.forEach((m, i) => {
         const k = keyFor(m)
-        if (k) lastIndexByKey.set(k, i)
+        if (k) {
+          lastIndexByKey.set(k, i)
+        }
       })
 
       messages = queue.filter((m, i) => {
         const k = keyFor(m)
-        if (!k) return true
+        if (!k) {
+          return true
+        }
         return lastIndexByKey.get(k) === i
       })
     }
