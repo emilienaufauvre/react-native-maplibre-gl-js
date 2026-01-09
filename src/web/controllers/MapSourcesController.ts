@@ -9,6 +9,9 @@ import type {
 import maplibregl, { type LayerSpecification } from 'maplibre-gl'
 import { stableStringify } from '../../react-native/hooks/atoms/useMapAtoms.utils'
 
+/**
+ *
+ */
 export default class MapSourcesController {
   #sources = new Map<string, MapSourceProps<any>>()
 
@@ -105,26 +108,70 @@ export default class MapSourcesController {
     reactNativeBridge: ReactNativeBridge,
     map: maplibregl.Map,
   ) => {
-    const oldSourceAsString = stableStringify(
-      this.#sources.get(props.id)?.source,
-    )
-    const newSourceAsString = stableStringify(props.source)
-    // Update everything it the source changed.
-    if (oldSourceAsString !== newSourceAsString) {
+    const oldSource = this.#sources.get(props.id)?.source
+    const newSource = props.source
+
+    const remountEverything = () => {
       this.#removeSourceAndItsLayers(props.id, reactNativeBridge, map)
       this.#addSourceAndItsLayers(props, reactNativeBridge, map)
+    }
+
+    if (oldSource.type !== newSource.type) {
+      remountEverything()
       return
     }
 
+    switch (oldSource.type) {
+      case 'geojson': {
+        const prevNoData = { ...oldSource }
+        const nextNoData = { ...newSource }
+        delete prevNoData.data
+        delete nextNoData.data
+
+        // Update everything if a thing other than "data" changed.
+        if (stableStringify(prevNoData) !== stableStringify(nextNoData)) {
+          remountEverything()
+          return
+        }
+        // Update only the data.
+        if (
+          stableStringify(oldSource.data) !== stableStringify(newSource.data)
+        ) {
+          const source = map.getSource(props.id) as maplibregl.GeoJSONSource
+          source.setData(newSource.data)
+        }
+        break
+      }
+      case 'image': {
+        // TODO optimization.
+        remountEverything()
+        return
+      }
+      case 'video': {
+        // TODO optimization.
+        remountEverything()
+        return
+      }
+      case 'vector': {
+        // TODO optimization.
+        remountEverything()
+        return
+      }
+      case 'raster': {
+        // TODO optimization.
+        remountEverything()
+        return
+      }
+    }
+    // Update the layers only if at least one changed (if one changed, the
+    // orders of the layers might have changed, so we need to update all of
+    // them).
     const oldLayersAsString = stableStringify(
       this.#sources.get(props.id)?.layers.map((item) => item.layer),
     )
     const newLayersAsString = stableStringify(
       props.layers.map((item) => item.layer),
     )
-    // Update only the layers if at least one changed (if one changed, the
-    // orders of the layers might have changed, so we need to update all of
-    // them).
     if (oldLayersAsString !== newLayersAsString) {
       this.#updateLayers(props, reactNativeBridge, map)
       return

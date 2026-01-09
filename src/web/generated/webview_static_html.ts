@@ -23683,14 +23683,48 @@ uniform mat4 u_projection_matrix;
       this.#addLayers(props, reactNativeBridge, map);
     };
     #updateSourceAndItsLayers = (props, reactNativeBridge, map) => {
-      const oldSourceAsString = stableStringify(
-        this.#sources.get(props.id)?.source
-      );
-      const newSourceAsString = stableStringify(props.source);
-      if (oldSourceAsString !== newSourceAsString) {
+      const oldSource = this.#sources.get(props.id)?.source;
+      const newSource = props.source;
+      const remountEverything = () => {
         this.#removeSourceAndItsLayers(props.id, reactNativeBridge, map);
         this.#addSourceAndItsLayers(props, reactNativeBridge, map);
+      };
+      if (oldSource.type !== newSource.type) {
+        remountEverything();
         return;
+      }
+      switch (oldSource.type) {
+        case "geojson": {
+          const prevNoData = { ...oldSource };
+          const nextNoData = { ...newSource };
+          delete prevNoData.data;
+          delete nextNoData.data;
+          if (stableStringify(prevNoData) !== stableStringify(nextNoData)) {
+            remountEverything();
+            return;
+          }
+          if (stableStringify(oldSource.data) !== stableStringify(newSource.data)) {
+            const source = map.getSource(props.id);
+            source.setData(newSource.data);
+          }
+          break;
+        }
+        case "image": {
+          remountEverything();
+          return;
+        }
+        case "video": {
+          remountEverything();
+          return;
+        }
+        case "vector": {
+          remountEverything();
+          return;
+        }
+        case "raster": {
+          remountEverything();
+          return;
+        }
       }
       const oldLayersAsString = stableStringify(
         this.#sources.get(props.id)?.layers.map((item) => item.layer)
@@ -23953,11 +23987,15 @@ uniform mat4 u_projection_matrix;
         };
         queue.forEach((m, i) => {
           const k = keyFor(m);
-          if (k) lastIndexByKey.set(k, i);
+          if (k) {
+            lastIndexByKey.set(k, i);
+          }
         });
         messages = queue.filter((m, i) => {
           const k = keyFor(m);
-          if (!k) return true;
+          if (!k) {
+            return true;
+          }
           return lastIndexByKey.get(k) === i;
         });
       }
