@@ -23689,11 +23689,13 @@ uniform mat4 u_projection_matrix;
         this.#removeSourceAndItsLayers(props.id, reactNativeBridge, map);
         this.#addSourceAndItsLayers(props, reactNativeBridge, map);
       };
-      if (oldSource.type !== newSource.type) {
+      if (newSource.type && ["geojson", "image", "video", "vector", "raster"].includes(
+        newSource.type
+      ) && oldSource.type !== newSource.type) {
         remountEverything();
         return;
       }
-      switch (oldSource.type) {
+      switch (newSource.type) {
         case "geojson": {
           const prevNoData = { ...oldSource };
           const nextNoData = { ...newSource };
@@ -23723,6 +23725,10 @@ uniform mat4 u_projection_matrix;
         }
         case "raster": {
           remountEverything();
+          return;
+        }
+        default: {
+          this.#removeSourceAndItsLayers(props.id, reactNativeBridge, map);
           return;
         }
       }

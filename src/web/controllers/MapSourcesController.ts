@@ -116,12 +116,18 @@ export default class MapSourcesController {
       this.#addSourceAndItsLayers(props, reactNativeBridge, map)
     }
 
-    if (oldSource.type !== newSource.type) {
+    if (
+      newSource.type &&
+      ['geojson', 'image', 'video', 'vector', 'raster'].includes(
+        newSource.type,
+      ) &&
+      oldSource.type !== newSource.type
+    ) {
       remountEverything()
       return
     }
 
-    switch (oldSource.type) {
+    switch (newSource.type) {
       case 'geojson': {
         const prevNoData = { ...oldSource }
         const nextNoData = { ...newSource }
@@ -160,6 +166,10 @@ export default class MapSourcesController {
       case 'raster': {
         // TODO optimization.
         remountEverything()
+        return
+      }
+      default: {
+        this.#removeSourceAndItsLayers(props.id, reactNativeBridge, map)
         return
       }
     }
