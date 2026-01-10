@@ -115,6 +115,7 @@ Several real-world usage scenarios are available, you can explore them in two wa
 - [`1.4. Add a raster tile source directly on map`](./example/src/app/1.-Map/1.4.-Add-a-raster-tile-source-directly-on-map.tsx)
 - [`1.5. Use global css styles`](./example/src/app/1.-Map/1.5.-Use-global-css-styles.tsx)
 - [`1.6. Add more velocity to drag pan`](./example/src/app/1.-Map/1.6.-Add-more-velocity-to-drag-pan.tsx)
+- [`1.7. Use a native script to enhance performances`](./example/src/app/1.-Map/1.7.-Use-a-native-script-to-enhance-performances.tsx)
 
 ### 2. Marker
 
