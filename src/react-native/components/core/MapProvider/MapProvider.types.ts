@@ -44,6 +44,19 @@ export type MapProviderProps = {
    * The map elements (e.g., Map) as direct children.
    */
   children?: ReactNode
+  /**
+   * A list of native scripts to inject into the WebView, allowing you to add
+   * custom web functionality or improve performance for frequently executed
+   * calls.
+   * Some global objects are made available by default in the WebView context,
+   * such as the maplibre-gl-js Map.
+   * These globals are:
+   * - `window.__RNML_CONTROLLER`: the main controller to interact with the map.
+   * - `window.__RNML_BRIDGE`: the bridge to send messages to RN.
+   * To be compliant with the injection mechanism, a script must be an IIFE that
+   * returns true.
+   */
+  nativeScripts?: string[]
 }
 
 /**

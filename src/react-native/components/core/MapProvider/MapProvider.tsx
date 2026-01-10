@@ -6,6 +6,7 @@ import {
   useCssStylesInjectionScript,
   useEnableDisableRNLogger,
   useFlushMessagesOnMapMounted,
+  useInjectJavaScriptIfAScriptChanged,
   useInjectJavaScriptIfScriptChanged,
   useMessageOptionsInjectionScript,
   useStyles,
@@ -55,6 +56,7 @@ const MapProviderInner = ({
     flushIntervalMs: 100,
     keepOnlyLastMessagePerType: true,
   },
+  nativeScripts = [],
 }: MapProviderProps) => {
   // States.
   // - Global.
@@ -73,6 +75,7 @@ const MapProviderInner = ({
   useInjectJavaScriptIfScriptChanged(cssStylesInjectionScript)
   useInjectJavaScriptIfScriptChanged(webLoggerEnabledInjectionScript)
   useInjectJavaScriptIfScriptChanged(messageOptionsInjectionScript)
+  useInjectJavaScriptIfAScriptChanged(nativeScripts)
 
   return (
     <View style={[styles.container, style]}>

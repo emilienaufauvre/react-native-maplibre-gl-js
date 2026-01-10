@@ -19,6 +19,10 @@ export default class CoreController {
     this.#mapSourcesController = new MapSourcesController()
   }
 
+  get map(): maplibregl.Map {
+    return this.#webObjectsController.map
+  }
+
   handleMessage = (
     message: MessageFromRNToWeb,
     reactNativeBridge: ReactNativeBridge,

@@ -250,3 +250,35 @@ export const useInjectJavaScriptIfScriptChanged = (script?: string) => {
     lastInjectedScriptRef.current = script
   }, [script, isWebWorldReady, webView])
 }
+
+/**
+ * Inject the given scripts into the WebView if one of them changed.
+ * @param scripts - A list of scripts to be injected into the WebView.
+ */
+export const useInjectJavaScriptIfAScriptChanged = (scripts: string[]) => {
+  // Refs.
+  const lastInjectedScriptsRef = useRef<string[] | null>(null)
+  // States.
+  // - Global.
+  const { webView, isWebWorldReady } = useMapAtoms()
+
+  useEffect(() => {
+    if (!scripts || !isWebWorldReady || !webView) {
+      return
+    }
+
+    const lastScripts = lastInjectedScriptsRef.current
+
+    const scriptsChanged =
+      !lastScripts ||
+      scripts.length !== lastScripts.length ||
+      scripts.some((s, i) => s !== lastScripts[i])
+
+    if (!scriptsChanged) {
+      return
+    }
+
+    scripts.forEach((script) => webView.injectJavaScript(script))
+    lastInjectedScriptsRef.current = [...scripts]
+  }, [scripts, isWebWorldReady, webView])
+}

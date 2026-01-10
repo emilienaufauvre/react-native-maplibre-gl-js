@@ -23829,6 +23829,9 @@ uniform mat4 u_projection_matrix;
       this.#webObjectsController = new WebObjectsController();
       this.#mapSourcesController = new MapSourcesController();
     }
+    get map() {
+      return this.#webObjectsController.map;
+    }
     handleMessage = (message, reactNativeBridge) => {
       web_logger_default.info(this.handleMessage.name, message);
       let map;
@@ -24019,6 +24022,8 @@ uniform mat4 u_projection_matrix;
     const bridge = new ReactNativeBridge();
     bridge.controller = controller;
     bridge.postMessage({ type: "ready" });
+    window.__RNML_CONTROLLER = controller;
+    window.__RNML_BRIDGE = bridge;
   };
   main();
 })();

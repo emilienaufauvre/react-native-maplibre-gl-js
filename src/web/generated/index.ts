@@ -11,6 +11,10 @@ const main = () => {
   const bridge = new ReactNativeBridge()
   bridge.controller = controller
   bridge.postMessage({ type: 'ready' })
+  // Expose main objects to the native scripts that could be injected within the
+  // WebView.
+  ;(window as any).__RNML_CONTROLLER = controller
+  ;(window as any).__RNML_BRIDGE = bridge
 }
 
 main()
