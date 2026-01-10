@@ -1,21 +1,10 @@
-import {
-  MapProvider,
-  Map,
-  Marker,
-  type MarkerRef,
-} from 'react-native-maplibre-gl-js'
-import { useRef } from 'react'
+import { Map, MapProvider, Marker } from 'react-native-maplibre-gl-js'
 
 /**
  * @returns - Example of the map component usage, with global CSS styles shared
  *  across markers.
  */
 const Screen = () => {
-  // Refs.
-  const marker1Ref = useRef<MarkerRef | null>(null)
-  const marker2Ref = useRef<MarkerRef | null>(null)
-  const marker3Ref = useRef<MarkerRef | null>(null)
-
   // CSS styles to be used among components. Can also be defined as a list of
   // strings (CSS styles).
   const css = `
@@ -58,8 +47,8 @@ const Screen = () => {
         }}
       />
       <Marker
-        ref={marker1Ref}
         options={{
+          coordinate: [2.32, 48.86],
           draggable: true,
           element: {
             // Use the CSS styles defined above.
@@ -69,15 +58,10 @@ const Screen = () => {
               </div>`,
           },
         }}
-        listeners={{
-          mount: {
-            rnListener: () => marker1Ref.current?.setLngLat([2.32, 48.86]),
-          },
-        }}
       />
       <Marker
-        ref={marker2Ref}
         options={{
+          coordinate: [2.31, 48.87],
           draggable: true,
           element: {
             // Use the CSS styles defined above.
@@ -87,15 +71,10 @@ const Screen = () => {
               </div>`,
           },
         }}
-        listeners={{
-          mount: {
-            rnListener: () => marker2Ref.current?.setLngLat([2.31, 48.87]),
-          },
-        }}
       />
       <Marker
-        ref={marker3Ref}
         options={{
+          coordinate: [2.335, 48.855],
           draggable: true,
           element: {
             // Use the CSS styles defined above.
@@ -103,11 +82,6 @@ const Screen = () => {
               <div class="pin pin--bounce">
                 <h1>✈️</h1>
               </div>`,
-          },
-        }}
-        listeners={{
-          mount: {
-            rnListener: () => marker3Ref.current?.setLngLat([2.335, 48.855]),
           },
         }}
       />
