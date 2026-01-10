@@ -121,6 +121,12 @@ export default class WebObjectsController {
 
     if (!(await this.#runIfSpecialMethod(message, object))) {
       result = await this.#runNormalMethod(message, object)
+      // Verify that the result is serializable. If not, return null.
+      try {
+        JSON.stringify(result)
+      } catch (error) {
+        result = null
+      }
     }
 
     reactNativeBridge.postMessage({

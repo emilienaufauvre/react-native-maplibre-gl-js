@@ -23410,6 +23410,11 @@ uniform mat4 u_projection_matrix;
       let result;
       if (!await this.#runIfSpecialMethod(message, object)) {
         result = await this.#runNormalMethod(message, object);
+        try {
+          JSON.stringify(result);
+        } catch (error) {
+          result = null;
+        }
       }
       reactNativeBridge.postMessage({
         type: "webObjectMethodResponse",
