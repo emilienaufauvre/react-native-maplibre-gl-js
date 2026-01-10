@@ -1,8 +1,8 @@
 import {
-  MapProvider,
   Map,
-  Marker,
+  MapProvider,
   type MapRef,
+  Marker,
   type MarkerRef,
 } from 'react-native-maplibre-gl-js'
 import { useRef } from 'react'
@@ -29,15 +29,13 @@ const Screen = () => {
       />
       <Marker
         ref={markerRef}
+        options={{
+          coordinate: [2.32, 48.86],
+        }}
         listeners={{
-          mount: {
-            rnListener: () => {
-              markerRef.current?.setLngLat([2.32, 48.86])
-            },
-          },
           // If marker clicked, go to NYC with a smooth animation.
           click: {
-            elementListener: () => {
+            elementListener: async () => {
               mapRef.current?.flyTo({
                 center: [-74.006111, 40.712778],
                 zoom: 9,
