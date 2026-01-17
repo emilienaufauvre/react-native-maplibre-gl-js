@@ -13,11 +13,12 @@ export const useMountUpdateUnmountWhenNeeded = (
 ) => {
   // Refs.
   const hasBeenMounted = useRef<boolean>(false)
+  const unmountRef = useRef<() => void | null>(null)
   // States.
   // - Global.
   const { isWebWorldReady } = useMapAtoms()
   // Behaviors.
-  const { mount, update } = useMountUnmountUpdateCallbacks(input)
+  const { mount, update, unmount } = useMountUnmountUpdateCallbacks(input)
 
   // Mount the object/source only when props have changed (and it's already
   // mounted in the web world), or that it has never been mounted.
@@ -32,8 +33,17 @@ export const useMountUpdateUnmountWhenNeeded = (
     } else {
       update()
     }
-    // TODO when unmount?
   }, [mount, update, hasBeenMounted, isWebWorldReady])
+
+  // Unmount on the web world if the component goes unmounted.
+  useEffect(() => {
+    unmountRef.current = unmount
+  }, [unmount])
+  useEffect(() => {
+    return () => {
+      unmountRef.current?.()
+    }
+  }, [])
 }
 
 export default useMountUpdateUnmountWhenNeeded

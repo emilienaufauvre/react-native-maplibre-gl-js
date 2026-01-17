@@ -249,7 +249,7 @@ export default class MapSourcesController {
           'source' in layer && layer.source === sourceId,
       )
       .map((layer) => layer.id)
-    layers.forEach((layerId) => {
+    layers?.forEach((layerId) => {
       // Remove the layer from the map.
       if (map.getLayer(layerId)) {
         map.removeLayer(layerId)

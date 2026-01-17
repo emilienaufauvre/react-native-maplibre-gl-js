@@ -1,4 +1,4 @@
-import { forwardRef, useId, useMemo } from 'react'
+import { forwardRef, useMemo, useRef } from 'react'
 import type {
   WebObjectComponent,
   WebObjectId,
@@ -9,6 +9,7 @@ import type {
 import useWebObjectMethodsProxy from '../hooks/useWebObjectMethodsProxy'
 import type { MountUpdateUnmountInput } from '../hooks/useMountUnmountUpdateCallbacks.types'
 import useMountUpdateUnmountWhenNeeded from '../hooks/useMountUpdateUnmountWhenNeeded'
+import { genId } from './createWebObjectAsComponent.utils'
 
 const createWebObjectAsComponent = <
   Ref extends WebObjectRef<any>,
@@ -18,9 +19,9 @@ const createWebObjectAsComponent = <
 ): WebObjectComponent<Ref, Props> => {
   return forwardRef<Ref, Props>((props, ref) => {
     // UID of the web object.
-    const id: WebObjectId = useId()
+    const id = useRef<WebObjectId>(genId())
     // Forward a method call on the RN object ref to the web object.
-    useWebObjectMethodsProxy<Ref>(ref, id)
+    useWebObjectMethodsProxy<Ref>(ref, id.current)
     // Mount the web object on launch and update the map source properties when
     // they changed in the component body.
     // TODO unmount to be added in comment.
@@ -31,7 +32,7 @@ const createWebObjectAsComponent = <
           options: props.options,
           listeners: props.listeners,
         },
-        objectId: id,
+        objectId: id.current,
         objectType,
       }),
       // Decompose props to avoid useless re-rendering of the component.

@@ -23783,7 +23783,7 @@ uniform mat4 u_projection_matrix;
       const layers = map.getStyle()?.layers?.filter(
         (layer) => "source" in layer && layer.source === sourceId
       ).map((layer) => layer.id);
-      layers.forEach((layerId) => {
+      layers?.forEach((layerId) => {
         if (map.getLayer(layerId)) {
           map.removeLayer(layerId);
         }
