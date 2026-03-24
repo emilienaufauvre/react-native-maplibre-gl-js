@@ -17,7 +17,7 @@ const Index = () => {
   }, [])
 
   //TODO remove
-  //return <Redirect href={'/7.-VectorTileSource/7.1.-Component-basis'} />
+  //return <Redirect href={'/1.-Map/1.7.-Add'} />
   /////////////
   return (
     <ScrollView

@@ -15,9 +15,40 @@ import { stableStringify } from './useMapAtoms.utils'
 
 export const mapAtoms = (() => {
   /**
+   * Reset all the atoms for a fresh restart of the map.
+   * TODO implement a more robust reset mechanism if atoms are added.
+   */
+  const resetAtom = atom(null, (get, set) => {
+    // Increment session.
+    set(webWorldSessionKeyAtom, get(webWorldSessionKeyAtom) + 1)
+
+    // Reset all the atoms.
+    set(webViewAtom, null)
+    set(isWebWorldReadyAtom, false)
+    set(isMapMountMessageReadyAtom, false)
+    set(isMapMountMessageDispatchedAtom, false)
+
+    set(messageQueueAtom, [])
+    set(isFlushScheduledAtom, false)
+
+    const pending = get(webObjectPendingMethodResponsesAtom)
+    pending.forEach((resolve) => resolve(undefined))
+
+    set(webObjectPendingMethodResponsesAtom, new Map())
+    set(webObjectsListenersAtom, new Map())
+    set(mapSourcesListenersAtom, new Map())
+  })
+
+  /**
    * The WebView used to render `MapLibre GL JS` views (the web world).
    */
   const webViewAtom = atom<WebView | null>(null)
+
+  /**
+   * Identify a "session" of the web world. Incremented at each restart/crash of
+   * the WebView to force the remount of all the web objects.
+   */
+  const webWorldSessionKeyAtom = atom(0)
 
   /**
    * True if the WebView is ready to be used.
@@ -335,6 +366,9 @@ export const mapAtoms = (() => {
     webObjectPendingMethodResponsesAtom,
     webObjectsListenersAtom,
     mapSourcesListenersAtom,
+
+    resetAtom,
+    webWorldSessionKeyAtom,
 
     enqueueMessageAtom,
     dispatchMessageAtom,

@@ -3,6 +3,7 @@ import { mapAtoms } from './mapAtoms'
 
 const useMapAtoms = () => {
   const [webView, setWebView] = useAtom(mapAtoms.webViewAtom)
+  const [webWorldSessionKey] = useAtom(mapAtoms.webWorldSessionKeyAtom)
   const [isWebWorldReady, setIsWebWorldReady] = useAtom(
     mapAtoms.isWebWorldReadyAtom,
   )
@@ -11,9 +12,12 @@ const useMapAtoms = () => {
   return {
     webView,
     setWebView,
+    webWorldSessionKey,
     isWebWorldReady,
     setIsWebWorldReady,
     isMapMountMessageReady,
+
+    reset: useSetAtom(mapAtoms.resetAtom),
 
     enqueueMessage: useSetAtom(mapAtoms.enqueueMessageAtom),
     dispatchMessage: useSetAtom(mapAtoms.dispatchMessageAtom),

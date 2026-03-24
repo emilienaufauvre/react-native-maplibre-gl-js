@@ -61,7 +61,7 @@ const MapProviderInner = ({
 }: MapProviderProps) => {
   // States.
   // - Global.
-  const { setWebView, webView } = useMapAtoms()
+  const { setWebView, webWorldSessionKey, reset } = useMapAtoms()
   // Theme.
   const styles = useStyles()
   // Behaviors.
@@ -81,6 +81,7 @@ const MapProviderInner = ({
   return (
     <View style={[styles.container, style]}>
       <WebView
+        key={'map-provider-webview-session-' + webWorldSessionKey}
         testID={'map-provider-webview'}
         ref={setWebView}
         style={[styles.webView, webViewStyle]}
@@ -94,10 +95,10 @@ const MapProviderInner = ({
           webLoggerEnabledInjectionScript,
           messageOptionsInjectionScript,
         ].join(';')}
-        // Reload if the webview has crashed or was closed if app in background.
-        onContentProcessDidTerminate={() => {
-          webView?.reload()
-        }}
+        // Trigger the reload everything (remount, etc. by changing the session
+        // key and resetting atoms) if the webview has crashed or was closed if
+        // app in background.
+        onContentProcessDidTerminate={reset}
       />
       {children}
     </View>

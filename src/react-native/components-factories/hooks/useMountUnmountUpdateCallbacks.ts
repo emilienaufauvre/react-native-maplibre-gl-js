@@ -4,7 +4,7 @@ import useMapAtoms from '../../hooks/atoms/useMapAtoms'
 
 /**
  * @param input - The RN object props, etc.
- * @returns – The callbacks used to mount, update and unmount the web object /
+ * @returns – The callbacks used to mount, update, and unmount the web object /
  *  map source and its listeners.
  */
 const useMountUnmountUpdateCallbacks = (input: MountUpdateUnmountInput) => {

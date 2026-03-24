@@ -12,11 +12,11 @@ export const useMountUpdateUnmountWhenNeeded = (
   input: MountUpdateUnmountInput,
 ) => {
   // Refs.
-  const hasBeenMounted = useRef<boolean>(false)
+  const mountedSessionKey = useRef<number | null>(null)
   const unmountRef = useRef<() => void | null>(null)
   // States.
   // - Global.
-  const { isWebWorldReady } = useMapAtoms()
+  const { webWorldSessionKey, isWebWorldReady } = useMapAtoms()
   // Behaviors.
   const { mount, update, unmount } = useMountUnmountUpdateCallbacks(input)
 
@@ -27,13 +27,13 @@ export const useMountUpdateUnmountWhenNeeded = (
       return
     }
 
-    if (!hasBeenMounted.current) {
+    if (mountedSessionKey.current !== webWorldSessionKey) {
       mount()
-      hasBeenMounted.current = true
+      mountedSessionKey.current = webWorldSessionKey
     } else {
       update()
     }
-  }, [mount, update, hasBeenMounted, isWebWorldReady])
+  }, [mount, update, mountedSessionKey, webWorldSessionKey, isWebWorldReady])
 
   // Unmount on the web world if the component goes unmounted.
   useEffect(() => {
