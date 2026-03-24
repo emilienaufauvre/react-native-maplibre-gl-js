@@ -57,6 +57,11 @@ export type MapProviderProps = {
    * returns true.
    */
   nativeScripts?: string[]
+
+  /**
+   * Callback when the WebView is reset (process terminated, reloaded, etc.).
+   */
+  onWebViewReset?: () => void
 }
 
 /**

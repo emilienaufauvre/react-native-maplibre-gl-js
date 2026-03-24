@@ -52,12 +52,13 @@ const MapProviderInner = ({
   children,
   cssStyles,
   rnLoggerEnabled = false,
-  webLoggerEnabled = true,
+  webLoggerEnabled = false,
   webMessageOptions = {
     flushIntervalMs: 100,
     keepOnlyLastMessagePerType: true,
   },
   nativeScripts = [],
+  onWebViewReset = () => {},
 }: MapProviderProps) => {
   // States.
   // - Global.
@@ -98,7 +99,17 @@ const MapProviderInner = ({
         // Trigger the reload everything (remount, etc. by changing the session
         // key and resetting atoms) if the webview has crashed or was closed if
         // app in background.
-        onContentProcessDidTerminate={reset}
+        // - For iOS:
+        onContentProcessDidTerminate={() => {
+          reset()
+          onWebViewReset()
+        }}
+        // - For Android:
+        onRenderProcessGone={() => {
+          reset()
+          onWebViewReset()
+        }}
+        // - TODO add for web once supported?
       />
       {children}
     </View>
