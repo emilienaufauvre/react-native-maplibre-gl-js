@@ -33,8 +33,9 @@ import { mapAtomsList } from '../../../hooks/atoms/mapAtoms'
  * ```
  */
 const MapProvider = (props: MapProviderProps) => {
-  // Atoms scoped by MapProvider so consumers can keep using their own Jotai
-  // store and atoms inside custom components rendered under MapProvider.
+  // Atoms use by this library are scoped by MapProvider so consumers of this
+  // library can keep using their own Jotai store and atoms inside custom
+  // components rendered under MapProvider.
   return (
     <ScopeProvider atoms={mapAtomsList}>
       <MapProviderInner {...props} />
@@ -60,7 +61,7 @@ const MapProviderInner = ({
 }: MapProviderProps) => {
   // States.
   // - Global.
-  const { setWebView } = useMapAtoms()
+  const { setWebView, webView } = useMapAtoms()
   // Theme.
   const styles = useStyles()
   // Behaviors.
@@ -93,6 +94,10 @@ const MapProviderInner = ({
           webLoggerEnabledInjectionScript,
           messageOptionsInjectionScript,
         ].join(';')}
+        // Reload if the webview has crashed or was closed if app in background.
+        onContentProcessDidTerminate={() => {
+          webView?.reload()
+        }}
       />
       {children}
     </View>
