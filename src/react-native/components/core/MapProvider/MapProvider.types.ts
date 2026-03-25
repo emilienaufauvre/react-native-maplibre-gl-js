@@ -77,6 +77,9 @@ export type MapProviderProps = {
    * etc.). Useful when to restore app states when the app is put in the
    * background and the OS kills the WebView. Note: the library automatically
    * recreates the Map and its components when the WebView is reset.
+   * A basic usage could be to wait for the map to be re-mounted to restore its
+   * state (e.g., center, zoom, pitch, bearing, etc.).
+   '
    */
   onWebViewReset?: () => void
 }
@@ -97,7 +100,7 @@ export type WebMessageOptions = {
    * dispatching.
    * This applies only to event messages (e.g., if a marker received two clicks
    * during the flush interval, only the last one is returned).
-   * If false, all messages are kept in the buffer, this may impact performances
+   * If false, all messages are kept in the buffer. This may impact performances
    * if a listener sends many messages of the same type quickly (e.g., the
    * "move" listener of a Map object).
    */
