@@ -11,6 +11,14 @@ import type {
   WebObjectProps,
   WebObjectRef,
 } from '../../../components-factories/web-objects/createWebObjectAsComponent.types'
+import type {
+  HTMLElementDescriptor,
+  WebFunctionDescriptor,
+} from '../../../../communication/messages.types'
+
+export const POPUP_OPTIONS_THAT_ARE_WEB_FUNCTIONS = [] as const
+
+export const POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS = [] as const
 
 /**
  * Popup component ref.
@@ -39,11 +47,34 @@ export type PopupMethods = WebObjectMethodsInferred<
     setEventedParent: (parentId: string) => Promise<void>
   }
 >
+
 /**
  * @interface
  * @group Popup types
  */
-export type PopupOptions = WebObjectOptionsInferred<MapLibrePopupOptions>
+export type PopupOptionsThatAreWebFunctions = {
+  // eslint-disable-next-line max-len
+  [K in (typeof POPUP_OPTIONS_THAT_ARE_WEB_FUNCTIONS)[number]]?: WebFunctionDescriptor
+}
+
+/**
+ * @interface
+ * @group Popup types
+ */
+export type PopupOptionsThatAreHTMLElements = {
+  // eslint-disable-next-line max-len
+  [K in (typeof POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS)[number]]?: HTMLElementDescriptor
+}
+
+/**
+ * @interface
+ * @group Popup types
+ */
+export type PopupOptions = WebObjectOptionsInferred<
+  MapLibrePopupOptions,
+  PopupOptionsThatAreWebFunctions & PopupOptionsThatAreHTMLElements
+>
+
 /**
  * @interface
  * @group Popup types

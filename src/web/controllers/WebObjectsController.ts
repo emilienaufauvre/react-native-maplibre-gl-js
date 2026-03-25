@@ -18,6 +18,18 @@ import type {
 } from '../../react-native/components-factories/web-objects/createWebObjectAsComponent.types'
 import type ReactNativeBridge from '../bridge/ReactNativeBridge'
 import { stableStringify } from '../../react-native/hooks/atoms/useMapAtoms.utils'
+import {
+  MAP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+  MAP_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
+} from '../../react-native/components/web-objects/Map/Map.types'
+import {
+  MARKER_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+  MARKER_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
+} from '../../react-native/components/web-objects/Marker/Marker.types'
+import {
+  POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+  POPUP_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
+} from '../../react-native/components/web-objects/Popup/Popup.types'
 
 /**
  *
@@ -145,29 +157,37 @@ export default class WebObjectsController {
 
     switch (objectType) {
       case 'map': {
+        options = this.#resolveDescriptorsInOptions(
+          options,
+          MAP_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
+          MAP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+        )
         const htmlContainer = document.getElementById('app')!
         element = new maplibregl.Map({
           ...options,
-          container: htmlContainer,
+          container: options.container ?? htmlContainer,
         })
         this.#mapId = objectId
         break
       }
       case 'marker': {
-        const htmlElement = this.#buildHTMLElement(options.element)
-        element = new maplibregl.Marker({
-          ...options,
-          element: htmlElement,
-        })
+        options = this.#resolveDescriptorsInOptions(
+          options,
+          MARKER_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
+          MARKER_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+        )
+        element = new maplibregl.Marker(options)
           .setLngLat(options.coordinate ?? [0, 0])
           .addTo(this.map)
         break
       }
       case 'popup': {
-        element = new maplibregl.Popup({
-          ...options,
-        })
-        //.addTo(this.map)
+        options = this.#resolveDescriptorsInOptions(
+          options,
+          POPUP_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
+          POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+        )
+        element = new maplibregl.Popup(options)
         break
       }
     }
@@ -364,6 +384,46 @@ export default class WebObjectsController {
     return await object[message.payload.method as keyof typeof object]?.(
       ...message.payload.args,
     )
+  }
+
+  #resolveDescriptorsInOptions = (
+    options: any,
+    optionsThatAreFunctions: readonly string[],
+    optionsThatAreHTMLElements: readonly string[],
+  ): any => {
+    if (options === null || typeof options !== 'object') {
+      return options
+    }
+
+    // Flatten the array if needed.
+    if (Array.isArray(options)) {
+      return options.map((opt) =>
+        this.#resolveDescriptorsInOptions(
+          opt,
+          optionsThatAreFunctions,
+          optionsThatAreHTMLElements,
+        ),
+      )
+    }
+
+    const resolved: any = {}
+
+    // Parse for the options that are known to be descriptors for this object
+    // type.
+    for (const key in options) {
+      if (optionsThatAreFunctions.includes(key)) {
+        resolved[key] = (window as any)[options[key]]
+      } else if (optionsThatAreHTMLElements.includes(key)) {
+        resolved[key] = this.#buildHTMLElement(options[key])
+      } else {
+        resolved[key] = this.#resolveDescriptorsInOptions(
+          options[key],
+          optionsThatAreFunctions,
+          optionsThatAreHTMLElements,
+        )
+      }
+    }
+    return resolved
   }
 
   #buildHTMLElement = (

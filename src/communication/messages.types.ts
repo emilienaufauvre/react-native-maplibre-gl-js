@@ -135,3 +135,11 @@ export type HTMLElementDescriptor = {
   dataset?: Record<string, string>
   innerHTML?: string
 }
+
+/**
+ * The name of the function attached to the `window` object in the web world.
+ * To replace a function given to a web object as an option. These functions
+ * cannot be created from the RN world, so they are injected as `nativeScripts`
+ * and referenced in the object options as descriptors.
+ */
+export type WebFunctionDescriptor = string

@@ -24,6 +24,18 @@ import type {
   WebObjectProps,
   WebObjectRef,
 } from '../../../components-factories/web-objects/createWebObjectAsComponent.types'
+import type {
+  HTMLElementDescriptor,
+  WebFunctionDescriptor,
+} from '../../../../communication/messages.types'
+
+export const MAP_OPTIONS_THAT_ARE_WEB_FUNCTIONS = [
+  'transformCameraUpdate',
+  'transformConstrain',
+  'transformRequest',
+] as const
+
+export const MAP_OPTIONS_THAT_ARE_HTML_ELEMENTS = ['container'] as const
 
 /**
  * Map component ref.
@@ -58,11 +70,29 @@ export type MapMethods = WebObjectMethodsInferred<
  * @interface
  * @group Map types
  */
+export type MapOptionsThatAreWebFunctions = {
+  // eslint-disable-next-line max-len
+  [K in (typeof MAP_OPTIONS_THAT_ARE_WEB_FUNCTIONS)[number]]?: WebFunctionDescriptor
+}
+
+/**
+ * @interface
+ * @group Map types
+ */
+export type MapOptionsThatAreHTMLElements = {
+  // eslint-disable-next-line max-len
+  [K in (typeof MAP_OPTIONS_THAT_ARE_HTML_ELEMENTS)[number]]?: HTMLElementDescriptor
+}
+
+/**
+ * @interface
+ * @group Map types
+ */
 export type MapOptions = WebObjectOptionsInferred<
   MapLibreMapOptions,
-  {},
-  'container'
+  MapOptionsThatAreWebFunctions & MapOptionsThatAreHTMLElements
 >
+
 /**
  * @interface
  * @group Map types

@@ -23289,7 +23289,7 @@ uniform mat4 u_projection_matrix;
   var web_logger_default = WebLogger;
 
   // src/web/controllers/WebObjectsController.ts
-  var import_maplibre_gl = __toESM(require_maplibre_gl());
+  var import_maplibre_gl4 = __toESM(require_maplibre_gl());
 
   // src/communication/messages.utils.ts
   var isWebObjectListenerOnObject = (listener) => {
@@ -23334,6 +23334,25 @@ uniform mat4 u_projection_matrix;
     return JSON.stringify(sortKeys(message), replacer);
   };
 
+  // src/react-native/components/web-objects/Map/Map.types.ts
+  var import_maplibre_gl = __toESM(require_maplibre_gl());
+  var MAP_OPTIONS_THAT_ARE_WEB_FUNCTIONS = [
+    "transformCameraUpdate",
+    "transformConstrain",
+    "transformRequest"
+  ];
+  var MAP_OPTIONS_THAT_ARE_HTML_ELEMENTS = ["container"];
+
+  // src/react-native/components/web-objects/Marker/Marker.types.ts
+  var import_maplibre_gl2 = __toESM(require_maplibre_gl());
+  var MARKER_OPTIONS_THAT_ARE_WEB_FUNCTIONS = [];
+  var MARKER_OPTIONS_THAT_ARE_HTML_ELEMENTS = ["element"];
+
+  // src/react-native/components/web-objects/Popup/Popup.types.ts
+  var import_maplibre_gl3 = __toESM(require_maplibre_gl());
+  var POPUP_OPTIONS_THAT_ARE_WEB_FUNCTIONS = [];
+  var POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS = [];
+
   // src/web/controllers/WebObjectsController.ts
   var WebObjectsController = class {
     #objects = /* @__PURE__ */ new Map();
@@ -23353,7 +23372,7 @@ uniform mat4 u_projection_matrix;
      */
     addExistingObjectsToMap = (reactNativeBridge, map) => {
       this.#objects.entries().forEach(([id, object]) => {
-        if (!(object instanceof import_maplibre_gl.default.Map)) {
+        if (!(object instanceof import_maplibre_gl4.default.Map)) {
           object.addTo(map);
           reactNativeBridge.postMessage({
             type: "webObjectListenerEvent",
@@ -23425,26 +23444,35 @@ uniform mat4 u_projection_matrix;
       let element;
       switch (objectType) {
         case "map": {
+          options = this.#resolveDescriptorsInOptions(
+            options,
+            MAP_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
+            MAP_OPTIONS_THAT_ARE_HTML_ELEMENTS
+          );
           const htmlContainer = document.getElementById("app");
-          element = new import_maplibre_gl.default.Map({
+          element = new import_maplibre_gl4.default.Map({
             ...options,
-            container: htmlContainer
+            container: options.container ?? htmlContainer
           });
           this.#mapId = objectId;
           break;
         }
         case "marker": {
-          const htmlElement = this.#buildHTMLElement(options.element);
-          element = new import_maplibre_gl.default.Marker({
-            ...options,
-            element: htmlElement
-          }).setLngLat(options.coordinate ?? [0, 0]).addTo(this.map);
+          options = this.#resolveDescriptorsInOptions(
+            options,
+            MARKER_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
+            MARKER_OPTIONS_THAT_ARE_HTML_ELEMENTS
+          );
+          element = new import_maplibre_gl4.default.Marker(options).setLngLat(options.coordinate ?? [0, 0]).addTo(this.map);
           break;
         }
         case "popup": {
-          element = new import_maplibre_gl.default.Popup({
-            ...options
-          });
+          options = this.#resolveDescriptorsInOptions(
+            options,
+            POPUP_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
+            POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS
+          );
+          element = new import_maplibre_gl4.default.Popup(options);
           break;
         }
       }
@@ -23516,7 +23544,7 @@ uniform mat4 u_projection_matrix;
           object.on(eventName, sendEventToReactNative);
         }
         if (isWebObjectListenerOnMapLayer(listener)) {
-          if (object instanceof import_maplibre_gl.default.Map) {
+          if (object instanceof import_maplibre_gl4.default.Map) {
             object.on(
               eventName,
               listener.layerId,
@@ -23525,7 +23553,7 @@ uniform mat4 u_projection_matrix;
           }
         }
         if (isWebObjectListenerOnHTMLElement(listener)) {
-          if (!(object instanceof import_maplibre_gl.default.Map)) {
+          if (!(object instanceof import_maplibre_gl4.default.Map)) {
             object.getElement().addEventListener(eventName, (event) => {
               sendEventToReactNative(event);
               event.stopPropagation();
@@ -23535,7 +23563,7 @@ uniform mat4 u_projection_matrix;
       });
     };
     #runIfSpecialMethod = async (message, object) => {
-      if (object instanceof import_maplibre_gl.default.Map) {
+      if (object instanceof import_maplibre_gl4.default.Map) {
         switch (message.payload.method) {
           case "addImage": {
             const image = await object.loadImage(message.payload.args[1]);
@@ -23548,7 +23576,7 @@ uniform mat4 u_projection_matrix;
           }
         }
       }
-      if (object instanceof import_maplibre_gl.default.Marker) {
+      if (object instanceof import_maplibre_gl4.default.Marker) {
         switch (message.payload.method) {
           case "addTo": {
             object.addTo(this.map);
@@ -23565,14 +23593,14 @@ uniform mat4 u_projection_matrix;
           case "setPopup": {
             const popupId = message.payload.args[0];
             const popup = this.#objects.get(popupId) ?? null;
-            if (popup && popup instanceof import_maplibre_gl.default.Popup) {
+            if (popup && popup instanceof import_maplibre_gl4.default.Popup) {
               object.setPopup(popup);
             }
             return true;
           }
         }
       }
-      if (object instanceof import_maplibre_gl.default.Popup) {
+      if (object instanceof import_maplibre_gl4.default.Popup) {
         switch (message.payload.method) {
           case "addTo": {
             object.addTo(this.map);
@@ -23594,6 +23622,35 @@ uniform mat4 u_projection_matrix;
       return await object[message.payload.method]?.(
         ...message.payload.args
       );
+    };
+    #resolveDescriptorsInOptions = (options, optionsThatAreFunctions, optionsThatAreHTMLElements) => {
+      if (options === null || typeof options !== "object") {
+        return options;
+      }
+      if (Array.isArray(options)) {
+        return options.map(
+          (opt) => this.#resolveDescriptorsInOptions(
+            opt,
+            optionsThatAreFunctions,
+            optionsThatAreHTMLElements
+          )
+        );
+      }
+      const resolved = {};
+      for (const key in options) {
+        if (optionsThatAreFunctions.includes(key)) {
+          resolved[key] = window[options[key]];
+        } else if (optionsThatAreHTMLElements.includes(key)) {
+          resolved[key] = this.#buildHTMLElement(options[key]);
+        } else {
+          resolved[key] = this.#resolveDescriptorsInOptions(
+            options[key],
+            optionsThatAreFunctions,
+            optionsThatAreHTMLElements
+          );
+        }
+      }
+      return resolved;
     };
     #buildHTMLElement = (descriptor) => {
       if (!descriptor) {
@@ -23623,7 +23680,7 @@ uniform mat4 u_projection_matrix;
   };
 
   // src/web/controllers/MapSourcesController.ts
-  var import_maplibre_gl2 = __toESM(require_maplibre_gl());
+  var import_maplibre_gl5 = __toESM(require_maplibre_gl());
   var MapSourcesController = class {
     #sources = /* @__PURE__ */ new Map();
     /**
@@ -23826,7 +23883,7 @@ uniform mat4 u_projection_matrix;
   };
 
   // src/web/controllers/CoreController.ts
-  var import_maplibre_gl3 = __toESM(require_maplibre_gl());
+  var import_maplibre_gl6 = __toESM(require_maplibre_gl());
   var CoreController = class {
     #webObjectsController;
     #mapSourcesController;

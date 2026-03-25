@@ -13,7 +13,14 @@ import type {
   WebObjectProps,
   WebObjectRef,
 } from '../../../components-factories/web-objects/createWebObjectAsComponent.types'
-import type { HTMLElementDescriptor } from '../../../../communication/messages.types'
+import type {
+  HTMLElementDescriptor,
+  WebFunctionDescriptor,
+} from '../../../../communication/messages.types'
+
+export const MARKER_OPTIONS_THAT_ARE_WEB_FUNCTIONS = [] as const
+
+export const MARKER_OPTIONS_THAT_ARE_HTML_ELEMENTS = ['element'] as const
 
 /**
  * Marker component ref.
@@ -44,16 +51,34 @@ export type MarkerMethods = WebObjectMethodsInferred<
     setPopup: (popupId: string) => Promise<void>
   }
 >
+
+/**
+ * @interface
+ * @group Marker types
+ */
+export type MarkerOptionsThatAreWebFunctions = {
+  // eslint-disable-next-line max-len
+  [K in (typeof MARKER_OPTIONS_THAT_ARE_WEB_FUNCTIONS)[number]]?: WebFunctionDescriptor
+}
+
+/**
+ * @interface
+ * @group Marker types
+ */
+export type MarkerOptionsThatAreHTMLElements = {
+  // eslint-disable-next-line max-len
+  [K in (typeof MARKER_OPTIONS_THAT_ARE_HTML_ELEMENTS)[number]]?: HTMLElementDescriptor
+}
+
 /**
  * @interface
  * @group Marker types
  */
 export type MarkerOptions = WebObjectOptionsInferred<
   MapLibreMarkerOptions & { coordinate?: LngLatLike },
-  {
-    element?: HTMLElementDescriptor
-  }
+  MarkerOptionsThatAreWebFunctions & MarkerOptionsThatAreHTMLElements
 >
+
 /**
  * @interface
  * @group Marker types

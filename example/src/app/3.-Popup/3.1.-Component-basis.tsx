@@ -1,6 +1,6 @@
 import {
-  MapProvider,
   Map,
+  MapProvider,
   Popup,
   type PopupRef,
 } from 'react-native-maplibre-gl-js'
@@ -30,7 +30,7 @@ const Screen = () => {
         listeners={{
           mount: {
             rnListener: () => {
-              // Setup the popup properties.
+              // Set up the popup properties.
               popupRef.current?.setLngLat([2.32, 48.86])
               popupRef.current?.setText('This is a popup')
               // And finally, open it (it's equivalent to addTo(map) in official

@@ -143,8 +143,9 @@ export type WebObjectListenerOnHTMLElement<Event> = {
 /**
  * Options that are used to instantiate a web object.
  * Filter out those options that cannot be set from the RN world and replace
- * them with the given replacements (e.g., HTMLElement that cannot be
- * instantiated in RN is replaced by HTMLElementDescriptor). Also, remove the
+ * them with the given replacements (HTMLElement that cannot be instantiated in
+ * RN are replaced by HTMLElementDescriptor and web functions that cannot be
+ * instantiated in RN are replaced by WebFunctionDescriptor). Also, remove the
  * ones that should not be specified and used.
  * @group Web object abstraction types
  */
