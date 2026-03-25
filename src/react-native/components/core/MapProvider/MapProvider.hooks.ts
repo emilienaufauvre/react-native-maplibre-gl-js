@@ -20,7 +20,7 @@ import type {
   WebObjectListenerOnObject,
   WebObjectListenerOnRN,
 } from '../../../components-factories/web-objects/createWebObjectAsComponent.types'
-import { buildCssInjectionScript, normalizeCss } from './MapProvider.utils'
+import { buildCssInjectionScript, normalizeData } from './MapProvider.utils'
 
 export const useStyles = () => {
   return useMemo(
@@ -179,7 +179,7 @@ export const useFlushMessagesOnMapMounted = () => {
  */
 export const useCssStylesInjectionScript = (cssStyles?: string | string[]) => {
   const cssStylesInjectionScript = useMemo(() => {
-    const normalizedCss = normalizeCss(cssStyles)
+    const normalizedCss = normalizeData(cssStyles)
     return normalizedCss ? buildCssInjectionScript(normalizedCss) : undefined
   }, [cssStyles])
   return { cssStylesInjectionScript }
@@ -255,9 +255,11 @@ export const useInjectJavaScriptIfScriptChanged = (script?: string) => {
  * Inject the given scripts into the WebView if one of them changed.
  * @param scripts - A list of scripts to be injected into the WebView.
  */
-export const useInjectJavaScriptIfAScriptChanged = (scripts: string[]) => {
+export const useInjectJavaScriptIfAScriptChanged = (
+  scripts?: string | string[],
+) => {
   // Refs.
-  const lastInjectedScriptsRef = useRef<string[] | null>(null)
+  const lastInjectedScriptsRef = useRef<string | string[] | null>(null)
   // States.
   // - Global.
   const { webView, isWebWorldReady } = useMapAtoms()
@@ -271,14 +273,17 @@ export const useInjectJavaScriptIfAScriptChanged = (scripts: string[]) => {
 
     const scriptsChanged =
       !lastScripts ||
-      scripts.length !== lastScripts.length ||
-      scripts.some((s, i) => s !== lastScripts[i])
+      scripts !== lastScripts ||
+      (Array.isArray(scripts) &&
+        Array.isArray(lastScripts) &&
+        (scripts.length !== lastScripts.length ||
+          scripts.some((s, i) => s !== lastScripts[i])))
 
     if (!scriptsChanged) {
       return
     }
-
-    scripts.forEach((script) => webView.injectJavaScript(script))
+    const normalizedScripts = normalizeData(scripts)
+    normalizedScripts?.forEach((script) => webView.injectJavaScript(script))
     lastInjectedScriptsRef.current = [...scripts]
   }, [scripts, isWebWorldReady, webView])
 }

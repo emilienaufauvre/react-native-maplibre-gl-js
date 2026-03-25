@@ -8,10 +8,7 @@ const Screen = () => {
   return (
     <MapProvider
       // Inject a native script to set custom functions in the web world.
-      nativeScripts={
-        // /!\ it is a list.
-        [
-          `
+      nativeScripts={`
           (() => {
             // This is an IIFE that will be injected into the WebView.
 
@@ -31,9 +28,7 @@ const Screen = () => {
             // It must return true to be compliant with the injection mechanism.
             return true
           })()
-          `,
-        ]
-      }
+          `}
       webLoggerEnabled={true}
       rnLoggerEnabled={true}
     >
@@ -41,7 +36,8 @@ const Screen = () => {
         options={{
           style: 'https://tiles.openfreemap.org/styles/liberty',
           center: [2.32, 48.86],
-          zoom: 12,
+          zoom: 15,
+          pitch: 60,
           // The function injected using the native script is then referenced in
           // the map options using its name.
           transformCameraUpdate: 'myCameraTransformation',

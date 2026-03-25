@@ -1,19 +1,21 @@
 /**
- * @param css - The CSS to be normalized.
- * @returns A normalized array of non-empty CSS strings or `undefined` if the
- *  given CSS is `undefined` or empty.
+ * @param data - The information to be normalized.
+ * @returns A normalized array of non-empty strings or `undefined` if the given
+ *  value is `undefined` or empty.
  */
-export const normalizeCss = (css?: string | string[]): string[] | undefined => {
-  const normalizedCss = (Array.isArray(css) ? css : css ? [css] : [])
+export const normalizeData = (
+  data?: string | string[],
+): string[] | undefined => {
+  const normalizedData = (Array.isArray(data) ? data : data ? [data] : [])
     .map((s) => s.trim())
     .filter(Boolean)
 
-  return normalizedCss.length ? normalizedCss : undefined
+  return normalizedData.length ? normalizedData : undefined
 }
 
 /**
  * @param normalizedCss - The CSS to be injected, typically produced by
- *  {@link normalizeCss}.
+ *  {@link normalizeData}.
  * @returns A JavaScript snippet that injects CSS into the document and
  *  evaluates to `true` once executed.
  */

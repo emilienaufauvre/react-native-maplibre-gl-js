@@ -51,13 +51,13 @@ const MapProviderInner = ({
   webViewStyle,
   children,
   cssStyles,
+  nativeScripts,
   rnLoggerEnabled = false,
   webLoggerEnabled = false,
   webMessageOptions = {
     flushIntervalMs: 100,
     keepOnlyLastMessagePerType: true,
   },
-  nativeScripts = [],
   onWebViewReset = () => {},
 }: MapProviderProps) => {
   // States.

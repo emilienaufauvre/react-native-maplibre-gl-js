@@ -15,11 +15,9 @@ const Screen = () => {
       // script to enhance the app performance.
       // Inject the script only once the map is mounted.
       nativeScripts={
-        // /!\ it is a list.
-        [
-          !isMapMounted
-            ? ''
-            : `
+        !isMapMounted
+          ? ''
+          : `
           (() => {
             // This is an IIFE that will be injected into the WebView.
 
@@ -55,8 +53,7 @@ const Screen = () => {
             // It must return true to be compliant with the injection mechanism.
             return true
           })()
-          `,
-        ]
+          `
       }
       rnLoggerEnabled={true}
     >
