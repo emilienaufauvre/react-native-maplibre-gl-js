@@ -4,12 +4,13 @@
 
 > **WebObjectOptionsInferred**\<`WebObjectOptions`, `ReplacedOptions`, `RemovedOptions`\> = `Omit`\<`Omit`\<`WebObjectOptions`, keyof `ReplacedOptions`\> & `ReplacedOptions`, `RemovedOptions`\>
 
-Defined in: [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:151](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L151)
+Defined in: [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:152](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L152)
 
 Options that are used to instantiate a web object.
 Filter out those options that cannot be set from the RN world and replace
-them with the given replacements (e.g., HTMLElement that cannot be
-instantiated in RN is replaced by HTMLElementDescriptor). Also, remove the
+them with the given replacements (HTMLElement that cannot be instantiated in
+RN are replaced by HTMLElementDescriptor and web functions that cannot be
+instantiated in RN are replaced by WebFunctionDescriptor). Also, remove the
 ones that should not be specified and used.
 
 ## Type Parameters

@@ -2,7 +2,7 @@
 
 # MapRef
 
-Defined in: [src/react-native/components/web-objects/Map/Map.types.ts:33](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Map/Map.types.ts#L33)
+Defined in: [src/react-native/components/web-objects/Map/Map.types.ts:45](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Map/Map.types.ts#L45)
 
 Map component ref.
 

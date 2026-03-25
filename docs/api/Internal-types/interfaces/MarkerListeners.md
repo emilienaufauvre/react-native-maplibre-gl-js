@@ -2,15 +2,15 @@
 
 # MarkerListeners
 
-Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:61](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L61)
+Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:86](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L86)
 
 ## Properties
 
 | Property | Type | Defined in |
 | ------ | ------ | ------ |
-| <a id="mount"></a> `mount?` | [`WebObjectListenerOnRN`](../type-aliases/WebObjectListenerOnRN.md)\<`void`\> | [src/react-native/components/web-objects/Marker/Marker.types.ts:63](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L63) |
-| <a id="unmount"></a> `unmount?` | [`WebObjectListenerOnRN`](../type-aliases/WebObjectListenerOnRN.md)\<`void`\> | [src/react-native/components/web-objects/Marker/Marker.types.ts:64](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L64) |
-| <a id="dragstart"></a> `dragstart?` | [`WebObjectListenerOnObject`](../type-aliases/WebObjectListenerOnObject.md)\<`Event$1`\> | [src/react-native/components/web-objects/Marker/Marker.types.ts:66](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L66) |
-| <a id="drag"></a> `drag?` | [`WebObjectListenerOnObject`](../type-aliases/WebObjectListenerOnObject.md)\<`Event$1`\> | [src/react-native/components/web-objects/Marker/Marker.types.ts:67](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L67) |
-| <a id="dragend"></a> `dragend?` | [`WebObjectListenerOnObject`](../type-aliases/WebObjectListenerOnObject.md)\<`Event$1`\> | [src/react-native/components/web-objects/Marker/Marker.types.ts:68](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L68) |
-| <a id="click"></a> `click?` | [`WebObjectListenerOnHTMLElement`](../type-aliases/WebObjectListenerOnHTMLElement.md)\<`MouseEvent`\> | [src/react-native/components/web-objects/Marker/Marker.types.ts:70](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L70) |
+| <a id="mount"></a> `mount?` | [`WebObjectListenerOnRN`](../type-aliases/WebObjectListenerOnRN.md)\<`void`\> | [src/react-native/components/web-objects/Marker/Marker.types.ts:88](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L88) |
+| <a id="unmount"></a> `unmount?` | [`WebObjectListenerOnRN`](../type-aliases/WebObjectListenerOnRN.md)\<`void`\> | [src/react-native/components/web-objects/Marker/Marker.types.ts:89](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L89) |
+| <a id="dragstart"></a> `dragstart?` | [`WebObjectListenerOnObject`](../type-aliases/WebObjectListenerOnObject.md)\<`Event$1`\> | [src/react-native/components/web-objects/Marker/Marker.types.ts:91](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L91) |
+| <a id="drag"></a> `drag?` | [`WebObjectListenerOnObject`](../type-aliases/WebObjectListenerOnObject.md)\<`Event$1`\> | [src/react-native/components/web-objects/Marker/Marker.types.ts:92](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L92) |
+| <a id="dragend"></a> `dragend?` | [`WebObjectListenerOnObject`](../type-aliases/WebObjectListenerOnObject.md)\<`Event$1`\> | [src/react-native/components/web-objects/Marker/Marker.types.ts:93](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L93) |
+| <a id="click"></a> `click?` | [`WebObjectListenerOnHTMLElement`](../type-aliases/WebObjectListenerOnHTMLElement.md)\<`MouseEvent`\> | [src/react-native/components/web-objects/Marker/Marker.types.ts:95](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L95) |

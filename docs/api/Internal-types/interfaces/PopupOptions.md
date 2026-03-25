@@ -2,7 +2,7 @@
 
 # PopupOptions
 
-Defined in: [src/react-native/components/web-objects/Popup/Popup.types.ts:46](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Popup/Popup.types.ts#L46)
+Defined in: [src/react-native/components/web-objects/Popup/Popup.types.ts:73](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Popup/Popup.types.ts#L73)
 
 ## Properties
 
