@@ -26,6 +26,7 @@ const Screen = () => {
       <Marker
         ref={markerRef}
         options={{
+          // Coordinates used when the marker is added to the map.
           coordinate: [2.32, 48.86],
           draggable: true,
           // The element to be used as the marker (a descriptor of an
