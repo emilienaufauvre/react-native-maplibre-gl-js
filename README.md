@@ -133,6 +133,7 @@ Several real-world usage scenarios are available, you can explore them in two wa
 ### 3. Popup
 
 - [`3.1. Component basics`](./example/src/app/3.-Popup/3.1.-Component-basics.tsx)
+- [`3.2. Use html element`](./example/src/app/3.-Popup/3.2.-Use-html-element.tsx)
 
 ### 4. GeoJSONSource
 

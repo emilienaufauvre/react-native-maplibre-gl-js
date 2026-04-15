@@ -2,7 +2,7 @@
 
 # PopupOptions
 
-Defined in: [src/react-native/components/web-objects/Popup/Popup.types.ts:73](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Popup/Popup.types.ts#L73)
+Defined in: [src/react-native/components/web-objects/Popup/Popup.types.ts:83](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Popup/Popup.types.ts#L83)
 
 ## Properties
 
@@ -19,3 +19,4 @@ Defined in: [src/react-native/components/web-objects/Popup/Popup.types.ts:73](ht
 | <a id="property-subpixelpositioning"></a> `subpixelPositioning?` | `boolean` | `false` | If `true`, rounding is disabled for placement of the popup, allowing for subpixel positioning and smoother movement when the popup is translated. | node\_modules/maplibre-gl/dist/maplibre-gl.d.ts:13416 |
 | <a id="property-locationoccludedopacity"></a> `locationOccludedOpacity?` | `string` \| `number` | `undefined` | Optional opacity when the location is behind the globe. Note that if a number is provided, it will be converted to a string. | node\_modules/maplibre-gl/dist/maplibre-gl.d.ts:13422 |
 | <a id="property-padding"></a> `padding?` | `PaddingOptions` | `undefined` | A pixel padding applied to the popup's positioning constraints. The popup will be positioned to avoid being placed within this padding area from the edges of the map container. | node\_modules/maplibre-gl/dist/maplibre-gl.d.ts:13429 |
+| <a id="property-element"></a> `element?` | `HTMLElementDescriptor` | `undefined` | - |  |
