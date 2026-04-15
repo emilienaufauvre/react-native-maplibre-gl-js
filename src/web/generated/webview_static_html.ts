@@ -24065,7 +24065,7 @@ uniform mat4 u_projection_matrix;
   // src/react-native/components/web-objects/Popup/Popup.types.ts
   var import_maplibre_gl3 = __toESM(require_maplibre_gl());
   var POPUP_OPTIONS_THAT_ARE_WEB_FUNCTIONS = [];
-  var POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS = [];
+  var POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS = ["element"];
 
   // src/web/controllers/WebObjectsController.ts
   var WebObjectsController = class {
@@ -24186,7 +24186,8 @@ uniform mat4 u_projection_matrix;
             POPUP_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
             POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS
           );
-          element = new import_maplibre_gl4.default.Popup(options);
+          const htmlElement = options.element ?? document.createElement("div");
+          element = new import_maplibre_gl4.default.Popup(options).setDOMContent(htmlElement);
           break;
         }
       }
@@ -24352,7 +24353,7 @@ uniform mat4 u_projection_matrix;
         if (optionsThatAreFunctions.includes(key)) {
           resolved[key] = window[options[key]];
         } else if (optionsThatAreHTMLElements.includes(key)) {
-          resolved[key] = this.#buildHTMLElement(
+          resolved[key] = this.#buildHTMLElementFromDescriptor(
             objectId,
             reactNativeBridge,
             options[key]
@@ -24369,7 +24370,7 @@ uniform mat4 u_projection_matrix;
       }
       return resolved;
     };
-    #buildHTMLElement = (objectId, reactNativeBridge, descriptor) => {
+    #buildHTMLElementFromDescriptor = (objectId, reactNativeBridge, descriptor) => {
       if (!descriptor) {
         return void 0;
       }

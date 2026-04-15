@@ -18,7 +18,7 @@ import type {
 
 export const POPUP_OPTIONS_THAT_ARE_WEB_FUNCTIONS = [] as const
 
-export const POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS = [] as const
+export const POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS = ['element'] as const
 
 /**
  * Popup component ref.
@@ -67,11 +67,21 @@ export type PopupOptionsThatAreHTMLElements = {
 }
 
 /**
+ * Popup options that are not part of the MapLibre Popup options but added for
+ * this library.
+ * @interface
+ * @group Popup types
+ */
+export type MarkerOptionsCustom = {
+  element?: HTMLElementDescriptor
+}
+
+/**
  * @interface
  * @group Popup types
  */
 export type PopupOptions = WebObjectOptionsInferred<
-  MapLibrePopupOptions,
+  MapLibrePopupOptions & MarkerOptionsCustom,
   PopupOptionsThatAreWebFunctions & PopupOptionsThatAreHTMLElements
 >
 

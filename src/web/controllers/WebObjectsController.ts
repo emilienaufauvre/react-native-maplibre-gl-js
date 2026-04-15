@@ -188,7 +188,8 @@ export default class WebObjectsController {
           POPUP_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
           POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
         )
-        element = new maplibregl.Popup(options)
+        const htmlElement = options.element ?? document.createElement('div')
+        element = new maplibregl.Popup(options).setDOMContent(htmlElement)
         break
       }
     }
@@ -411,7 +412,7 @@ export default class WebObjectsController {
       if (optionsThatAreFunctions.includes(key)) {
         resolved[key] = (window as any)[options[key]]
       } else if (optionsThatAreHTMLElements.includes(key)) {
-        resolved[key] = this.#buildHTMLElement(
+        resolved[key] = this.#buildHTMLElementFromDescriptor(
           objectId,
           reactNativeBridge,
           options[key],
@@ -429,7 +430,7 @@ export default class WebObjectsController {
     return resolved
   }
 
-  #buildHTMLElement = (
+  #buildHTMLElementFromDescriptor = (
     objectId: WebObjectId,
     reactNativeBridge: ReactNativeBridge,
     descriptor?: HTMLElementDescriptor,

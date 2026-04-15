@@ -71,11 +71,21 @@ export type MarkerOptionsThatAreHTMLElements = {
 }
 
 /**
+ * Marker options that are not part of the MapLibre Marker options but added for
+ * this library.
+ * @interface
+ * @group Marker types
+ */
+export type MarkerOptionsCustom = {
+  coordinate?: LngLatLike
+}
+
+/**
  * @interface
  * @group Marker types
  */
 export type MarkerOptions = WebObjectOptionsInferred<
-  MapLibreMarkerOptions & { coordinate?: LngLatLike },
+  MapLibreMarkerOptions & MarkerOptionsCustom,
   MarkerOptionsThatAreWebFunctions & MarkerOptionsThatAreHTMLElements
 >
 
