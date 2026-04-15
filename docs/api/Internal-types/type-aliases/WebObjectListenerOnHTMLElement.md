@@ -19,4 +19,4 @@ the web object.
 
 | Property | Type | Defined in |
 | ------ | ------ | ------ |
-| <a id="elementlistener"></a> `elementListener` | `Listener`\<`Event`\> | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:140](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L140) |
+| <a id="property-elementlistener"></a> `elementListener` | `Listener`\<`Event`\> | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:140](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L140) |

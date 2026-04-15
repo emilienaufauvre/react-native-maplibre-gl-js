@@ -14,7 +14,7 @@ This is the bridge to the web world / the `MapLibre GL JS` library.
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `props` | [`MapProviderProps`](../type-aliases/MapProviderProps.md) |  |
+| `props` | [`MapProviderProps`](../type-aliases/MapProviderProps.md) | - |
 
 ## Returns
 

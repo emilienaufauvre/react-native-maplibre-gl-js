@@ -1,6 +1,6 @@
 [react-native-maplibre-gl-js](../../index.md) / [Public API](../index.md) / VectorTileSource
 
-# VectorTileSource()
+# VectorTileSource
 
 > `const` **VectorTileSource**: (`props`: [`VectorTileSourceProps`](../interfaces/VectorTileSourceProps.md)) => `null`
 

@@ -1,6 +1,6 @@
 [react-native-maplibre-gl-js](../../index.md) / [Public API](../index.md) / ImageSource
 
-# ImageSource()
+# ImageSource
 
 > `const` **ImageSource**: (`props`: [`ImageSourceProps`](../interfaces/ImageSourceProps.md)) => `null`
 

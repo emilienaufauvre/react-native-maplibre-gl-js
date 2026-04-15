@@ -50,6 +50,7 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Supported platforms](#supported-platforms)
 - [Installation](#installation)
@@ -127,6 +128,7 @@ Several real-world usage scenarios are available, you can explore them in two wa
 - [`2.5. Use an attached popup`](./example/src/app/2.-Marker/2.5.-Use-an-attached-popup.tsx)
 - [`2.6. Propagates the events to a parent component`](./example/src/app/2.-Marker/2.6.-Propagates-the-events-to-a-parent-component.tsx)
 - [`2.7. Use a local image`](./example/src/app/2.-Marker/2.7.-Use-a-local-image.tsx)
+- [`2.8. Listeners on inner html element`](./example/src/app/2.-Marker/2.8.-Listeners-on-inner-html-element.tsx)
 
 ### 3. Popup
 

@@ -1,6 +1,6 @@
 [react-native-maplibre-gl-js](../../index.md) / [Public API](../index.md) / VideoSource
 
-# VideoSource()
+# VideoSource
 
 > `const` **VideoSource**: (`props`: [`VideoSourceProps`](../interfaces/VideoSourceProps.md)) => `null`
 

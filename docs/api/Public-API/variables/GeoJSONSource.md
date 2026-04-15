@@ -1,6 +1,6 @@
 [react-native-maplibre-gl-js](../../index.md) / [Public API](../index.md) / GeoJSONSource
 
-# GeoJSONSource()
+# GeoJSONSource
 
 > `const` **GeoJSONSource**: (`props`: [`GeoJSONSourceProps`](../interfaces/GeoJSONSourceProps.md)) => `null`
 

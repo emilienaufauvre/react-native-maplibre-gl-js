@@ -18,5 +18,5 @@ web world).
 
 | Property | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| <a id="options-1"></a> `options?` | `Options` | The MapLibreGL JS options used to mount the web object. | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:60](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L60) |
-| <a id="listeners-1"></a> `listeners?` | `Listeners` | The listeners to be set on the web object events. | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:64](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L64) |
+| <a id="property-options"></a> `options?` | `Options` | The MapLibreGL JS options used to mount the web object. | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:60](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L60) |
+| <a id="property-listeners"></a> `listeners?` | `Listeners` | The listeners to be set on the web object events. | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:64](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L64) |

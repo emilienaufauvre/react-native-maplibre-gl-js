@@ -13,5 +13,5 @@ Custom events introduced by this library, executed once the web object is
 
 | Property | Type | Defined in |
 | ------ | ------ | ------ |
-| <a id="mount"></a> `mount?` | [`WebObjectListenerOnRN`](WebObjectListenerOnRN.md)\<`void`\> | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:89](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L89) |
-| <a id="unmount"></a> `unmount?` | [`WebObjectListenerOnRN`](WebObjectListenerOnRN.md)\<`void`\> | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:90](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L90) |
+| <a id="property-mount"></a> `mount?` | [`WebObjectListenerOnRN`](WebObjectListenerOnRN.md)\<`void`\> | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:89](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L89) |
+| <a id="property-unmount"></a> `unmount?` | [`WebObjectListenerOnRN`](WebObjectListenerOnRN.md)\<`void`\> | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:90](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L90) |

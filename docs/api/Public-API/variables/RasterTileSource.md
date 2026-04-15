@@ -1,6 +1,6 @@
 [react-native-maplibre-gl-js](../../index.md) / [Public API](../index.md) / RasterTileSource
 
-# RasterTileSource()
+# RasterTileSource
 
 > `const` **RasterTileSource**: (`props`: [`RasterTileSourceProps`](../interfaces/RasterTileSourceProps.md)) => `null`
 

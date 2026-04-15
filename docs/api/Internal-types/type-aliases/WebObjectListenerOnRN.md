@@ -18,4 +18,4 @@ A listener on an event introduced by the React Native usage.
 
 | Property | Type | Defined in |
 | ------ | ------ | ------ |
-| <a id="rnlistener"></a> `rnListener` | `Listener`\<`Event`\> | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:113](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L113) |
+| <a id="property-rnlistener"></a> `rnListener` | `Listener`\<`Event`\> | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:113](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L113) |

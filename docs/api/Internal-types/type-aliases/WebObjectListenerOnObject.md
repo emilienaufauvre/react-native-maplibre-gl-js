@@ -18,4 +18,4 @@ A listener to be set on an event emitted by the web object.
 
 | Property | Type | Defined in |
 | ------ | ------ | ------ |
-| <a id="objectlistener"></a> `objectListener` | `Listener`\<`Event`\> | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:121](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L121) |
+| <a id="property-objectlistener"></a> `objectListener` | `Listener`\<`Event`\> | [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:121](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L121) |
