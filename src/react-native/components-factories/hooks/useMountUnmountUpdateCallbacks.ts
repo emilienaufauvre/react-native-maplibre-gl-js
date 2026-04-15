@@ -1,6 +1,10 @@
 import { useCallback } from 'react'
 import type { MountUpdateUnmountInput } from './useMountUnmountUpdateCallbacks.types'
 import useMapAtoms from '../../hooks/atoms/useMapAtoms'
+import {
+  extractHTMLElementListeners,
+  removeHTMLElementListeners,
+} from './useMountUnmountUpdateCallbacks.utils'
 
 /**
  * @param input - The RN object props, etc.
@@ -17,14 +21,16 @@ const useMountUnmountUpdateCallbacks = (input: MountUpdateUnmountInput) => {
     setMapSourceListeners,
     deleteMapSourceListeners,
   } = useMapAtoms()
-
   const mount = useCallback(() => {
     switch (input.type) {
       case 'webObject': {
         dispatchMessage({
           type: `webObjectMount`,
           payload: {
-            options: input.props.options,
+            options: removeHTMLElementListeners(
+              input.props.options,
+              input.optionsThatAreHTMLElements,
+            ),
             listeners: input.props.listeners,
             objectId: input.objectId,
             objectType: input.objectType,
@@ -32,7 +38,13 @@ const useMountUnmountUpdateCallbacks = (input: MountUpdateUnmountInput) => {
         })
         setWebObjectListeners({
           objectId: input.objectId,
-          listeners: input.props.listeners ?? {},
+          listeners: {
+            ...(input.props.listeners ?? {}),
+            ...extractHTMLElementListeners(
+              input.props.options,
+              input.optionsThatAreHTMLElements,
+            ),
+          },
         })
         break
       }

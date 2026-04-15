@@ -27,6 +27,7 @@ describe('useMountUpdateUnmountWhenNeeded', () => {
         options: { foo: 'bar' },
         listeners: { onTap: 'tapFunction' },
       },
+      optionsThatAreHTMLElements: [],
       objectId: 'obj-1',
       objectType: 'map',
     })

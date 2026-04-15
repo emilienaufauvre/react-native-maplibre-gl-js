@@ -1,5 +1,9 @@
 import createWebObjectAsComponent from '../../../components-factories/web-objects/createWebObjectAsComponent'
-import type { MarkerProps, MarkerRef } from './Marker.types'
+import {
+  MARKER_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+  type MarkerProps,
+  type MarkerRef,
+} from './Marker.types'
 
 /**
  * MapLibre Marker view.
@@ -47,6 +51,9 @@ import type { MarkerProps, MarkerRef } from './Marker.types'
  * ```
  * @group Components – web objects
  */
-const Marker = createWebObjectAsComponent<MarkerRef, MarkerProps>('marker')
+const Marker = createWebObjectAsComponent<MarkerRef, MarkerProps>(
+  'marker',
+  MARKER_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+)
 
 export default Marker

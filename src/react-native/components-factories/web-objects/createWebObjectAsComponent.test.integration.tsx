@@ -3,8 +3,8 @@ import createWebObjectAsComponent from './createWebObjectAsComponent'
 import { jest } from '@jest/globals'
 import type {
   WebObjectComponent,
-  WebObjectRef,
   WebObjectProps,
+  WebObjectRef,
 } from './createWebObjectAsComponent.types'
 import { setIsWebWorldReady } from '../../hooks/atoms/useMapAtoms.mock'
 import {
@@ -33,7 +33,7 @@ describe('createWebObjectAsComponent', () => {
     >
 
     beforeEach(() => {
-      Component = createWebObjectAsComponent('map')
+      Component = createWebObjectAsComponent('map', [])
       setIsWebWorldReady(true)
       render(<Component />)
     })

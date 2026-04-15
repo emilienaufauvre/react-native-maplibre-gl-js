@@ -1,5 +1,9 @@
 import createWebObjectAsComponent from '../../../components-factories/web-objects/createWebObjectAsComponent'
-import type { PopupProps, PopupRef } from './Popup.types'
+import {
+  POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+  type PopupProps,
+  type PopupRef,
+} from './Popup.types'
 
 /**
  * MapLibre Popup view.
@@ -34,6 +38,9 @@ import type { PopupProps, PopupRef } from './Popup.types'
  * ```
  * @group Components – web objects
  */
-const Popup = createWebObjectAsComponent<PopupRef, PopupProps>('popup')
+const Popup = createWebObjectAsComponent<PopupRef, PopupProps>(
+  'popup',
+  POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+)
 
 export default Popup

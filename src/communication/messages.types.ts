@@ -128,12 +128,20 @@ export type MessageFromWebToRN =
  * To replace HTMLElement instances that cannot be created in React Native.
  */
 export type HTMLElementDescriptor = {
-  tagName?: string
-  className?: string
-  attributes?: Record<string, string>
-  style?: Record<string, string>
-  dataset?: Record<string, string>
   innerHTML?: string
+  listeners?: HTMLElementDescriptorListener[]
+}
+
+/**
+ * Listener to be attached to a target inside an HTMLElement instance.
+ */
+export type HTMLElementDescriptorListener = {
+  // '#id', '.class', 'button', etc.
+  cssSelector: string
+  // 'click', 'mouseenter', etc.
+  eventName: string
+  // The function to be called when the event is triggered.
+  callback: (event: any) => void
 }
 
 /**

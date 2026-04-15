@@ -1,4 +1,4 @@
-import { render, act } from '@testing-library/react-native'
+import { act, render } from '@testing-library/react-native'
 import { jest } from '@jest/globals'
 import useMountUnmountUpdateCallbacks from './useMountUnmountUpdateCallbacks'
 import {
@@ -40,6 +40,7 @@ describe('useMountUnmountUpdateCallbacks', () => {
             options,
             listeners,
           },
+          optionsThatAreHTMLElements: [],
           objectId,
           objectType,
         })

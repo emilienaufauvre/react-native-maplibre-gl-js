@@ -16,6 +16,7 @@ const createWebObjectAsComponent = <
   Props extends WebObjectProps<any, any>,
 >(
   objectType: WebObjectType,
+  optionsThatAreHTMLElements: readonly string[],
 ): WebObjectComponent<Ref, Props> => {
   return forwardRef<Ref, Props>((props, ref) => {
     // UID of the web object.
@@ -32,6 +33,7 @@ const createWebObjectAsComponent = <
           options: props.options,
           listeners: props.listeners,
         },
+        optionsThatAreHTMLElements,
         objectId: id.current,
         objectType,
       }),

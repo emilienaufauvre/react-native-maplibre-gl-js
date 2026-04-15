@@ -4,6 +4,7 @@ import type {
 } from '../../communication/messages.types'
 import maplibregl, { type MapLayerEventType } from 'maplibre-gl'
 import {
+  getHTMLElementDescriptorListenerName,
   isWebObjectListenerOnHTMLElement,
   isWebObjectListenerOnMapLayer,
   isWebObjectListenerOnObject,
@@ -59,13 +60,7 @@ export default class WebObjectsController {
     this.#objects.entries().forEach(([id, object]) => {
       if (!(object instanceof maplibregl.Map)) {
         object.addTo(map)
-        reactNativeBridge.postMessage({
-          type: 'webObjectListenerEvent',
-          payload: {
-            objectId: id,
-            eventName: 'mount',
-          },
-        })
+        this.#sendEventToReactNative(id, reactNativeBridge, 'mount')
       }
     })
   }
@@ -158,6 +153,8 @@ export default class WebObjectsController {
     switch (objectType) {
       case 'map': {
         options = this.#resolveDescriptorsInOptions(
+          objectId,
+          reactNativeBridge,
           options,
           MAP_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
           MAP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
@@ -172,6 +169,8 @@ export default class WebObjectsController {
       }
       case 'marker': {
         options = this.#resolveDescriptorsInOptions(
+          objectId,
+          reactNativeBridge,
           options,
           MARKER_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
           MARKER_OPTIONS_THAT_ARE_HTML_ELEMENTS,
@@ -183,6 +182,8 @@ export default class WebObjectsController {
       }
       case 'popup': {
         options = this.#resolveDescriptorsInOptions(
+          objectId,
+          reactNativeBridge,
           options,
           POPUP_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
           POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
@@ -197,13 +198,7 @@ export default class WebObjectsController {
     }
 
     // Send the "mount" event to the React Native listener.
-    reactNativeBridge.postMessage({
-      type: 'webObjectListenerEvent',
-      payload: {
-        objectId,
-        eventName: 'mount',
-      },
-    })
+    this.#sendEventToReactNative(objectId, reactNativeBridge, 'mount')
 
     return element
   }
@@ -250,13 +245,7 @@ export default class WebObjectsController {
     }
     object.remove()
     // Send the "unmount" event to the React Native listener.
-    reactNativeBridge.postMessage({
-      type: 'webObjectListenerEvent',
-      payload: {
-        objectId: objectId,
-        eventName: 'unmount',
-      },
-    })
+    this.#sendEventToReactNative(objectId, reactNativeBridge, 'unmount')
   }
 
   #setObjectListeners = (
@@ -269,23 +258,16 @@ export default class WebObjectsController {
       return
     }
     Object.entries(listeners).forEach(([eventName, listener]) => {
-      const sendEventToReactNative = (event: any) => {
-        // Remove circular references that cannot be serialized.
-        delete event.target
-        // Send the event to the React Native listener.
-        reactNativeBridge.postMessage({
-          type: 'webObjectListenerEvent',
-          payload: {
-            objectId,
-            eventName,
-            event,
-          },
-        })
-      }
-
       // Attach the listener to the object.
       if (isWebObjectListenerOnObject(listener)) {
-        object.on(eventName, sendEventToReactNative)
+        object.on(eventName, (event) =>
+          this.#sendEventToReactNative(
+            objectId,
+            reactNativeBridge,
+            eventName,
+            event,
+          ),
+        )
       }
       // Attach the listener to a map layer.
       if (isWebObjectListenerOnMapLayer(listener)) {
@@ -295,7 +277,13 @@ export default class WebObjectsController {
           object.on(
             eventName as keyof MapLayerEventType,
             (listener as WebObjectListenerOnMapLayer<any>).layerId,
-            sendEventToReactNative,
+            (event) =>
+              this.#sendEventToReactNative(
+                objectId,
+                reactNativeBridge,
+                eventName,
+                event,
+              ),
           )
         }
       }
@@ -305,7 +293,12 @@ export default class WebObjectsController {
         // object.
         if (!(object instanceof maplibregl.Map)) {
           object.getElement().addEventListener(eventName, (event: Event) => {
-            sendEventToReactNative(event)
+            this.#sendEventToReactNative(
+              objectId,
+              reactNativeBridge,
+              eventName,
+              event,
+            )
             event.stopPropagation()
           })
         }
@@ -387,6 +380,8 @@ export default class WebObjectsController {
   }
 
   #resolveDescriptorsInOptions = (
+    objectId: WebObjectId,
+    reactNativeBridge: ReactNativeBridge,
     options: any,
     optionsThatAreFunctions: readonly string[],
     optionsThatAreHTMLElements: readonly string[],
@@ -399,6 +394,8 @@ export default class WebObjectsController {
     if (Array.isArray(options)) {
       return options.map((opt) =>
         this.#resolveDescriptorsInOptions(
+          objectId,
+          reactNativeBridge,
           opt,
           optionsThatAreFunctions,
           optionsThatAreHTMLElements,
@@ -414,9 +411,15 @@ export default class WebObjectsController {
       if (optionsThatAreFunctions.includes(key)) {
         resolved[key] = (window as any)[options[key]]
       } else if (optionsThatAreHTMLElements.includes(key)) {
-        resolved[key] = this.#buildHTMLElement(options[key])
+        resolved[key] = this.#buildHTMLElement(
+          objectId,
+          reactNativeBridge,
+          options[key],
+        )
       } else {
         resolved[key] = this.#resolveDescriptorsInOptions(
+          objectId,
+          reactNativeBridge,
           options[key],
           optionsThatAreFunctions,
           optionsThatAreHTMLElements,
@@ -427,33 +430,53 @@ export default class WebObjectsController {
   }
 
   #buildHTMLElement = (
+    objectId: WebObjectId,
+    reactNativeBridge: ReactNativeBridge,
     descriptor?: HTMLElementDescriptor,
   ): HTMLElement | undefined => {
     // From a descriptor, build the corresponding HTMLElement.
     if (!descriptor) {
       return undefined
     }
-
-    const element = document.createElement(descriptor.tagName ?? 'div')
-    element.className = descriptor.className ?? ''
-
-    if (descriptor.attributes) {
-      for (const [name, value] of Object.entries(descriptor.attributes)) {
-        element.setAttribute(name, value)
-      }
-    }
-    if (descriptor.style) {
-      Object.assign(element.style, descriptor.style)
-    }
-    if (descriptor.dataset) {
-      for (const [name, value] of Object.entries(descriptor.dataset)) {
-        ;(element.dataset as any)[name] = value
-      }
-    }
+    const element = document.createElement('div')
+    // Provide the inner HTML (style + HTML) to the element.
     if (descriptor.innerHTML !== undefined) {
       element.innerHTML = descriptor.innerHTML
     }
+    // Attach the listeners to the element.
+    descriptor.listeners?.forEach((listener) => {
+      element.addEventListener(listener.eventName, (event) => {
+        const target = event.target as HTMLElement
+        if (target.closest(listener.cssSelector)) {
+          this.#sendEventToReactNative(
+            objectId,
+            reactNativeBridge,
+            getHTMLElementDescriptorListenerName(listener),
+            event,
+          )
+        }
+      })
+    })
 
     return element
+  }
+
+  #sendEventToReactNative = (
+    objectId: WebObjectId,
+    reactNativeBridge: ReactNativeBridge,
+    eventName: string,
+    event?: any,
+  ) => {
+    // Remove circular references that cannot be serialized.
+    delete event?.target
+    // Send the event to the React Native listener.
+    reactNativeBridge.postMessage({
+      type: 'webObjectListenerEvent',
+      payload: {
+        objectId,
+        eventName,
+        event,
+      },
+    })
   }
 }

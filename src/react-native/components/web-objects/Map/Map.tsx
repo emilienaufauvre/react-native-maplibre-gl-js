@@ -1,4 +1,8 @@
-import type { MapProps, MapRef } from './Map.types'
+import {
+  MAP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+  type MapProps,
+  type MapRef,
+} from './Map.types'
 import createWebObjectAsComponent from '../../../components-factories/web-objects/createWebObjectAsComponent'
 
 /**
@@ -35,6 +39,9 @@ import createWebObjectAsComponent from '../../../components-factories/web-object
  * ```
  * @group Components – web objects
  */
-const Map = createWebObjectAsComponent<MapRef, MapProps>('map')
+const Map = createWebObjectAsComponent<MapRef, MapProps>(
+  'map',
+  MAP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+)
 
 export default Map

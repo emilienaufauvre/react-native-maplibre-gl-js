@@ -19,7 +19,7 @@ describe('createWebObjectAsComponent', () => {
 
   describe('Given the web object is rendered', () => {
     beforeEach(() => {
-      const Component = createWebObjectAsComponent('map')
+      const Component = createWebObjectAsComponent('map', [])
       render(<Component />)
     })
 

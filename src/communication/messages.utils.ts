@@ -4,6 +4,7 @@ import type {
   WebObjectListenerOnObject,
   WebObjectListenerOnRN,
 } from '../react-native/components-factories/web-objects/createWebObjectAsComponent.types'
+import type { HTMLElementDescriptorListener } from './messages.types'
 
 export const isWebObjectListenerOnRN = (
   listener?:
@@ -56,3 +57,7 @@ export const isWebObjectListenerOnHTMLElement = (
   }
   return 'elementListener' in listener
 }
+
+export const getHTMLElementDescriptorListenerName = (
+  listener: HTMLElementDescriptorListener,
+): string => `${listener.eventName}${listener.cssSelector}`
