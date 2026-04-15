@@ -109,7 +109,7 @@ Several real-world usage scenarios are available, you can explore them in two wa
 
 ### 1. Map
 
-- [`1.1. Component basis`](./example/src/app/1.-Map/1.1.-Component-basis.tsx)
+- [`1.1. Component basics`](./example/src/app/1.-Map/1.1.-Component-basics.tsx)
 - [`1.2. Create a camera animation`](./example/src/app/1.-Map/1.2.-Create-a-camera-animation.tsx)
 - [`1.3. Use the globe projection`](./example/src/app/1.-Map/1.3.-Use-the-globe-projection.tsx)
 - [`1.4. Add a raster tile source directly on map`](./example/src/app/1.-Map/1.4.-Add-a-raster-tile-source-directly-on-map.tsx)
@@ -120,7 +120,7 @@ Several real-world usage scenarios are available, you can explore them in two wa
 
 ### 2. Marker
 
-- [`2.1. Component basis`](./example/src/app/2.-Marker/2.1.-Component-basis.tsx)
+- [`2.1. Component basics`](./example/src/app/2.-Marker/2.1.-Component-basics.tsx)
 - [`2.2. Animate the coordinate with reanimated`](./example/src/app/2.-Marker/2.2.-Animate-the-coordinate-with-reanimated.tsx)
 - [`2.3. Animate on click with css`](./example/src/app/2.-Marker/2.3.-Animate-on-click-with-css.tsx)
 - [`2.4. Use an detached popup`](./example/src/app/2.-Marker/2.4.-Use-an-detached-popup.tsx)
@@ -130,32 +130,32 @@ Several real-world usage scenarios are available, you can explore them in two wa
 
 ### 3. Popup
 
-- [`3.1. Component basis`](./example/src/app/3.-Popup/3.1.-Component-basis.tsx)
+- [`3.1. Component basics`](./example/src/app/3.-Popup/3.1.-Component-basics.tsx)
 
 ### 4. GeoJSONSource
 
-- [`4.1. Component basis`](./example/src/app/4.-GeoJSONSource/4.1.-Component-basis.tsx)
+- [`4.1. Component basics`](./example/src/app/4.-GeoJSONSource/4.1.-Component-basics.tsx)
 - [`4.2. Use a line gradient`](./example/src/app/4.-GeoJSONSource/4.2.-Use-a-line-gradient.tsx)
 - [`4.3. Use a local image`](./example/src/app/4.-GeoJSONSource/4.3.-Use-a-local-image.tsx)
 
 ### 5. ImageSource
 
-- [`5.1. Component basis`](./example/src/app/5.-ImageSource/5.1.-Component-basis.tsx)
+- [`5.1. Component basics`](./example/src/app/5.-ImageSource/5.1.-Component-basics.tsx)
 - [`5.2. Use an interactive listener`](./example/src/app/5.-ImageSource/5.2.-Use-an-interactive-listener.tsx)
 - [`5.3. Animate a serie of images 1`](./example/src/app/5.-ImageSource/5.3.-Animate-a-serie-of-images-1.tsx)
 - [`5.4. Animate a serie of images 2`](./example/src/app/5.-ImageSource/5.4.-Animate-a-serie-of-images-2.tsx)
 
 ### 6. VideoSource
 
-- [`6.1. Component basis`](./example/src/app/6.-VideoSource/6.1.-Component-basis.tsx)
+- [`6.1. Component basics`](./example/src/app/6.-VideoSource/6.1.-Component-basics.tsx)
 
 ### 7. VectorTileSource
 
-- [`7.1. Component basis`](./example/src/app/7.-VectorTileSource/7.1.-Component-basis.tsx)
+- [`7.1. Component basics`](./example/src/app/7.-VectorTileSource/7.1.-Component-basics.tsx)
 
 ### 8. RasterTileSource
 
-- [`8.1. Component basis`](./example/src/app/8.-RasterTileSource/8.1.-Component-basis.tsx)
+- [`8.1. Component basics`](./example/src/app/8.-RasterTileSource/8.1.-Component-basics.tsx)
 
 <!-- EXAMPLES-LIST:END -->
 
