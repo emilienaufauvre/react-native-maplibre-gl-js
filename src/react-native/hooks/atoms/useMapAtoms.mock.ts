@@ -3,6 +3,7 @@ let isWebWorldReady = false
 export const setIsWebWorldReadyMock = jest.fn()
 export const getWebObjectListenersMock = jest.fn()
 export const setWebObjectListenersMock = jest.fn()
+export const updateWebObjectListenersMock = jest.fn()
 export const deleteWebObjectListenersMock = jest.fn()
 export const getMapSourceListenersMock = jest.fn()
 export const setMapSourceListenersMock = jest.fn()
@@ -17,11 +18,12 @@ export const setIsWebWorldReady = (value: boolean) => {
 const useMapAtomsMock = () => ({
   isWebWorldReady,
   setIsWebWorldReady: setIsWebWorldReadyMock,
-  setWebObjectListeners: setWebObjectListenersMock,
   getWebObjectListeners: getWebObjectListenersMock,
+  setWebObjectListeners: setWebObjectListenersMock,
+  updateWebObjectListeners: updateWebObjectListenersMock,
   deleteWebObjectListeners: deleteWebObjectListenersMock,
-  setMapSourceListeners: setMapSourceListenersMock,
   getMapSourceListeners: getMapSourceListenersMock,
+  setMapSourceListeners: setMapSourceListenersMock,
   deleteMapSourceListeners: deleteMapSourceListenersMock,
   dispatchMessage: dispatchMessageMock,
   resolveWebObjectPendingMethodResponse:

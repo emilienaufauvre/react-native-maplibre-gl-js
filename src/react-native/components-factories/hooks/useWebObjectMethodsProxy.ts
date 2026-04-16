@@ -3,6 +3,7 @@ import {
   useCallback,
   useImperativeHandle,
   useMemo,
+  useRef,
 } from 'react'
 import type {
   WebObjectId,
@@ -26,6 +27,10 @@ export const useWebObjectMethodsProxy = <Ref extends WebObjectRef<any>>(
   objectId: WebObjectId,
   methodsThatContainHTMLElements: readonly string[],
 ) => {
+  // Refs.
+  const methodsThatContainHTMLElementsRef = useRef(
+    methodsThatContainHTMLElements,
+  )
   // States.
   // - Global.
   const {
@@ -46,7 +51,11 @@ export const useWebObjectMethodsProxy = <Ref extends WebObjectRef<any>>(
             return new Promise((resolve) => {
               const requestId = genRequestId()
               // Update the listeners of the HTMLElements if needed.
-              if (methodsThatContainHTMLElements.includes(propKey as string)) {
+              if (
+                methodsThatContainHTMLElementsRef.current.includes(
+                  propKey as string,
+                )
+              ) {
                 updateWebObjectListeners({
                   objectId,
                   newListeners: extractHTMLElementListenersFromMethodArgs(args),
@@ -71,7 +80,6 @@ export const useWebObjectMethodsProxy = <Ref extends WebObjectRef<any>>(
     ) as Ref
   }, [
     objectId,
-    methodsThatContainHTMLElements,
     setWebObjectPendingMethodResponse,
     dispatchMessage,
     updateWebObjectListeners,

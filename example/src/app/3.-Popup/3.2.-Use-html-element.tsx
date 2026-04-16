@@ -139,6 +139,7 @@ const Screen = () => {
                     .popup-content-title {
                       font-size: 18px;
                       font-weight: 700;
+                      color: #FFF;
                     }
                   </style>
                   <div id="popup" class="popup">
