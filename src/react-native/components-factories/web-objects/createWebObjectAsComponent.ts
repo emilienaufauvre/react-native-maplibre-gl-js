@@ -17,15 +17,20 @@ const createWebObjectAsComponent = <
 >(
   objectType: WebObjectType,
   optionsThatAreHTMLElements: readonly string[],
+  methodsThatContainHTMLElements: readonly string[],
 ): WebObjectComponent<Ref, Props> => {
   return forwardRef<Ref, Props>((props, ref) => {
     // UID of the web object.
     const id = useRef<WebObjectId>(genId())
     // Forward a method call on the RN object ref to the web object.
-    useWebObjectMethodsProxy<Ref>(ref, id.current)
+    useWebObjectMethodsProxy<Ref>(
+      ref,
+      id.current,
+      methodsThatContainHTMLElements,
+    )
     // Mount the web object on launch and update the map source properties when
     // they changed in the component body.
-    // TODO unmount to be added in comment.
+    // TODO unmount description to be added in this comment.
     const input: MountUpdateUnmountInput = useMemo(
       () => ({
         type: 'webObject',

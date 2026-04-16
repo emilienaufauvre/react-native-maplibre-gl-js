@@ -288,6 +288,26 @@ export const mapAtoms = (() => {
   )
 
   /**
+   * Add new callbacks on a specific web object.
+   */
+  const updateWebObjectListenersAtom = atom(
+    null,
+    (
+      get,
+      set,
+      {
+        objectId,
+        newListeners,
+      }: { objectId: WebObjectId; newListeners: WebObjectListeners },
+    ) => {
+      const map = new Map(get(webObjectsListenersAtom))
+      const existingListeners = map.get(objectId)
+      map.set(objectId, { ...existingListeners, ...newListeners })
+      set(webObjectsListenersAtom, map)
+    },
+  )
+
+  /**
    * Delete callbacks associated with a web object.
    */
   const deleteWebObjectListenersAtom = atom(
@@ -380,6 +400,7 @@ export const mapAtoms = (() => {
 
     setWebObjectListenersAtom,
     getWebObjectListenersAtom,
+    updateWebObjectListenersAtom,
     deleteWebObjectListenersAtom,
 
     setMapSourceListenersAtom,

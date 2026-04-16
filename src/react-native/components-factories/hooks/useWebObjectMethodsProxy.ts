@@ -6,10 +6,11 @@ import {
 } from 'react'
 import type {
   WebObjectId,
-  WebObjectMethodCallRequestId,
   WebObjectRef,
 } from '../web-objects/createWebObjectAsComponent.types'
 import useMapAtoms from '../../hooks/atoms/useMapAtoms'
+import { extractHTMLElementListenersFromMethodArgs } from './useMountUnmountUpdateCallbacks.utils'
+import { genRequestId } from './useWebObjectMethodsProxy.utils'
 
 /**
  * Create a proxy to call the methods of the corresponding web world object,
@@ -17,14 +18,21 @@ import useMapAtoms from '../../hooks/atoms/useMapAtoms'
  * @param ref - A React ref object that will be updated to point to the web
  *  methods proxy.
  * @param objectId - The ID of the web object that owns the method.
+ * @param methodsThatContainHTMLElements - The methods that contain
+ *  HTMLElements.
  */
 export const useWebObjectMethodsProxy = <Ref extends WebObjectRef<any>>(
   ref: ForwardedRef<Ref>,
   objectId: WebObjectId,
+  methodsThatContainHTMLElements: readonly string[],
 ) => {
   // States.
   // - Global.
-  const { dispatchMessage, setWebObjectPendingMethodResponse } = useMapAtoms()
+  const {
+    dispatchMessage,
+    setWebObjectPendingMethodResponse,
+    updateWebObjectListeners,
+  } = useMapAtoms()
 
   const createProxy = useCallback((): Ref => {
     return new Proxy(
@@ -36,10 +44,14 @@ export const useWebObjectMethodsProxy = <Ref extends WebObjectRef<any>>(
           }
           return (...args: any[]) => {
             return new Promise((resolve) => {
-              // TODO generator.
-              const requestId: WebObjectMethodCallRequestId = Math.random()
-                .toString(36)
-                .slice(2, 11)
+              const requestId = genRequestId()
+              // Update the listeners of the HTMLElements if needed.
+              if (methodsThatContainHTMLElements.includes(propKey as string)) {
+                updateWebObjectListeners({
+                  objectId,
+                  newListeners: extractHTMLElementListenersFromMethodArgs(args),
+                })
+              }
               // Store the resolver as a pending response.
               setWebObjectPendingMethodResponse({ requestId, resolve })
               // Send the method call message to the WebView.
@@ -57,7 +69,13 @@ export const useWebObjectMethodsProxy = <Ref extends WebObjectRef<any>>(
         },
       },
     ) as Ref
-  }, [objectId, dispatchMessage, setWebObjectPendingMethodResponse])
+  }, [
+    objectId,
+    methodsThatContainHTMLElements,
+    setWebObjectPendingMethodResponse,
+    dispatchMessage,
+    updateWebObjectListeners,
+  ])
 
   const methodsProxy = useMemo(() => createProxy(), [createProxy])
   // Expose the web methods as the component methods.

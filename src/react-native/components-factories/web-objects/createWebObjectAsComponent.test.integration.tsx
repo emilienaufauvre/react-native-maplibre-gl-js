@@ -33,7 +33,7 @@ describe('createWebObjectAsComponent', () => {
     >
 
     beforeEach(() => {
-      Component = createWebObjectAsComponent('map', [])
+      Component = createWebObjectAsComponent('map', [], [])
       setIsWebWorldReady(true)
       render(<Component />)
     })

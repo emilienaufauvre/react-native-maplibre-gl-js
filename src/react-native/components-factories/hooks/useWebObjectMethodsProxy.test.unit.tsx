@@ -1,5 +1,5 @@
-import { forwardRef, createRef } from 'react'
-import { render, screen, act } from '@testing-library/react-native'
+import { createRef, forwardRef } from 'react'
+import { act, render, screen } from '@testing-library/react-native'
 import { jest } from '@jest/globals'
 import useWebObjectMethodsProxy from './useWebObjectMethodsProxy'
 import {
@@ -25,7 +25,7 @@ describe('useWebObjectMethodsProxy', () => {
      */
     const Probe = forwardRef<any, { objectId: WebObjectId }>(
       ({ objectId }, ref) => {
-        useWebObjectMethodsProxy(ref, objectId)
+        useWebObjectMethodsProxy(ref, objectId, [])
         return null
       },
     )

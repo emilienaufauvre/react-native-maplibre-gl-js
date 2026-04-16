@@ -22,6 +22,8 @@ export const MARKER_OPTIONS_THAT_ARE_WEB_FUNCTIONS = [] as const
 
 export const MARKER_OPTIONS_THAT_ARE_HTML_ELEMENTS = ['element'] as const
 
+export const MARKER_METHODS_THAT_CONTAINS_HTML_ELEMENTS = [] as const
+
 /**
  * Marker component ref.
  * @interface
@@ -40,16 +42,22 @@ export type MarkerProps = WebObjectProps<MarkerOptions, MarkerListeners>
  * @interface
  * @group Marker types
  */
+export type MarkerMethodsOverwritten = {
+  // No need to pass the map.
+  addTo: () => Promise<void>
+  // Work with ID instead of object reference.
+  setEventedParent: (parentId: string) => Promise<void>
+  // Work with ID instead of object reference.
+  setPopup: (popupId: string) => Promise<void>
+}
+
+/**
+ * @interface
+ * @group Marker types
+ */
 export type MarkerMethods = WebObjectMethodsInferred<
   MapLibreMarker,
-  {
-    // No need to pass the map.
-    addTo: () => Promise<void>
-    // Work with ID instead of object reference.
-    setEventedParent: (parentId: string) => Promise<void>
-    // Work with ID instead of object reference.
-    setPopup: (popupId: string) => Promise<void>
-  }
+  MarkerMethodsOverwritten
 >
 
 /**

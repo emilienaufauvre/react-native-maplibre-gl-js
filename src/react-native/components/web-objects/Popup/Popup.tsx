@@ -1,5 +1,6 @@
 import createWebObjectAsComponent from '../../../components-factories/web-objects/createWebObjectAsComponent'
 import {
+  POPUP_METHODS_THAT_CONTAINS_HTML_ELEMENTS,
   POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
   type PopupProps,
   type PopupRef,
@@ -41,6 +42,7 @@ import {
 const Popup = createWebObjectAsComponent<PopupRef, PopupProps>(
   'popup',
   POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+  POPUP_METHODS_THAT_CONTAINS_HTML_ELEMENTS,
 )
 
 export default Popup

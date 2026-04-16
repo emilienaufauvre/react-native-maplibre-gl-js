@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import type { MountUpdateUnmountInput } from './useMountUnmountUpdateCallbacks.types'
 import useMapAtoms from '../../hooks/atoms/useMapAtoms'
 import {
-  extractHTMLElementListeners,
+  extractHTMLElementListenersFromOptions,
   removeHTMLElementListeners,
 } from './useMountUnmountUpdateCallbacks.utils'
 
@@ -40,7 +40,7 @@ const useMountUnmountUpdateCallbacks = (input: MountUpdateUnmountInput) => {
           objectId: input.objectId,
           listeners: {
             ...(input.props.listeners ?? {}),
-            ...extractHTMLElementListeners(
+            ...extractHTMLElementListenersFromOptions(
               input.props.options,
               input.optionsThatAreHTMLElements,
             ),

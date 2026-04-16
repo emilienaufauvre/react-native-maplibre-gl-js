@@ -1,8 +1,8 @@
+import type { WebObjectListeners } from '../web-objects/createWebObjectAsComponent.types'
 import type {
-  WebObjectListenerOnHTMLElement,
-  WebObjectListeners,
-} from '../web-objects/createWebObjectAsComponent.types'
-import type { HTMLElementDescriptorListener } from '../../../communication/messages.types'
+  HTMLElementDescriptor,
+  HTMLElementDescriptorListener,
+} from '../../../communication/messages.types'
 import { getHTMLElementDescriptorListenerName } from '../../../communication/messages.utils'
 
 export const removeHTMLElementListeners = (
@@ -43,22 +43,55 @@ export const removeHTMLElementListeners = (
   return result
 }
 
-export const extractHTMLElementListeners = (
+export const extractHTMLElementListenersFromOptions = (
   options: any,
   optionsThatAreHTMLElements: readonly string[],
 ): WebObjectListeners => {
-  const callbacks: Record<string, WebObjectListenerOnHTMLElement<any>> = {}
+  let callbacks: WebObjectListeners = {}
 
   for (const key of optionsThatAreHTMLElements) {
-    const htmlListeners = options?.[key]?.listeners as
-      | HTMLElementDescriptorListener[]
-      | undefined
-    htmlListeners?.forEach((listener) => {
-      callbacks[getHTMLElementDescriptorListenerName(listener)] = {
-        elementListener: listener.callback,
-      }
-    })
+    callbacks = {
+      ...callbacks,
+      ...extractHTMLElementListenersFromDescriptor(options?.[key]),
+    }
   }
+
+  return callbacks
+}
+
+export const extractHTMLElementListenersFromMethodArgs = (
+  methodArgs: any[],
+): WebObjectListeners => {
+  let callbacks: WebObjectListeners = {}
+
+  for (const arg of methodArgs) {
+    // TODO we need a more robust way to identify HTMLElements. A class for
+    //  HTMLElementDescriptor could be created.
+    if (!arg?.listeners) {
+      continue
+    }
+    callbacks = {
+      ...callbacks,
+      ...extractHTMLElementListenersFromDescriptor(arg),
+    }
+  }
+
+  return callbacks
+}
+
+const extractHTMLElementListenersFromDescriptor = (
+  htmlElement: HTMLElementDescriptor | undefined,
+): WebObjectListeners => {
+  const callbacks: WebObjectListeners = {}
+  const htmlListeners = htmlElement?.listeners as
+    | HTMLElementDescriptorListener[]
+    | undefined
+
+  htmlListeners?.forEach((listener) => {
+    callbacks[getHTMLElementDescriptorListenerName(listener)] = {
+      elementListener: listener.callback,
+    }
+  })
 
   return callbacks
 }

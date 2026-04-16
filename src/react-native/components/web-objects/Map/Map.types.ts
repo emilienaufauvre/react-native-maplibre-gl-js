@@ -37,6 +37,8 @@ export const MAP_OPTIONS_THAT_ARE_WEB_FUNCTIONS = [
 
 export const MAP_OPTIONS_THAT_ARE_HTML_ELEMENTS = ['container'] as const
 
+export const MAP_METHODS_THAT_CONTAINS_HTML_ELEMENTS = [] as const
+
 /**
  * Map component ref.
  * @interface
@@ -54,16 +56,22 @@ export type MapProps = WebObjectProps<MapOptions, MapListeners>
  * @interface
  * @group Map types
  */
+export type MapMethodsOverwritten = {
+  // Replace image data objects with a local image string.
+  addImage: (
+    id: string,
+    localImage: string,
+    options?: Partial<StyleImageMetadata>,
+  ) => Promise<void>
+}
+
+/**
+ * @interface
+ * @group Map types
+ */
 export type MapMethods = WebObjectMethodsInferred<
   MapLibreMap,
-  {
-    // Replace image data objects with a local image string.
-    addImage: (
-      id: string,
-      localImage: string,
-      options?: Partial<StyleImageMetadata>,
-    ) => Promise<void>
-  }
+  MapMethodsOverwritten
 >
 
 /**

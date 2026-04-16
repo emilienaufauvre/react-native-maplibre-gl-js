@@ -20,6 +20,10 @@ export const POPUP_OPTIONS_THAT_ARE_WEB_FUNCTIONS = [] as const
 
 export const POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS = ['element'] as const
 
+export const POPUP_METHODS_THAT_CONTAINS_HTML_ELEMENTS = [
+  'setDOMContent',
+] as const
+
 /**
  * Popup component ref.
  * @interface
@@ -38,14 +42,22 @@ export type PopupProps = WebObjectProps<PopupOptions, PopupListeners>
  * @interface
  * @group Popup types
  */
+export type PopupMethodsOverwritten = {
+  // No need to pass the map.
+  addTo: () => Promise<void>
+  // Work with ID instead of object reference.
+  setEventedParent: (parentId: string) => Promise<void>
+  // Work with and HTML element descriptor instead of object reference.
+  setDOMContent: (element: HTMLElementDescriptor) => Promise<void>
+}
+
+/**
+ * @interface
+ * @group Popup types
+ */
 export type PopupMethods = WebObjectMethodsInferred<
   MapLibrePopup,
-  {
-    // No need to pass the map.
-    addTo: () => Promise<void>
-    // Work with ID instead of object reference.
-    setEventedParent: (parentId: string) => Promise<void>
-  }
+  PopupMethodsOverwritten
 >
 
 /**

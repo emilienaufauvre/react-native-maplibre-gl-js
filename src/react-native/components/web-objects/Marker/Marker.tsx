@@ -1,5 +1,6 @@
 import createWebObjectAsComponent from '../../../components-factories/web-objects/createWebObjectAsComponent'
 import {
+  MARKER_METHODS_THAT_CONTAINS_HTML_ELEMENTS,
   MARKER_OPTIONS_THAT_ARE_HTML_ELEMENTS,
   type MarkerProps,
   type MarkerRef,
@@ -54,6 +55,7 @@ import {
 const Marker = createWebObjectAsComponent<MarkerRef, MarkerProps>(
   'marker',
   MARKER_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+  MARKER_METHODS_THAT_CONTAINS_HTML_ELEMENTS,
 )
 
 export default Marker

@@ -24135,7 +24135,12 @@ uniform mat4 u_projection_matrix;
         return;
       }
       let result;
-      if (!await this.#runIfSpecialMethod(message, object)) {
+      if (!await this.#runIfSpecialMethod(
+        message,
+        reactNativeBridge,
+        object,
+        message.payload.objectId
+      )) {
         result = await this.#runNormalMethod(message, object);
         try {
           JSON.stringify(result);
@@ -24272,7 +24277,7 @@ uniform mat4 u_projection_matrix;
         }
       });
     };
-    #runIfSpecialMethod = async (message, object) => {
+    #runIfSpecialMethod = async (message, reactNativeBridge, object, objetId) => {
       if (object instanceof import_maplibre_gl4.default.Map) {
         switch (message.payload.method) {
           case "addImage": {
@@ -24321,6 +24326,20 @@ uniform mat4 u_projection_matrix;
             const parent = this.#objects.get(parentId) ?? null;
             if (parent) {
               object.setEventedParent(parent);
+            }
+            return true;
+          }
+          case "setDOMContent": {
+            if (!message.payload.args[0]) {
+              return true;
+            }
+            const htmlElement = this.#buildHTMLElementFromDescriptor(
+              objetId,
+              reactNativeBridge,
+              message.payload.args[0]
+            );
+            if (htmlElement) {
+              object.setDOMContent(htmlElement);
             }
             return true;
           }

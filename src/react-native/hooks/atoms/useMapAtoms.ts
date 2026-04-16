@@ -35,6 +35,7 @@ const useMapAtoms = () => {
 
     setWebObjectListeners: useSetAtom(mapAtoms.setWebObjectListenersAtom),
     getWebObjectListeners: useSetAtom(mapAtoms.getWebObjectListenersAtom),
+    updateWebObjectListeners: useSetAtom(mapAtoms.updateWebObjectListenersAtom),
     deleteWebObjectListeners: useSetAtom(mapAtoms.deleteWebObjectListenersAtom),
 
     setMapSourceListeners: useSetAtom(mapAtoms.setMapSourceListenersAtom),

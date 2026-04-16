@@ -126,7 +126,14 @@ export default class WebObjectsController {
 
     let result
 
-    if (!(await this.#runIfSpecialMethod(message, object))) {
+    if (
+      !(await this.#runIfSpecialMethod(
+        message,
+        reactNativeBridge,
+        object,
+        message.payload.objectId,
+      ))
+    ) {
       result = await this.#runNormalMethod(message, object)
       // Verify that the result is serializable. If not, return null.
       try {
@@ -309,7 +316,9 @@ export default class WebObjectsController {
 
   #runIfSpecialMethod = async (
     message: Extract<MessageFromRNToWeb, { type: 'webObjectMethodCall' }>,
+    reactNativeBridge: ReactNativeBridge,
     object: WebObjectClass,
+    objetId: WebObjectId,
   ) => {
     // Special cases for methods that have special parameters not compatible
     // with RN (see RN component types definitions). These methods always return
@@ -363,6 +372,20 @@ export default class WebObjectsController {
           const parent = this.#objects.get(parentId) ?? null
           if (parent) {
             object.setEventedParent(parent)
+          }
+          return true
+        }
+        case 'setDOMContent': {
+          if (!message.payload.args[0]) {
+            return true
+          }
+          const htmlElement = this.#buildHTMLElementFromDescriptor(
+            objetId,
+            reactNativeBridge,
+            message.payload.args[0] as HTMLElementDescriptor,
+          )
+          if (htmlElement) {
+            object.setDOMContent(htmlElement)
           }
           return true
         }

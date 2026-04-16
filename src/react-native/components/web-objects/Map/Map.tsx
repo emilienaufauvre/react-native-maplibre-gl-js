@@ -1,4 +1,5 @@
 import {
+  MAP_METHODS_THAT_CONTAINS_HTML_ELEMENTS,
   MAP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
   type MapProps,
   type MapRef,
@@ -42,6 +43,7 @@ import createWebObjectAsComponent from '../../../components-factories/web-object
 const Map = createWebObjectAsComponent<MapRef, MapProps>(
   'map',
   MAP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
+  MAP_METHODS_THAT_CONTAINS_HTML_ELEMENTS,
 )
 
 export default Map
