@@ -2,7 +2,7 @@
 
 # MapOptions
 
-Defined in: [src/react-native/components/web-objects/Map/Map.types.ts:91](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Map/Map.types.ts#L91)
+Defined in: [src/react-native/components/web-objects/Map/Map.types.ts:99](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Map/Map.types.ts#L99)
 
 ## Properties
 

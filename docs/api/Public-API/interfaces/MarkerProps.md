@@ -2,7 +2,7 @@
 
 # MarkerProps
 
-Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:37](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L37)
+Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:39](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L39)
 
 Marker component props.
 

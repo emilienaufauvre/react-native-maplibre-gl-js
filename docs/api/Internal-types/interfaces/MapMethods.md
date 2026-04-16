@@ -2,7 +2,7 @@
 
 # MapMethods
 
-Defined in: [src/react-native/components/web-objects/Map/Map.types.ts:57](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Map/Map.types.ts#L57)
+Defined in: [src/react-native/components/web-objects/Map/Map.types.ts:72](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Map/Map.types.ts#L72)
 
 ## Properties
 

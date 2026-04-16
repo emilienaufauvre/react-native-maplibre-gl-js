@@ -2,7 +2,7 @@
 
 # PopupProps
 
-Defined in: [src/react-native/components/web-objects/Popup/Popup.types.ts:35](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Popup/Popup.types.ts#L35)
+Defined in: [src/react-native/components/web-objects/Popup/Popup.types.ts:39](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Popup/Popup.types.ts#L39)
 
 Popup component props.
 

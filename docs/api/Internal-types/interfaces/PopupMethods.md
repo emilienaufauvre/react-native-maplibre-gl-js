@@ -2,7 +2,7 @@
 
 # PopupMethods
 
-Defined in: [src/react-native/components/web-objects/Popup/Popup.types.ts:41](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Popup/Popup.types.ts#L41)
+Defined in: [src/react-native/components/web-objects/Popup/Popup.types.ts:58](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Popup/Popup.types.ts#L58)
 
 ## Properties
 
@@ -29,13 +29,13 @@ Defined in: [src/react-native/components/web-objects/Popup/Popup.types.ts:41](ht
 | <a id="property-addclassname"></a> `addClassName` | (...`args`: \[`string`\]) => `Promise`\<`Popup`\> |  |
 | <a id="property-removeclassname"></a> `removeClassName` | (...`args`: \[`string`\]) => `Promise`\<`Popup`\> |  |
 | <a id="property-toggleclassname"></a> `toggleClassName` | (...`args`: \[`string`\]) => `Promise`\<`boolean` \| `undefined`\> |  |
+| <a id="property-setdomcontent"></a> `setDOMContent` | (...`args`: \[`HTMLElementDescriptor`\]) => `Promise`\<`Promise`\<`void`\>\> |  |
 | <a id="property-isopen"></a> `isOpen` | (...`args`: \[\]) => `Promise`\<`boolean`\> |  |
 | <a id="property-trackpointer"></a> `trackPointer` | (...`args`: \[\]) => `Promise`\<`Popup`\> |  |
 | <a id="property-settext"></a> `setText` | (...`args`: \[`string`\]) => `Promise`\<`Popup`\> |  |
 | <a id="property-sethtml"></a> `setHTML` | (...`args`: \[`string`\]) => `Promise`\<`Popup`\> |  |
 | <a id="property-getmaxwidth"></a> `getMaxWidth` | (...`args`: \[\]) => `Promise`\<`string`\> |  |
 | <a id="property-setmaxwidth"></a> `setMaxWidth` | (...`args`: \[`string`\]) => `Promise`\<`Popup`\> |  |
-| <a id="property-setdomcontent"></a> `setDOMContent` | (...`args`: \[`Node`\]) => `Promise`\<`Popup`\> |  |
 | <a id="property-_createclosebutton"></a> `_createCloseButton` | (...`args`: \[\]) => `Promise`\<`void`\> |  |
 | <a id="property-_focusfirstelement"></a> `_focusFirstElement` | (...`args`: \[\]) => `Promise`\<`void`\> |  |
 | <a id="property-_onclose"></a> `_onClose` | (...`args`: \[\]) => `Promise`\<`void`\> |  |

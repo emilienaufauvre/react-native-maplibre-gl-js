@@ -2,7 +2,7 @@
 
 # MarkerOptions
 
-Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:87](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L87)
+Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:95](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L95)
 
 ## Properties
 
@@ -22,4 +22,4 @@ Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:87](
 | <a id="property-opacitywhencovered"></a> `opacityWhenCovered?` | `string` \| `number` | `0.2` | Marker's opacity when it's behind 3d terrain Accepts any valid CSS opacity value as a number or string. | node\_modules/maplibre-gl/dist/maplibre-gl.d.ts:13793 |
 | <a id="property-subpixelpositioning"></a> `subpixelPositioning?` | `boolean` | `false` | If `true`, rounding is disabled for placement of the marker, allowing for subpixel positioning and smoother movement when the marker is translated. | node\_modules/maplibre-gl/dist/maplibre-gl.d.ts:13799 |
 | <a id="property-element"></a> `element?` | `HTMLElementDescriptor` | `undefined` | - |  |
-| <a id="property-coordinate"></a> `coordinate?` | `LngLatLike` | `undefined` | - | [src/react-native/components/web-objects/Marker/Marker.types.ts:80](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L80) |
+| <a id="property-coordinate"></a> `coordinate?` | `LngLatLike` | `undefined` | - | [src/react-native/components/web-objects/Marker/Marker.types.ts:88](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L88) |

@@ -2,7 +2,7 @@
 
 # MarkerRef
 
-Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:30](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L30)
+Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:32](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components/web-objects/Marker/Marker.types.ts#L32)
 
 Marker component ref.
 
