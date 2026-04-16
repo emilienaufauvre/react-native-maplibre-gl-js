@@ -24191,8 +24191,11 @@ uniform mat4 u_projection_matrix;
             POPUP_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
             POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS
           );
-          const htmlElement = options.element ?? document.createElement("div");
-          element = new import_maplibre_gl4.default.Popup(options).setDOMContent(htmlElement);
+          const { element: htmlElement, ...popupOptions } = options;
+          element = new import_maplibre_gl4.default.Popup(popupOptions);
+          if (htmlElement) {
+            element.setDOMContent(htmlElement);
+          }
           break;
         }
       }

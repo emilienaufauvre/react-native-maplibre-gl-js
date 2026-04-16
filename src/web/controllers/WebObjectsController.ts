@@ -195,8 +195,11 @@ export default class WebObjectsController {
           POPUP_OPTIONS_THAT_ARE_WEB_FUNCTIONS,
           POPUP_OPTIONS_THAT_ARE_HTML_ELEMENTS,
         )
-        const htmlElement = options.element ?? document.createElement('div')
-        element = new maplibregl.Popup(options).setDOMContent(htmlElement)
+        const { element: htmlElement, ...popupOptions } = options
+        element = new maplibregl.Popup(popupOptions)
+        if (htmlElement) {
+          element.setDOMContent(htmlElement)
+        }
         break
       }
     }
