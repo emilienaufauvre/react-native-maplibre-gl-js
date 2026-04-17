@@ -10,8 +10,8 @@ import type {
   WebObjectRef,
 } from '../web-objects/createWebObjectAsComponent.types'
 import useMapAtoms from '../../hooks/atoms/useMapAtoms'
-import { extractHTMLElementListenersFromMethodArgs } from './useMountUnmountUpdateCallbacks.utils'
 import { genRequestId } from './useWebObjectMethodsProxy.utils'
+import { extractHTMLElementListenersFromMethodArgs } from '../../../communication/messages.utils'
 
 /**
  * Create a proxy to call the methods of the corresponding web world object,
