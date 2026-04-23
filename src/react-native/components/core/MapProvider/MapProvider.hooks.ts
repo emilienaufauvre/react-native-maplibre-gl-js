@@ -173,6 +173,33 @@ export const useFlushMessagesOnMapMounted = () => {
 }
 
 /**
+ * Stable values for the native scripts and CSS styles to avoid unnecessary
+ * executions.
+ * @param nativeScripts - A list of scripts to be injected into the WebView.
+ * @param cssStyles - The CSS to be made available within the webview.
+ * @returns - The stable values for the native scripts and CSS styles.
+ */
+export const useStableNativeScriptsAndCssStyles = (
+  nativeScripts: string | string[] | undefined,
+  cssStyles: string | string[] | undefined,
+) => {
+  const stableNativeScripts = useMemo(
+    () => nativeScripts,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [Array.isArray(nativeScripts) ? nativeScripts.join('||') : nativeScripts],
+  )
+  const stableCssStyles = useMemo(
+    () => cssStyles,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [Array.isArray(cssStyles) ? cssStyles.join('||') : cssStyles],
+  )
+
+  return {
+    stableNativeScripts,
+    stableCssStyles,
+  }
+}
+/**
  * @param cssStyles - The CSS to be made available within the webview.
  * @returns - A script to provide the given parameters to the Web world, using
  *  a format that can be injected into the WebView.

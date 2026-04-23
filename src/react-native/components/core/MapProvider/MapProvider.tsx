@@ -9,6 +9,7 @@ import {
   useInjectJavaScriptIfAScriptChanged,
   useInjectJavaScriptIfScriptChanged,
   useMessageOptionsInjectionScript,
+  useStableNativeScriptsAndCssStyles,
   useStyles,
   useWebLoggerEnabledInjectionScript,
   useWebMessageHandler,
@@ -66,10 +67,13 @@ const MapProviderInner = ({
   // Theme.
   const styles = useStyles()
   // Behaviors.
+  const { stableNativeScripts, stableCssStyles } =
+    useStableNativeScriptsAndCssStyles(nativeScripts, cssStyles)
   const { handler } = useWebMessageHandler()
   useEnableDisableRNLogger(rnLoggerEnabled)
   useFlushMessagesOnMapMounted()
-  const { cssStylesInjectionScript } = useCssStylesInjectionScript(cssStyles)
+  const { cssStylesInjectionScript } =
+    useCssStylesInjectionScript(stableCssStyles)
   const { webLoggerEnabledInjectionScript } =
     useWebLoggerEnabledInjectionScript(webLoggerEnabled)
   const { messageOptionsInjectionScript } =
@@ -77,7 +81,7 @@ const MapProviderInner = ({
   useInjectJavaScriptIfScriptChanged(cssStylesInjectionScript)
   useInjectJavaScriptIfScriptChanged(webLoggerEnabledInjectionScript)
   useInjectJavaScriptIfScriptChanged(messageOptionsInjectionScript)
-  useInjectJavaScriptIfAScriptChanged(nativeScripts)
+  useInjectJavaScriptIfAScriptChanged(stableNativeScripts)
 
   return (
     <View style={[styles.container, style]}>
