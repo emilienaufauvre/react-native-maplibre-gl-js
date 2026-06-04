@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { Text, View } from 'react-native'
 import { render, renderHook, screen } from '@testing-library/react-native'
 import MapProvider from './MapProvider'
 import { useWebMessageHandler } from './MapProvider.hooks'
