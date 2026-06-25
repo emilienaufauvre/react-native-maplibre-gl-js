@@ -10,13 +10,13 @@ Defined in: [src/react-native/components/web-objects/Popup/Popup.types.ts:58](ht
 | ------ | ------ | ------ |
 | <a id="property-getid"></a> `getId` | () => `string` |  |
 | <a id="property-off"></a> `off` | (...`args`: \[`string`, `Listener`\]) => `Promise`\<`Popup`\> |  |
-| <a id="property-fire"></a> `fire` | (...`args`: \[`string` \| `Event$1`, `any`\]) => `Promise`\<`Popup`\> |  |
+| <a id="property-remove"></a> `remove` | (...`args`: \[\]) => `Promise`\<`Popup`\> |  |
 | <a id="property-on"></a> `on` | (...`args`: \[`string`, `Listener`\]) => `Promise`\<`Subscription`\> |  |
 | <a id="property-once"></a> `once` | (...`args`: \[`string`, `Listener`\]) => `Promise`\<`Promise`\<`any`\> \| `Popup`\> |  |
 | <a id="property-_update"></a> `_update` | (...`args`: \[`MapMouseEvent` \| `MapLibreEvent`\<`unknown`\>\]) => `Promise`\<`void`\> |  |
-| <a id="property-remove"></a> `remove` | (...`args`: \[\]) => `Promise`\<`Popup`\> |  |
 | <a id="property-setpadding"></a> `setPadding` | (...`args`: \[`PaddingOptions`\]) => `Promise`\<`void`\> |  |
 | <a id="property-_eventedparentdata"></a> `_eventedParentData` | (...`args`: `unknown`[]) => `Promise`\<`unknown`\> |  |
+| <a id="property-fire"></a> `fire` | (...`args`: \[`string` \| `Event$1`, `any`\]) => `Promise`\<`Popup`\> |  |
 | <a id="property-listens"></a> `listens` | (...`args`: \[`string`\]) => `Promise`\<`boolean`\> |  |
 | <a id="property-seteventedparent"></a> `setEventedParent` | (...`args`: \[`string`\]) => `Promise`\<`Promise`\<`void`\>\> |  |
 | <a id="property-addto"></a> `addTo` | (...`args`: \[\]) => `Promise`\<`Promise`\<`void`\>\> |  |

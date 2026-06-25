@@ -10,12 +10,12 @@ Defined in: [src/react-native/components/web-objects/Marker/Marker.types.ts:58](
 | ------ | ------ | ------ |
 | <a id="property-getid"></a> `getId` | () => `string` |  |
 | <a id="property-off"></a> `off` | (...`args`: \[`string`, `Listener`\]) => `Promise`\<`Marker`\> |  |
-| <a id="property-fire"></a> `fire` | (...`args`: \[`string` \| `Event$1`, `any`\]) => `Promise`\<`Marker`\> |  |
+| <a id="property-remove"></a> `remove` | (...`args`: \[\]) => `Promise`\<`Marker`\> |  |
 | <a id="property-on"></a> `on` | (...`args`: \[`string`, `Listener`\]) => `Promise`\<`Subscription`\> |  |
 | <a id="property-once"></a> `once` | (...`args`: \[`string`, `Listener`\]) => `Promise`\<`Promise`\<`any`\> \| `Marker`\> |  |
 | <a id="property-_update"></a> `_update` | (...`args`: \[\{ `type`: `"terrain"` \| `"move"` \| `"moveend"` \| `"render"`; \}\]) => `Promise`\<`void`\> |  |
-| <a id="property-remove"></a> `remove` | (...`args`: \[\]) => `Promise`\<`Marker`\> |  |
 | <a id="property-_eventedparentdata"></a> `_eventedParentData` | (...`args`: `unknown`[]) => `Promise`\<`unknown`\> |  |
+| <a id="property-fire"></a> `fire` | (...`args`: \[`string` \| `Event$1`, `any`\]) => `Promise`\<`Marker`\> |  |
 | <a id="property-listens"></a> `listens` | (...`args`: \[`string`\]) => `Promise`\<`boolean`\> |  |
 | <a id="property-seteventedparent"></a> `setEventedParent` | (...`args`: \[`string`\]) => `Promise`\<`Promise`\<`void`\>\> |  |
 | <a id="property-addto"></a> `addTo` | (...`args`: \[\]) => `Promise`\<`Promise`\<`void`\>\> |  |

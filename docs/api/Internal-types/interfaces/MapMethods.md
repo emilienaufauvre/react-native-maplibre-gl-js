@@ -10,9 +10,8 @@ Defined in: [src/react-native/components/web-objects/Map/Map.types.ts:72](https:
 | ------ | ------ | ------ |
 | <a id="property-getid"></a> `getId` | () => `string` |  |
 | <a id="property-off"></a> `off` | (...`args`: \[`string`, `Listener`\]) => `Promise`\<`Map$1`\> |  |
-| <a id="property-fire"></a> `fire` | (...`args`: \[`string` \| `Event$1`, `any`\]) => `Promise`\<`Map$1`\> |  |
+| <a id="property-remove"></a> `remove` | (...`args`: \[\]) => `Promise`\<`void`\> |  |
 | <a id="property-stop"></a> `stop` | (...`args`: \[\]) => `Promise`\<`Map$1`\> |  |
-| <a id="property-resize"></a> `resize` | (...`args`: \[`any`, `boolean`\]) => `Promise`\<`Map$1`\> |  |
 | <a id="property-_terraindatacallback"></a> `_terrainDataCallback` | (...`args`: \[`MapStyleDataEvent` \| `MapSourceDataEvent`\]) => `Promise`\<`void`\> |  |
 | <a id="property-_getmapid"></a> `_getMapId` | (...`args`: \[\]) => `Promise`\<`number`\> |  |
 | <a id="property-setglobalstateproperty"></a> `setGlobalStateProperty` | (...`args`: \[`string`, `any`\]) => `Promise`\<`Map$1`\> |  |
@@ -22,6 +21,7 @@ Defined in: [src/react-native/components/web-objects/Map/Map.types.ts:72](https:
 | <a id="property-hascontrol"></a> `hasControl` | (...`args`: \[`IControl`\]) => `Promise`\<`boolean`\> |  |
 | <a id="property-coveringtiles"></a> `coveringTiles` | (...`args`: \[`CoveringTilesOptions`\]) => `Promise`\<`OverscaledTileID`[]\> |  |
 | <a id="property-calculatecameraoptionsfromto"></a> `calculateCameraOptionsFromTo` | (...`args`: \[`LngLat`, `number`, `LngLat`, `number`\]) => `Promise`\<`CameraOptions`\> |  |
+| <a id="property-resize"></a> `resize` | (...`args`: \[`any`, `boolean`\]) => `Promise`\<`Map$1`\> |  |
 | <a id="property-_resizeinternal"></a> `_resizeInternal` | (...`args`: \[`boolean`\]) => `Promise`\<`void`\> |  |
 | <a id="property-_resizetransform"></a> `_resizeTransform` | (...`args`: \[`boolean`\]) => `Promise`\<`void`\> |  |
 | <a id="property-_getclampedpixelratio"></a> `_getClampedPixelRatio` | (...`args`: \[`number`, `number`\]) => `Promise`\<`number`\> |  |
@@ -123,7 +123,6 @@ Defined in: [src/react-native/components/web-objects/Map/Map.types.ts:72](https:
 | <a id="property-_cancelrenderframe"></a> `_cancelRenderFrame` | (...`args`: \[`number`\]) => `Promise`\<`void`\> |  |
 | <a id="property-_render"></a> `_render` | (...`args`: \[`number`\]) => `Promise`\<`Map$1`\> |  |
 | <a id="property-redraw"></a> `redraw` | (...`args`: \[\]) => `Promise`\<`Map$1`\> |  |
-| <a id="property-remove"></a> `remove` | (...`args`: \[\]) => `Promise`\<`void`\> |  |
 | <a id="property-triggerrepaint"></a> `triggerRepaint` | (...`args`: \[\]) => `Promise`\<`void`\> |  |
 | <a id="property-_onwindowonline"></a> `_onWindowOnline` | (...`args`: \[\]) => `Promise`\<`void`\> |  |
 | <a id="property-getcameratargetelevation"></a> `getCameraTargetElevation` | (...`args`: \[\]) => `Promise`\<`number`\> |  |
@@ -185,5 +184,6 @@ Defined in: [src/react-native/components/web-objects/Map/Map.types.ts:72](https:
 | <a id="property-_normalizebearing"></a> `_normalizeBearing` | (...`args`: \[`number`, `number`\]) => `Promise`\<`number`\> |  |
 | <a id="property-queryterrainelevation"></a> `queryTerrainElevation` | (...`args`: \[`LngLatLike`\]) => `Promise`\<`number` \| `null`\> |  |
 | <a id="property-_eventedparentdata"></a> `_eventedParentData` | (...`args`: `unknown`[]) => `Promise`\<`unknown`\> |  |
+| <a id="property-fire"></a> `fire` | (...`args`: \[`string` \| `Event$1`, `any`\]) => `Promise`\<`Map$1`\> |  |
 | <a id="property-listens"></a> `listens` | (...`args`: \[`string`\]) => `Promise`\<`boolean`\> |  |
 | <a id="property-seteventedparent"></a> `setEventedParent` | (...`args`: \[`Evented` \| `null`, `any`\]) => `Promise`\<`Map$1`\> |  |
