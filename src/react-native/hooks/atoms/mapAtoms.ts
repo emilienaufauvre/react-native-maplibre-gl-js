@@ -1,5 +1,4 @@
 import { atom } from 'jotai'
-import type { WebView } from 'react-native-webview'
 import type { MessageFromRNToWeb } from '../../../communication/messages.types'
 import type {
   WebObjectId,
@@ -12,6 +11,7 @@ import type {
   MapSourceLayerListeners,
 } from '../../components-factories/map-sources/createMapSourceAsComponent.types'
 import { stableStringify } from './useMapAtoms.utils'
+import type { MapProviderWebViewTransport } from '../../components/core/MapProvider/MapProvider.types'
 
 export const mapAtoms = (() => {
   /**
@@ -40,9 +40,9 @@ export const mapAtoms = (() => {
   })
 
   /**
-   * The WebView used to render `MapLibre GL JS` views (the web world).
+   * The transport used to communicate with the web world.
    */
-  const webViewAtom = atom<WebView | null>(null)
+  const webViewAtom = atom<MapProviderWebViewTransport | null>(null)
 
   /**
    * Identify a "session" of the web world. Incremented at each restart/crash of

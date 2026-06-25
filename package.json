@@ -27,9 +27,15 @@
     "LICENSE"
   ],
   "main": "./lib/module/index.js",
+  "browser": "./src/index.ts",
+  "react-native": "./src/index.ts",
+  "source": "./src/index.ts",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
     ".": {
+      "browser": "./src/index.ts",
+      "react-native": "./src/index.ts",
+      "source": "./src/index.ts",
       "default": "./lib/module/index.js",
       "types": "./lib/typescript/src/index.d.ts"
     },
@@ -54,7 +60,11 @@
     "docs:readme-toc": "doctoc README.md",
     "docs:readme-examples": "node scripts/docs-readme-examples.js",
     "release:build": "bob build",
-    "release:semantic-release": "semantic-release"
+    "release:semantic-release": "semantic-release",
+    "example:start": "yarn workspace react-native-maplibre-gl-js-example start",
+    "example:android": "yarn workspace react-native-maplibre-gl-js-example android",
+    "example:ios": "yarn workspace react-native-maplibre-gl-js-example ios",
+    "example:web": "yarn workspace react-native-maplibre-gl-js-example web"
   },
   "commitlint": {
     "extends": [
@@ -107,12 +117,13 @@
     ]
   },
   "dependencies": {
+    "@react-native/jest-preset": "^0.86.0",
     "expo-asset": "^56.0.15",
     "jotai": "^2.20.0",
     "jotai-scope": "^0.11.0",
     "maplibre-gl": "^5.23.0",
     "react-native-logs": "^5.5.0",
-    "react-native-webview": "^13.16.0"
+    "react-native-webview": "^14.0.1"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^19.8.1",
@@ -143,10 +154,10 @@
     "jest": "^29.7.0",
     "lefthook": "^2.0.11",
     "prettier": "^3.7.4",
-    "react": "19.1.0",
-    "react-native": "0.81.5",
+    "react": "19.2.3",
+    "react-native": "0.85.3",
     "react-native-builder-bob": "^0.40.16",
-    "react-test-renderer": "19.1.0",
+    "react-test-renderer": "19.2.3",
     "release-it": "^19.0.4",
     "semantic-release": "^25.0.2",
     "ts-node": "^10.9.2",

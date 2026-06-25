@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { router } from 'expo-router'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import MaterialCommunityIcons from '@react-native-vector-icons/material-icons'
 
 /**
  * @returns - A home page that links to all example screens.
@@ -101,58 +101,90 @@ const styles = StyleSheet.create({
     fontSize: 16,
     flex: 1,
   },
+  emptyState: {
+    marginTop: 8,
+    fontSize: 14,
+    color: '#555',
+  },
 })
 
 type RouteDef = {
+  path: string
+}
+
+type RouteWithMeta = {
   folder: string
   index: string
   title: string
   path: string
 }
 
-// @ts-ignore
-const ctx = require.context('./', true, /\.tsx?$/)
+const routes: RouteDef[] = [
+  { path: '/1.-Map/1.1.-Component-basics' },
+  { path: '/1.-Map/1.2.-Create-a-camera-animation' },
+  { path: '/1.-Map/1.3.-Use-the-globe-projection' },
+  { path: '/1.-Map/1.4.-Add-a-raster-tile-source-directly-on-map' },
+  { path: '/1.-Map/1.5.-Use-global-css-styles' },
+  { path: '/1.-Map/1.6.-Add-more-velocity-to-drag-pan' },
+  { path: '/1.-Map/1.7.-Use-a-native-script-to-enhance-performances' },
+  { path: '/1.-Map/1.8.-Use-functions-in-map-options' },
+  { path: '/2.-Marker/2.1.-Component-basics' },
+  { path: '/2.-Marker/2.2.-Animate-the-coordinate-with-reanimated' },
+  { path: '/2.-Marker/2.3.-Animate-on-click-with-css' },
+  { path: '/2.-Marker/2.4.-Use-an-detached-popup' },
+  { path: '/2.-Marker/2.5.-Use-an-attached-popup' },
+  { path: '/2.-Marker/2.6.-Propagates-the-events-to-a-parent-component' },
+  { path: '/2.-Marker/2.7.-Use-a-local-image' },
+  { path: '/2.-Marker/2.8.-Listeners-on-inner-html-element' },
+  { path: '/3.-Popup/3.1.-Component-basics' },
+  { path: '/3.-Popup/3.2.-Use-html-element' },
+  { path: '/4.-GeoJSONSource/4.1.-Component-basics' },
+  { path: '/4.-GeoJSONSource/4.2.-Use-a-line-gradient' },
+  { path: '/4.-GeoJSONSource/4.3.-Use-a-local-image' },
+  { path: '/5.-ImageSource/5.1.-Component-basics' },
+  { path: '/5.-ImageSource/5.2.-Use-an-interactive-listener' },
+  { path: '/5.-ImageSource/5.3.-Animate-a-serie-of-images-1' },
+  { path: '/5.-ImageSource/5.4.-Animate-a-serie-of-images-2' },
+  { path: '/6.-VideoSource/6.1.-Component-basics' },
+  { path: '/7.-VectorTileSource/7.1.-Component-basics' },
+  { path: '/8.-RasterTileSource/8.1.-Component-basics' },
+]
 
-const pretty = (value: string): string => {
-  return value.replace(/[-_]/g, ' ').trim()
+const toWords = (value: string): string =>
+  value
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/-/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+const parseRoutePath = (path: string): RouteWithMeta => {
+  const [, folderSegment = '', screenSegment = ''] = path.split('/')
+  const folder = toWords(folderSegment.replace(/^\d+\.-/, ''))
+
+  const match = screenSegment.match(/^(\d+(?:\.\d+)?)\.-(.+)$/)
+  const index = match?.[1] ?? screenSegment
+  const title = toWords(match?.[2] ?? screenSegment)
+
+  return {
+    folder,
+    index,
+    title,
+    path,
+  }
 }
 
-// List all the routes/examples available.
-const routes: RouteDef[] = ctx
-  .keys()
-  .filter((key: string) => !(key.includes('_layout') || key === './index.tsx'))
-  .map((key: string) => {
-    const clean = key.replace('./', '').replace('.tsx', '')
-    const parts: string[] = clean.split('/')
-    const folder: string = parts.at(0) ?? 'General'
-    const name: string =
-      parts.length > 1 ? parts.slice(1).join('/') : (parts[0] ?? '')
-    const [index, title] = ((t) => [
-      t.slice(0, t.indexOf(' ')),
-      t.slice(t.indexOf(' ') + 1),
-    ])(pretty(name))
-    return {
-      folder: pretty(folder),
-      index,
-      title,
-      path: `/${clean}`,
-    }
-  })
-  .sort(
-    (a: RouteDef, b: RouteDef) =>
-      a.folder.localeCompare(b.folder) || a.index.localeCompare(b.index),
-  )
+const groupByFolder = (items: RouteDef[]): Record<string, RouteWithMeta[]> => {
+  return items.reduce<Record<string, RouteWithMeta[]>>((acc, route) => {
+    const parsedRoute = parseRoutePath(route.path)
 
-const groupByFolder = (items: RouteDef[]): Record<string, RouteDef[]> =>
-  items.reduce<Record<string, RouteDef[]>>(
-    (acc: Record<string, RouteDef[]>, route: RouteDef) => {
-      if (!acc[route.folder]) {
-        acc[route.folder] = []
-      }
-      acc?.[route.folder]?.push(route)
-      return acc
-    },
-    {},
-  )
+    if (!acc[parsedRoute.folder]) {
+      acc[parsedRoute.folder] = []
+    }
+
+    acc[parsedRoute.folder]?.push(parsedRoute)
+    return acc
+  }, {})
+}
 
 export default Index

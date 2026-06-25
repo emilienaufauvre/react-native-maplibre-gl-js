@@ -3,18 +3,16 @@
     "rootDir": ".",
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    "customConditions": [
-      "react-native-strict-api"
-    ],
+    "customConditions": ["react-native-strict-api"],
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
-    "lib": [
-      "ESNext",
-      "dom"
-    ],
+    "lib": ["ESNext", "dom"],
     "module": "ESNext",
     "moduleResolution": "bundler",
+    // Allow a module to have different versions depending on the platform (the
+    // resolution is made by Metro on RN expo but not automatically by tsc).
+    "moduleSuffixes": [".native", ".web", ".android", ".ios", ""],
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,

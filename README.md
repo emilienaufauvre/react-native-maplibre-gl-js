@@ -1,4 +1,3 @@
-
 <div align="center">
   <h1>react-native-maplibre-gl-js</h1>
   <a href="https://github.com/emilienaufauvre/react-native-maplibre-gl-js/actions/workflows/validation.yml">
@@ -81,7 +80,7 @@
 |----------|--------|
 | iOS      | ✅      |
 | Android  | ✅      |
-| Web      | ❌      |
+| Web      | ✅      |
 
 
 ## Installation

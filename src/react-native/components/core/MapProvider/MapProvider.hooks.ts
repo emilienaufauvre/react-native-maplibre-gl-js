@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import type {
+  MapProviderWebViewMessageEvent,
   MessageFromWebToRNHandlers,
   WebMessageOptions,
 } from './MapProvider.types'
-import type { WebViewMessageEvent } from 'react-native-webview'
 import RNLogger from '../../../logger/rn-logger'
 import type { MessageFromWebToRN } from '../../../../communication/messages.types'
 import {
@@ -49,13 +49,12 @@ export const useWebMessageHandler = () => {
   const createWebViewMessageHandler = useCallback(
     (handlers: MessageFromWebToRNHandlers) => {
       // Not an anonymous function => get the function name for logger.
-      return function handleMessage(event: WebViewMessageEvent) {
+      return function handleMessage(event: MapProviderWebViewMessageEvent) {
         try {
-          RNLogger.debug('RN', handleMessage.name, event?.nativeEvent?.data)
+          const data = event?.nativeEvent?.data ?? event?.data
+          RNLogger.debug('RN', handleMessage.name, data)
 
-          const message = JSON.parse(
-            event.nativeEvent.data,
-          ) as MessageFromWebToRN
+          const message = JSON.parse(data as string) as MessageFromWebToRN
 
           let messages
 

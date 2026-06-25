@@ -115,3 +115,21 @@ export type MessageFromWebToRNHandlers = {
     message: Extract<MessageFromWebToRN, { type: K }>,
   ) => void
 }
+
+/**
+ * For Web polyfill to mock WebView usage.
+ */
+export type MapProviderWebViewTransport = {
+  postMessage: (data: string) => void
+  injectJavaScript: (script: string) => void
+}
+
+/**
+ * WebView message event format.
+ */
+export type MapProviderWebViewMessageEvent = {
+  nativeEvent?: {
+    data?: string
+  }
+  data?: string
+}
