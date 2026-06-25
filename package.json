@@ -27,14 +27,10 @@
     "LICENSE"
   ],
   "main": "./lib/module/index.js",
-  "browser": "./src/index.ts",
-  "react-native": "./src/index.ts",
   "source": "./src/index.ts",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
     ".": {
-      "browser": "./src/index.ts",
-      "react-native": "./src/index.ts",
       "source": "./src/index.ts",
       "default": "./lib/module/index.js",
       "types": "./lib/typescript/src/index.d.ts"
