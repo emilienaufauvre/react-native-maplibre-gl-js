@@ -24,6 +24,12 @@ export type {
   PopupRef,
   PopupProps,
 } from './react-native/components/web-objects/Popup/Popup.types'
+export type {
+  WebObjectListenerOnRN,
+  WebObjectListenerOnObject,
+  WebObjectListenerOnMapLayer,
+  WebObjectListenerOnHTMLElement,
+} from './react-native/components-factories/web-objects/createWebObjectAsComponent.types'
 
 // @group Types (map sources)
 export type { GeoJSONSourceProps } from './react-native/components/map-sources/GeoJSONSource/GeoJSONSource.types'
@@ -31,6 +37,12 @@ export type { ImageSourceProps } from './react-native/components/map-sources/Ima
 export type { VideoSourceProps } from './react-native/components/map-sources/VideoSource/VideoSource.types'
 export type { VectorTileSourceProps } from './react-native/components/map-sources/VectorTileSource/VectorTileSource.types'
 export type { RasterTileSourceProps } from './react-native/components/map-sources/RasterTileSource/RasterTileSource.types'
+export type {
+  MapSourceId,
+  MapSourceLayerId,
+  MapSourceLayer,
+  MapSourceLayerListeners,
+} from './react-native/components-factories/map-sources/createMapSourceAsComponent.types'
 
 // @group Components – core
 export { default as MapProvider } from './react-native/components/core/MapProvider/MapProvider'
