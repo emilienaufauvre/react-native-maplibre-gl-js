@@ -24,6 +24,8 @@ export type {
   PopupRef,
   PopupProps,
 } from './react-native/components/web-objects/Popup/Popup.types'
+
+// @group Types (web objects abstractions)
 export type {
   WebObjectListenerOnRN,
   WebObjectListenerOnObject,
@@ -37,6 +39,8 @@ export type { ImageSourceProps } from './react-native/components/map-sources/Ima
 export type { VideoSourceProps } from './react-native/components/map-sources/VideoSource/VideoSource.types'
 export type { VectorTileSourceProps } from './react-native/components/map-sources/VectorTileSource/VectorTileSource.types'
 export type { RasterTileSourceProps } from './react-native/components/map-sources/RasterTileSource/RasterTileSource.types'
+
+// @group Types (map sources abstractions)
 export type {
   MapSourceId,
   MapSourceLayerId,
