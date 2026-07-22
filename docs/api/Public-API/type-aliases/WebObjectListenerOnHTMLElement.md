@@ -1,4 +1,4 @@
-[react-native-maplibre-gl-js](../../index.md) / [Internal types](../index.md) / WebObjectListenerOnHTMLElement
+[react-native-maplibre-gl-js](../../index.md) / [Public API](../index.md) / WebObjectListenerOnHTMLElement
 
 # WebObjectListenerOnHTMLElement\<Event\>
 

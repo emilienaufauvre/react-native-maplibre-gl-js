@@ -1,4 +1,4 @@
-[react-native-maplibre-gl-js](../../index.md) / [Internal types](../index.md) / MapSourceLayerId
+[react-native-maplibre-gl-js](../../index.md) / [Public API](../index.md) / MapSourceLayerId
 
 # MapSourceLayerId
 

@@ -2,7 +2,7 @@
 
 # WebObjectListenersWeb
 
-> **WebObjectListenersWeb** = \{\[`eventName`: `string`\]: [`WebObjectListenerOnRN`](WebObjectListenerOnRN.md)\<`void`\> \| [`WebObjectListenerOnObject`](WebObjectListenerOnObject.md)\<`any`\> \| [`WebObjectListenerOnMapLayer`](WebObjectListenerOnMapLayer.md)\<`any`\> \| [`WebObjectListenerOnHTMLElement`](WebObjectListenerOnHTMLElement.md)\<`any`\>; \}
+> **WebObjectListenersWeb** = \{\[`eventName`: `string`\]: [`WebObjectListenerOnRN`](../../Public-API/type-aliases/WebObjectListenerOnRN.md)\<`void`\> \| [`WebObjectListenerOnObject`](../../Public-API/type-aliases/WebObjectListenerOnObject.md)\<`any`\> \| [`WebObjectListenerOnMapLayer`](../../Public-API/type-aliases/WebObjectListenerOnMapLayer.md)\<`any`\> \| [`WebObjectListenerOnHTMLElement`](../../Public-API/type-aliases/WebObjectListenerOnHTMLElement.md)\<`any`\>; \}
 
 Defined in: [src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts:98](https://github.com/emilienaufauvre/react-native-maplibre-gl-js/blob/main/src/react-native/components-factories/web-objects/createWebObjectAsComponent.types.ts#L98)
 
@@ -11,4 +11,4 @@ object.
 
 ## Index Signature
 
-\[`eventName`: `string`\]: [`WebObjectListenerOnRN`](WebObjectListenerOnRN.md)\<`void`\> \| [`WebObjectListenerOnObject`](WebObjectListenerOnObject.md)\<`any`\> \| [`WebObjectListenerOnMapLayer`](WebObjectListenerOnMapLayer.md)\<`any`\> \| [`WebObjectListenerOnHTMLElement`](WebObjectListenerOnHTMLElement.md)\<`any`\>
+\[`eventName`: `string`\]: [`WebObjectListenerOnRN`](../../Public-API/type-aliases/WebObjectListenerOnRN.md)\<`void`\> \| [`WebObjectListenerOnObject`](../../Public-API/type-aliases/WebObjectListenerOnObject.md)\<`any`\> \| [`WebObjectListenerOnMapLayer`](../../Public-API/type-aliases/WebObjectListenerOnMapLayer.md)\<`any`\> \| [`WebObjectListenerOnHTMLElement`](../../Public-API/type-aliases/WebObjectListenerOnHTMLElement.md)\<`any`\>

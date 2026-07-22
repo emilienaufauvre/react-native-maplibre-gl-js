@@ -56,6 +56,24 @@ Public API of `react-native-maplibre-gl-js`.
 | [VectorTileSourceProps](interfaces/VectorTileSourceProps.md) | VectorTileSource component props. |
 | [RasterTileSourceProps](interfaces/RasterTileSourceProps.md) | RasterTileSource component props. |
 
+## Web object abstraction types
+
+| Type Alias | Description |
+| ------ | ------ |
+| [WebObjectListenerOnRN](type-aliases/WebObjectListenerOnRN.md) | A listener on an event introduced by the React Native usage. |
+| [WebObjectListenerOnObject](type-aliases/WebObjectListenerOnObject.md) | A listener to be set on an event emitted by the web object. |
+| [WebObjectListenerOnMapLayer](type-aliases/WebObjectListenerOnMapLayer.md) | A listener to be set on an event emitted by the web object, but specific to a map layer. |
+| [WebObjectListenerOnHTMLElement](type-aliases/WebObjectListenerOnHTMLElement.md) | A listener to be set on an event emitted by the HTMLElement associated with the web object. |
+
+## Map source abstraction types
+
+| Name | Description |
+| ------ | ------ |
+| [MapSourceId](type-aliases/MapSourceId.md) | UID of a map source in the web world. |
+| [MapSourceLayerId](type-aliases/MapSourceLayerId.md) | UID of a map source layer in the web world. |
+| [MapSourceLayer](interfaces/MapSourceLayer.md) | A layer specification that can be added to a map source. |
+| [MapSourceLayerListeners](interfaces/MapSourceLayerListeners.md) | Listeners that can be set by a component on the corresponding map layer events. By default, the mount/unmount events are available (they are custom, added on top of the `MapLibre GL JS` events). |
+
 ## Hooks
 
 | Function | Description |
