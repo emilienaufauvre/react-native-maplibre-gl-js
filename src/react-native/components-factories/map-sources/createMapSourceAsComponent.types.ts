@@ -68,7 +68,7 @@ export type MapSourceProps<SourceSpec extends MapSourceClass> = {
  */
 export type MapSourceLayer = {
   layer: Omit<MapSourceLayerWithSourceId, 'source'>
-  beforeId?: string
+  beforeId?: MapSourceLayerId
   listeners?: MapSourceLayerListeners
 }
 
