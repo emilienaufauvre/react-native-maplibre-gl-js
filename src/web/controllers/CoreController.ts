@@ -115,7 +115,9 @@ export default class CoreController {
         )
       }
     } catch (error: any) {
-      WebLogger.error(this.handleMessage.name, error.message)
+      // Name the culprit: a swallowed error here means a source or an object
+      // silently never made it to the map.
+      WebLogger.error(this.handleMessage.name, message.type, error.message)
     }
   }
 }
