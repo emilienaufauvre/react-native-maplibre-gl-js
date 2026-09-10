@@ -61,7 +61,7 @@ const main = async () => {
     .replace('</body>', `<script>${js}</script></body>`)
   // Wrap as a TS export with a template literal
   const escaped = '`' + escapeForTemplateLiteral(inlinedHtml) + '`'
-  const fileContents = `export const WEBVIEW_STATIC_HTML = ${escaped};\n`
+  const fileContents = `export const WEBVIEW_STATIC_HTML = ${escaped}\n`
 
   fs.writeFileSync(OUTPUT_FILE, fileContents, 'utf8')
   console.log(`${OUTPUT_FILE} generated.`)

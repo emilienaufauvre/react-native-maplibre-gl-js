@@ -55,7 +55,7 @@
     "docs:typedoc": "typedoc",
     "docs:readme-toc": "doctoc README.md",
     "docs:readme-examples": "node scripts/docs-readme-examples.js",
-    "release:build": "bob build",
+    "release:build": "yarn build:webview-code && bob build",
     "release:semantic-release": "semantic-release",
     "example:start": "yarn workspace react-native-maplibre-gl-js-example start",
     "example:android": "yarn workspace react-native-maplibre-gl-js-example android",
