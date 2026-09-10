@@ -3,6 +3,7 @@ import {
   createFakeMap,
   createFakeReactNativeBridge,
   createMountMessage,
+  createUpdateMessage,
 } from './MapSourcesController.mock'
 
 describe('MapSourcesController', () => {
@@ -228,6 +229,41 @@ describe('MapSourcesController', () => {
 
       test('Then the source is present at the end', () => {
         expect(fakeMap.map.getSource('source-1')).toBeDefined()
+        expect(fakeMap.getLayersOrder()).toEqual(['layer-1'])
+      })
+    })
+
+    describe('When an "update" message arrives for a source that was never mounted', () => {
+      beforeEach(() => {
+        controller.handleUpdateMessage(
+          createUpdateMessage({ id: 'source-1', layers: [{ id: 'layer-1' }] }),
+          bridge,
+          fakeMap.map,
+        )
+      })
+
+      test('Then it does not throw and mounts the source instead', () => {
+        expect(fakeMap.map.getSource('source-1')).toBeDefined()
+        expect(fakeMap.getLayersOrder()).toEqual(['layer-1'])
+        expect(fakeMap.errors).toEqual([])
+      })
+    })
+
+    describe('When two "update" messages arrive in a row for a source that was never mounted', () => {
+      beforeEach(() => {
+        controller.handleUpdateMessage(
+          createUpdateMessage({ id: 'source-1', layers: [{ id: 'layer-1' }] }),
+          bridge,
+          fakeMap.map,
+        )
+        controller.handleUpdateMessage(
+          createUpdateMessage({ id: 'source-1', layers: [{ id: 'layer-1' }] }),
+          bridge,
+          fakeMap.map,
+        )
+      })
+
+      test('Then the source is not duplicated', () => {
         expect(fakeMap.getLayersOrder()).toEqual(['layer-1'])
       })
     })

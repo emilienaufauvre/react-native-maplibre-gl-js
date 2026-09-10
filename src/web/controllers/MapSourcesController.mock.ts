@@ -123,3 +123,21 @@ export const createMountMessage = ({
       })),
     },
   }) as any
+
+/**
+ * @param options - The source description.
+ * @param options.id - The source id.
+ * @param options.layers - The layers, with their optional declared anchor.
+ * @returns - A "mapSourceUpdate" message for a GeoJSON source.
+ */
+export const createUpdateMessage = ({
+  id,
+  layers,
+}: {
+  id: string
+  layers: { id: string; beforeId?: string }[]
+}) =>
+  ({
+    ...createMountMessage({ id, layers }),
+    type: 'mapSourceUpdate',
+  }) as any

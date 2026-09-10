@@ -187,6 +187,14 @@ export default class MapSourcesController {
       this.#addSourceAndItsLayers(props, reactNativeBridge, map)
     }
 
+    if (oldSource === undefined) {
+      // A racing "update" arrived before its own "mount" was registered (or
+      // after an "unmount"): there is nothing to diff against yet, so mount
+      // instead of reading a source that was never tracked.
+      this.#addSourceAndItsLayers(props, reactNativeBridge, map)
+      return
+    }
+
     if (
       newSource.type &&
       ['geojson', 'image', 'video', 'vector', 'raster'].includes(
